@@ -21,6 +21,11 @@
     --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
     --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    /* Devanagari: no webfont (CSP blocks CDNs), so walk the system faces
+       shipped by Android, Windows, macOS and Linux in that order. */
+    --deva: "Noto Sans Devanagari", "Nirmala UI", Mangal, "Kohinoor Devanagari",
+            "Devanagari Sangam MN", "Lohit Devanagari", "Samyak Devanagari",
+            Gargi, Kalimati, sans-serif;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -270,6 +275,53 @@
     text-wrap: pretty;
   }
 
+  /* ── Marathi line ─────────────────────────────────────────
+     Colour is inherited, not fixed, so the graded red/green
+     states carry through instead of fighting a hard-coded value.
+     Extra line-height gives the matras room above and below. */
+  .mr {
+    display: block;
+    font-family: var(--deva);
+    line-height: 1.72;
+    color: inherit;
+    opacity: .74;
+  }
+
+  .qtext .mr {
+    font-size: .82em;
+    margin-top: .3em;
+    padding-top: .28em;
+    border-top: 1px dotted var(--rule);
+    max-width: 30em;
+  }
+
+  .qtag .mr {
+    display: inline;
+    font-family: var(--deva);
+    text-transform: none;
+    letter-spacing: 0;
+    opacity: .85;
+  }
+  .qtag .mr::before { content: " · "; }
+
+  .eyebrow .mr {
+    display: inline;
+    font-family: var(--deva);
+    text-transform: none;
+    letter-spacing: 0;
+    opacity: .85;
+  }
+  .eyebrow .mr::before { content: " · "; }
+
+  .loading .mr {
+    display: block;
+    font-family: var(--deva);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-top: 5px;
+    opacity: .8;
+  }
+
   /* ── options ──────────────────────────────────────────────── */
   .options { display: flex; flex-direction: column; gap: 8px; }
 
@@ -322,7 +374,8 @@
   }
   .opt:hover:not(:disabled) .bubble { border-color: var(--accent); }
 
-  .opt .text { font-size: 15.5px; line-height: 1.4; }
+  .opt .text { font-size: 15.5px; line-height: 1.4; min-width: 0; }
+  .opt .text .mr { font-size: .92em; margin-top: 1px; }
 
   /* graded states */
   .opt[data-mark="right"] {
@@ -401,6 +454,20 @@
   }
   .verdict[data-tone="right"] { color: var(--correct); }
   .verdict[data-tone="wrong"] { color: var(--wrong); }
+  .verdict .mr { display: block; font-size: 12.5px; margin-top: 1px; }
+
+  /* Marathi gloss under a chrome label */
+  .field span .mr,
+  .strip .label .mr {
+    display: block;
+    font-family: var(--deva);
+    font-size: 9.5px;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.5;
+    opacity: .8;
+  }
+  .btn .mr { display: block; font-family: var(--deva); font-size: 10px; letter-spacing: .02em; text-transform: none; opacity: .85; }
 
   .btn {
     font-family: var(--mono);
@@ -467,6 +534,9 @@
     padding-top: 3px;
   }
   .row .q { font-family: var(--serif); font-size: 16px; line-height: 1.4; }
+  .row .q .mr { font-size: .88em; margin-top: 2px; }
+  .row .a .mr { display: inline; opacity: .7; }
+  .row .a .mr::before { content: " / "; opacity: .5; }
   .row .a {
     font-family: var(--mono);
     font-size: 11.5px;
@@ -538,30 +608,30 @@
 
     <header class="masthead">
       <div>
-        <p class="eyebrow">Practice answer sheet · No. 001</p>
+        <p class="eyebrow">Practice answer sheet<span class="mr">सराव उत्तरपत्रिका</span></p>
         <h1>MCQ Exam Drill</h1>
       </div>
       <div class="fields">
         <div class="field">
-          <span>Score</span>
+          <span>Score<span class="mr">गुण</span></span>
           <strong id="f-score">0/0</strong>
         </div>
         <div class="field">
-          <span>Streak</span>
+          <span>Streak<span class="mr">सलग</span></span>
           <strong id="f-streak">0</strong>
         </div>
         <div class="field">
-          <span>Time</span>
+          <span>Time<span class="mr">वेळ</span></span>
           <strong id="f-time">0:00</strong>
         </div>
       </div>
     </header>
 
     <div class="strip" id="strip" aria-hidden="true">
-      <span class="label">Responses</span>
+      <span class="label">Responses<span class="mr">उत्तरे</span></span>
     </div>
 
-    <div class="loading" id="loading">Loading question bank…</div>
+    <div class="loading" id="loading">Loading question bank…<span class="mr">प्रश्नसंच उघडत आहे…</span></div>
 
     <section id="quiz" class="hidden">
       <div class="question">
@@ -580,19 +650,20 @@
       <div class="footer">
         <p class="verdict" id="verdict" role="status" aria-live="polite">
           Pick an option — or press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd>
+          <span class="mr">पर्याय निवडा</span>
         </p>
-        <button class="btn" id="next" disabled>Next question</button>
+        <button class="btn" id="next" disabled>Next question<span class="mr">पुढील प्रश्न</span></button>
       </div>
     </section>
 
     <section id="result" class="hidden">
       <div class="result">
-        <p class="eyebrow">Sheet graded</p>
+        <p class="eyebrow">Sheet graded<span class="mr">पेपर तपासला</span></p>
         <div class="score"><b id="r-score">0</b><i id="r-pct">of 10 · 0%</i></div>
         <p class="grade" id="r-grade"></p>
         <div class="footer" style="margin-top:0;border-top:0;padding-top:0">
-          <button class="btn" id="again">Start a new sheet</button>
-          <button class="btn ghost" id="toggle-review">Show answer key</button>
+          <button class="btn" id="again">Start a new sheet<span class="mr">नवीन पेपर</span></button>
+          <button class="btn ghost" id="toggle-review">Show answer key<span class="mr">उत्तरतालिका</span></button>
         </div>
       </div>
       <div class="review hidden" id="review"></div>
@@ -600,7 +671,7 @@
   </main>
 
   <div class="colophon">
-    <span id="source">Bank: local · 236 questions</span>
+    <span id="source">Bank: local · 236 questions · English + मराठी</span>
     <button id="theme">Switch theme</button>
   </div>
 </div>
@@ -611,278 +682,306 @@
 
   const PER_ROUND = 10;
 
+  /* The bundled bank is bilingual; Open Trivia DB is English-only.
+     Bilingual sheets are the whole point, so the bank leads. Set this
+     to true to draw English-only questions from the live API instead. */
+  const USE_LIVE_API = false;
+
   /* Fallback bank — used whenever the live API is unreachable
      (the published sandbox blocks outbound requests). */
   const BANK = [
-    ["Science", "What is the chemical symbol for potassium?", "K", ["Na", "P", "Pt"]],
-    ["Science", "Which planet in our solar system is the largest?", "Jupiter", ["Saturn", "Neptune", "Earth"]],
-    ["Maths", "What is the square root of 169?", "13", ["11", "17", "23"]],
-    ["Biology", "Which organelle is known as the powerhouse of the cell?", "Mitochondria", ["Ribosome", "Nucleus", "Golgi apparatus"]],
-    ["Geography", "What is the capital city of Australia?", "Canberra", ["Sydney", "Melbourne", "Perth"]],
-    ["Literature", "Who wrote the novel <em>Pride and Prejudice</em>?", "Jane Austen", ["Charlotte Brontë", "Emily Dickinson", "Mary Shelley"]],
-    ["Physics", "The speed of light in a vacuum is closest to which value?", "3.0 × 10⁸ m/s", ["3.0 × 10⁶ m/s", "1.5 × 10⁸ m/s", "9.8 × 10⁸ m/s"]],
-    ["Geography", "What is the longest river in Africa?", "The Nile", ["The Congo", "The Niger", "The Zambezi"]],
-    ["Maths", "What do the interior angles of a triangle add up to?", "180°", ["90°", "270°", "360°"]],
-    ["Biology", "Which gas do plants absorb from the air for photosynthesis?", "Carbon dioxide", ["Oxygen", "Nitrogen", "Hydrogen"]],
-    ["Biology", "How many bones are there in the adult human body?", "206", ["186", "224", "252"]],
-    ["Physics", "Who proposed the general theory of relativity?", "Albert Einstein", ["Isaac Newton", "Niels Bohr", "Galileo Galilei"]],
-    ["Science", "Which is the hardest naturally occurring mineral?", "Diamond", ["Quartz", "Topaz", "Corundum"]],
-    ["Computing", "In computing, what does CPU stand for?", "Central Processing Unit", ["Computer Power Unit", "Central Program Utility", "Core Processing Interface"]],
-    ["Computing", "What is the decimal number 10 in binary?", "1010", ["1100", "1001", "1110"]],
-    ["Geography", "Which is the largest ocean on Earth?", "The Pacific", ["The Atlantic", "The Indian", "The Arctic"]],
-    ["Science", "What is the freezing point of water in Fahrenheit?", "32 °F", ["0 °F", "48 °F", "100 °F"]],
-    ["Science", "What is the scientific study of earthquakes called?", "Seismology", ["Geology", "Volcanology", "Meteorology"]],
-    ["Chemistry", "Which element is first on the periodic table?", "Hydrogen", ["Helium", "Lithium", "Carbon"]],
-    ["Maths", "What is the value of π to two decimal places?", "3.14", ["3.41", "3.12", "3.16"]],
-    ["General", "What is the currency of Japan?", "The yen", ["The won", "The yuan", "The ringgit"]],
-    ["Art", "Who painted the <em>Mona Lisa</em>?", "Leonardo da Vinci", ["Michelangelo", "Raphael", "Sandro Botticelli"]],
-    ["Maths", "What is 15% of 200?", "30", ["15", "45", "20"]],
-    ["Biology", "What is the largest mammal alive today?", "The blue whale", ["The African elephant", "The giraffe", "The sperm whale"]],
-    ["Astronomy", "Which planet is known as the Red Planet?", "Mars", ["Venus", "Mercury", "Jupiter"]],
-    ["Computing", "What does HTML stand for?", "HyperText Markup Language", ["HighText Machine Language", "Hyperlink Text Marking Logic", "Home Tool Markup Language"]],
-    ["Geography", "How many continents are there on Earth?", "7", ["5", "6", "8"]],
-    ["Chemistry", "Which acid gives lemons their sour taste?", "Citric acid", ["Acetic acid", "Lactic acid", "Sulphuric acid"]],
-    ["Science", "Who discovered penicillin?", "Alexander Fleming", ["Louis Pasteur", "Joseph Lister", "Edward Jenner"]],
-    ["Maths", "What is the smallest prime number?", "2", ["0", "1", "3"]],
-    ["Chemistry", "What is the chemical formula for table salt?", "NaCl", ["KCl", "NaOH", "H₂SO₄"]],
-    ["Biology", "Which organ filters waste from the blood to make urine?", "The kidneys", ["The liver", "The spleen", "The pancreas"]],
-    ["Physics", "What is the SI unit of electric current?", "The ampere", ["The volt", "The watt", "The ohm"]],
-    ["Geography", "In which country would you find the Great Wall?", "China", ["Japan", "Mongolia", "India"]],
-    ["Literature", "Who wrote the play <em>Romeo and Juliet</em>?", "William Shakespeare", ["Christopher Marlowe", "Ben Jonson", "John Webster"]],
-    ["Maths", "What is 2 raised to the power of 8?", "256", ["128", "512", "64"]],
-    ["Chemistry", "Which gas is most abundant in Earth's atmosphere?", "Nitrogen", ["Oxygen", "Carbon dioxide", "Argon"]],
-    ["Computing", "Which programming language runs natively in a web browser?", "JavaScript", ["Python", "C++", "Swift"]],
-    ["Science", "At sea level, water boils at what temperature?", "100 °C", ["90 °C", "110 °C", "120 °C"]],
-    ["Geography", "Which is the largest hot desert in the world?", "The Sahara", ["The Gobi", "The Kalahari", "The Arabian"]],
-    ["Computing", "Who is regarded as the father of the computer?", "Charles Babbage", ["Alan Turing", "John von Neumann", "Blaise Pascal"]],
-    ["Maths", "What is the derivative of x² with respect to x?", "2x", ["x", "x²/2", "2"]],
-    ["Biology", "How many bones make up the middle ear?", "3", ["1", "2", "5"]],
-    ["Physics", "Which force keeps the planets in orbit around the Sun?", "Gravity", ["Magnetism", "Friction", "The strong nuclear force"]],
-    ["Chemistry", "What is the pH of a neutral solution at 25 °C?", "7", ["0", "1", "14"]],
+    ["Science", ["What is the chemical symbol for potassium?", "पोटॅशियमचे रासायनिक चिन्ह काय आहे?"], "K", ["Na", "P", "Pt"]],
+    ["Science", ["Which planet in our solar system is the largest?", "आपल्या सूर्यमालेतील सर्वात मोठा ग्रह कोणता आहे?"], ["Jupiter", "गुरू"], [["Saturn", "शनी"], ["Neptune", "वरुण"], ["Earth", "पृथ्वी"]]],
+    ["Maths", ["What is the square root of 169?", "169 चे वर्गमूळ किती आहे?"], "13", ["11", "17", "23"]],
+    ["Biology", ["Which organelle is known as the powerhouse of the cell?", "पेशीचे ऊर्जाकेंद्र म्हणून कोणत्या अंगकाला ओळखले जाते?"], ["Mitochondria", "मायटोकॉन्ड्रिया"], [["Ribosome", "रायबोसोम"], ["Nucleus", "केंद्रक"], ["Golgi apparatus", "गॉल्जी संकुल"]]],
+    ["Geography", ["What is the capital city of Australia?", "ऑस्ट्रेलियाची राजधानी कोणती आहे?"], ["Canberra", "कॅनबेरा"], [["Sydney", "सिडनी"], ["Melbourne", "मेलबर्न"], ["Perth", "पर्थ"]]],
+    ["Literature", ["Who wrote the novel <em>Pride and Prejudice</em>?", "<em>Pride and Prejudice</em> ही कादंबरी कोणी लिहिली?"], ["Jane Austen", "जेन ऑस्टेन"], [["Charlotte Brontë", "शार्लट ब्राँटे"], ["Emily Dickinson", "एमिली डिकिन्सन"], ["Mary Shelley", "मेरी शेली"]]],
+    ["Physics", ["The speed of light in a vacuum is closest to which value?", "निर्वात पोकळीतील प्रकाशाचा वेग यापैकी कोणत्या मूल्याच्या सर्वात जवळ आहे?"], "3.0 × 10⁸ m/s", ["3.0 × 10⁶ m/s", "1.5 × 10⁸ m/s", "9.8 × 10⁸ m/s"]],
+    ["Geography", ["What is the longest river in Africa?", "आफ्रिकेतील सर्वात लांब नदी कोणती आहे?"], ["The Nile", "नाईल"], [["The Congo", "काँगो"], ["The Niger", "नायजर"], ["The Zambezi", "झांबेझी"]]],
+    ["Maths", ["What do the interior angles of a triangle add up to?", "त्रिकोणाच्या अंतर्गत कोनांची बेरीज किती असते?"], "180°", ["90°", "270°", "360°"]],
+    ["Biology", ["Which gas do plants absorb from the air for photosynthesis?", "प्रकाशसंश्लेषणासाठी वनस्पती हवेतून कोणता वायू शोषून घेतात?"], ["Carbon dioxide", "कार्बन डायऑक्साइड"], [["Oxygen", "ऑक्सिजन"], ["Nitrogen", "नायट्रोजन"], ["Hydrogen", "हायड्रोजन"]]],
+    ["Biology", ["How many bones are there in the adult human body?", "प्रौढ माणसाच्या शरीरात किती हाडे असतात?"], "206", ["186", "224", "252"]],
+    ["Physics", ["Who proposed the general theory of relativity?", "सापेक्षतेचा व्यापक सिद्धांत कोणी मांडला?"], ["Albert Einstein", "अल्बर्ट आइनस्टाइन"], [["Isaac Newton", "आयझॅक न्यूटन"], ["Niels Bohr", "नील्स बोर"], ["Galileo Galilei", "गॅलिलिओ गॅलिली"]]],
+    ["Science", ["Which is the hardest naturally occurring mineral?", "निसर्गात आढळणारे सर्वात कठीण खनिज कोणते आहे?"], ["Diamond", "हिरा"], [["Quartz", "स्फटिक"], ["Topaz", "पुष्कराज"], ["Corundum", "कुरुविंद"]]],
+    ["Computing", ["In computing, what does CPU stand for?", "संगणकशास्त्रात CPU चे पूर्ण रूप काय आहे?"], "Central Processing Unit", ["Computer Power Unit", "Central Program Utility", "Core Processing Interface"]],
+    ["Computing", ["What is the decimal number 10 in binary?", "दशांश संख्या 10 ही द्विमान (बायनरी) पद्धतीत कशी लिहितात?"], "1010", ["1100", "1001", "1110"]],
+    ["Geography", ["Which is the largest ocean on Earth?", "पृथ्वीवरील सर्वात मोठा महासागर कोणता आहे?"], ["The Pacific", "प्रशांत महासागर"], [["The Atlantic", "अटलांटिक महासागर"], ["The Indian", "हिंदी महासागर"], ["The Arctic", "आर्क्टिक महासागर"]]],
+    ["Science", ["What is the freezing point of water in Fahrenheit?", "फॅरनहाइटमध्ये पाण्याचा गोठणबिंदू किती असतो?"], "32 °F", ["0 °F", "48 °F", "100 °F"]],
+    ["Science", ["What is the scientific study of earthquakes called?", "भूकंपांच्या शास्त्रीय अभ्यासाला काय म्हणतात?"], ["Seismology", "भूकंपशास्त्र"], [["Geology", "भूगर्भशास्त्र"], ["Volcanology", "ज्वालामुखीशास्त्र"], ["Meteorology", "हवामानशास्त्र"]]],
+    ["Chemistry", ["Which element is first on the periodic table?", "आवर्त सारणीतील पहिले मूलद्रव्य कोणते आहे?"], ["Hydrogen", "हायड्रोजन"], [["Helium", "हेलियम"], ["Lithium", "लिथियम"], ["Carbon", "कार्बन"]]],
+    ["Maths", ["What is the value of π to two decimal places?", "π चे मूल्य दोन दशांश स्थळांपर्यंत किती आहे?"], "3.14", ["3.41", "3.12", "3.16"]],
+    ["General", ["What is the currency of Japan?", "जपानचे चलन कोणते आहे?"], ["The yen", "येन"], [["The won", "वॉन"], ["The yuan", "युआन"], ["The ringgit", "रिंगिट"]]],
+    ["Art", ["Who painted the <em>Mona Lisa</em>?", "<em>Mona Lisa</em> हे चित्र कोणी काढले?"], ["Leonardo da Vinci", "लिओनार्दो दा विंची"], [["Michelangelo", "मायकेलअँजेलो"], ["Raphael", "राफेल"], ["Sandro Botticelli", "सांद्रो बोत्तिचेल्ली"]]],
+    ["Maths", ["What is 15% of 200?", "200 चा 15% किती आहे?"], "30", ["15", "45", "20"]],
+    ["Biology", ["What is the largest mammal alive today?", "आज अस्तित्वात असलेला सर्वात मोठा सस्तन प्राणी कोणता आहे?"], ["The blue whale", "निळा देवमासा"], [["The African elephant", "आफ्रिकन हत्ती"], ["The giraffe", "जिराफ"], ["The sperm whale", "स्पर्म व्हेल"]]],
+    ["Astronomy", ["Which planet is known as the Red Planet?", "कोणत्या ग्रहाला लाल ग्रह म्हणून ओळखले जाते?"], ["Mars", "मंगळ"], [["Venus", "शुक्र"], ["Mercury", "बुध"], ["Jupiter", "गुरू"]]],
+    ["Computing", ["What does HTML stand for?", "HTML चे पूर्ण रूप काय आहे?"], "HyperText Markup Language", ["HighText Machine Language", "Hyperlink Text Marking Logic", "Home Tool Markup Language"]],
+    ["Geography", ["How many continents are there on Earth?", "पृथ्वीवर किती खंड आहेत?"], "7", ["5", "6", "8"]],
+    ["Chemistry", ["Which acid gives lemons their sour taste?", "लिंबाला आंबट चव कोणत्या आम्लामुळे येते?"], ["Citric acid", "सायट्रिक आम्ल"], [["Acetic acid", "ॲसिटिक आम्ल"], ["Lactic acid", "लॅक्टिक आम्ल"], ["Sulphuric acid", "सल्फ्युरिक आम्ल"]]],
+    ["Science", ["Who discovered penicillin?", "पेनिसिलिनचा शोध कोणी लावला?"], ["Alexander Fleming", "अलेक्झांडर फ्लेमिंग"], [["Louis Pasteur", "लुई पाश्चर"], ["Joseph Lister", "जोसेफ लिस्टर"], ["Edward Jenner", "एडवर्ड जेन्नर"]]],
+    ["Maths", ["What is the smallest prime number?", "सर्वात लहान मूळ संख्या कोणती आहे?"], "2", ["0", "1", "3"]],
+    ["Chemistry", ["What is the chemical formula for table salt?", "खाण्याच्या मिठाचे रासायनिक सूत्र काय आहे?"], "NaCl", ["KCl", "NaOH", "H₂SO₄"]],
+    ["Biology", ["Which organ filters waste from the blood to make urine?", "रक्तातील टाकाऊ पदार्थ गाळून मूत्र तयार करणारा अवयव कोणता?"], ["The kidneys", "मूत्रपिंड"], [["The liver", "यकृत"], ["The spleen", "प्लीहा"], ["The pancreas", "स्वादुपिंड"]]],
+    ["Physics", ["What is the SI unit of electric current?", "विद्युत प्रवाहाचे SI एकक कोणते आहे?"], ["The ampere", "अँपिअर"], [["The volt", "व्होल्ट"], ["The watt", "वॅट"], ["The ohm", "ओहम"]]],
+    ["Geography", ["In which country would you find the Great Wall?", "ग्रेट वॉल (भव्य भिंत) कोणत्या देशात आहे?"], ["China", "चीन"], [["Japan", "जपान"], ["Mongolia", "मंगोलिया"], ["India", "भारत"]]],
+    ["Literature", ["Who wrote the play <em>Romeo and Juliet</em>?", "<em>Romeo and Juliet</em> हे नाटक कोणी लिहिले?"], ["William Shakespeare", "विल्यम शेक्सपिअर"], [["Christopher Marlowe", "क्रिस्टोफर मार्लो"], ["Ben Jonson", "बेन जॉन्सन"], ["John Webster", "जॉन वेबस्टर"]]],
+    ["Maths", ["What is 2 raised to the power of 8?", "2 चा 8 वा घात किती आहे?"], "256", ["128", "512", "64"]],
+    ["Chemistry", ["Which gas is most abundant in Earth's atmosphere?", "पृथ्वीच्या वातावरणात सर्वाधिक प्रमाणात कोणता वायू आढळतो?"], ["Nitrogen", "नायट्रोजन"], [["Oxygen", "ऑक्सिजन"], ["Carbon dioxide", "कार्बन डायऑक्साइड"], ["Argon", "आर्गॉन"]]],
+    ["Computing", ["Which programming language runs natively in a web browser?", "वेब ब्राउझरमध्ये थेट चालणारी प्रोग्रामिंग भाषा कोणती आहे?"], "JavaScript", ["Python", "C++", "Swift"]],
+    ["Science", ["At sea level, water boils at what temperature?", "समुद्रसपाटीवर पाणी कोणत्या तापमानाला उकळते?"], "100 °C", ["90 °C", "110 °C", "120 °C"]],
+    ["Geography", ["Which is the largest hot desert in the world?", "जगातील सर्वात मोठे उष्ण वाळवंट कोणते आहे?"], ["The Sahara", "सहारा"], [["The Gobi", "गोबी"], ["The Kalahari", "कालाहारी"], ["The Arabian", "अरेबियन"]]],
+    ["Computing", ["Who is regarded as the father of the computer?", "संगणकाचे जनक कोणाला मानले जाते?"], ["Charles Babbage", "चार्ल्स बॅबेज"], [["Alan Turing", "ॲलन ट्युरिंग"], ["John von Neumann", "जॉन फॉन न्यूमन"], ["Blaise Pascal", "ब्लेझ पास्कल"]]],
+    ["Maths", ["What is the derivative of x² with respect to x?", "x² चे x सापेक्ष विकलन (डेरिव्हेटिव्ह) काय आहे?"], "2x", ["x", "x²/2", "2"]],
+    ["Biology", ["How many bones make up the middle ear?", "मधल्या कानात किती हाडे असतात?"], "3", ["1", "2", "5"]],
+    ["Physics", ["Which force keeps the planets in orbit around the Sun?", "ग्रहांना सूर्याभोवतीच्या कक्षेत कोणते बल धरून ठेवते?"], ["Gravity", "गुरुत्वाकर्षण"], [["Magnetism", "चुंबकत्व"], ["Friction", "घर्षण"], ["The strong nuclear force", "प्रबळ केंद्रकीय बल"]]],
+    ["Chemistry", ["What is the pH of a neutral solution at 25 °C?", "25 °C तापमानाला उदासीन द्रावणाचा pH किती असतो?"], "7", ["0", "1", "14"]],
 
     /* Geography */
-    ["Geography", "What is the capital city of Canada?", "Ottawa", ["Toronto", "Vancouver", "Montreal"]],
-    ["Geography", "What is the capital city of Brazil?", "Brasília", ["Rio de Janeiro", "São Paulo", "Salvador"]],
-    ["Geography", "What is the capital city of New Zealand?", "Wellington", ["Auckland", "Christchurch", "Dunedin"]],
-    ["Geography", "What is the capital city of Turkey?", "Ankara", ["Istanbul", "Izmir", "Bursa"]],
-    ["Geography", "Which city is the seat of the Swiss federal government?", "Bern", ["Zurich", "Geneva", "Basel"]],
-    ["Geography", "What is the capital city of Egypt?", "Cairo", ["Alexandria", "Giza", "Luxor"]],
-    ["Geography", "What is the capital city of South Korea?", "Seoul", ["Busan", "Incheon", "Daegu"]],
-    ["Geography", "What is the capital city of Kenya?", "Nairobi", ["Mombasa", "Kisumu", "Nakuru"]],
-    ["Geography", "Which is the highest mountain above sea level?", "Mount Everest", ["K2", "Kangchenjunga", "Lhotse"]],
-    ["Geography", "Which is the largest country in the world by land area?", "Russia", ["Canada", "China", "The United States"]],
-    ["Geography", "Which is the smallest country in the world by land area?", "Vatican City", ["Monaco", "Nauru", "San Marino"]],
-    ["Geography", "Which is the largest island in the world?", "Greenland", ["New Guinea", "Borneo", "Madagascar"]],
-    ["Geography", "Which river flows through Paris?", "The Seine", ["The Rhine", "The Loire", "The Rhône"]],
-    ["Geography", "Which river flows through London?", "The Thames", ["The Severn", "The Mersey", "The Tyne"]],
-    ["Geography", "Which mountain range is traditionally taken as the boundary between Europe and Asia?", "The Urals", ["The Alps", "The Carpathians", "The Pyrenees"]],
-    ["Geography", "Mount Kilimanjaro lies in which country?", "Tanzania", ["Kenya", "Uganda", "Ethiopia"]],
-    ["Geography", "The Great Barrier Reef lies off the coast of which country?", "Australia", ["Indonesia", "The Philippines", "Fiji"]],
-    ["Geography", "In which country would you find Machu Picchu?", "Peru", ["Chile", "Bolivia", "Ecuador"]],
-    ["Geography", "Angel Falls, the world's highest uninterrupted waterfall, is in which country?", "Venezuela", ["Brazil", "Colombia", "Guyana"]],
-    ["Geography", "Lake Baikal, the world's deepest lake, lies in which country?", "Russia", ["Mongolia", "Kazakhstan", "China"]],
-    ["Geography", "Which desert covers much of Mongolia and northern China?", "The Gobi", ["The Taklamakan", "The Karakum", "The Thar"]],
-    ["Geography", "The Dead Sea lies between Israel and which other country?", "Jordan", ["Egypt", "Syria", "Lebanon"]],
-    ["Geography", "Which strait separates Spain from Morocco?", "The Strait of Gibraltar", ["The Bosphorus", "The Dardanelles", "The Bering Strait"]],
-    ["Geography", "The city of Istanbul spans which two continents?", "Europe and Asia", ["Asia and Africa", "Europe and Africa", "Asia and Oceania"]],
-    ["Geography", "Which two countries share the world's longest international border?", "Canada and the United States", ["Russia and China", "Argentina and Chile", "India and China"]],
-    ["Geography", "Which line of latitude sits at 0 degrees?", "The Equator", ["The Tropic of Cancer", "The Prime Meridian", "The Tropic of Capricorn"]],
-    ["Geography", "The Prime Meridian passes through which London borough?", "Greenwich", ["Westminster", "Camden", "Hackney"]],
-    ["Geography", "Which is the largest US state by area?", "Alaska", ["Texas", "California", "Montana"]],
-    ["Geography", "Which country is known as the Land of the Rising Sun?", "Japan", ["China", "South Korea", "Thailand"]],
-    ["Geography", "Which country's flag features a single red maple leaf?", "Canada", ["Lebanon", "Norway", "Switzerland"]],
+    ["Geography", ["What is the capital city of Canada?", "कॅनडाची राजधानी कोणती आहे?"], ["Ottawa", "ओटावा"], [["Toronto", "टोराँटो"], ["Vancouver", "व्हँकुव्हर"], ["Montreal", "मॉन्ट्रियल"]]],
+    ["Geography", ["What is the capital city of Brazil?", "ब्राझीलची राजधानी कोणती आहे?"], ["Brasília", "ब्राझिलिया"], [["Rio de Janeiro", "रिओ दी जानेरो"], ["São Paulo", "साओ पाउलो"], ["Salvador", "साल्वादोर"]]],
+    ["Geography", ["What is the capital city of New Zealand?", "न्यूझीलंडची राजधानी कोणती आहे?"], ["Wellington", "वेलिंग्टन"], [["Auckland", "ऑकलंड"], ["Christchurch", "ख्राइस्टचर्च"], ["Dunedin", "ड्युनेडिन"]]],
+    ["Geography", ["What is the capital city of Turkey?", "तुर्कस्तानची राजधानी कोणती आहे?"], ["Ankara", "अंकारा"], [["Istanbul", "इस्तंबूल"], ["Izmir", "इझमीर"], ["Bursa", "बुर्सा"]]],
+    ["Geography", ["Which city is the seat of the Swiss federal government?", "स्वित्झर्लंडच्या संघीय सरकारचे मुख्यालय कोणत्या शहरात आहे?"], ["Bern", "बर्न"], [["Zurich", "झुरिच"], ["Geneva", "जिनिव्हा"], ["Basel", "बासेल"]]],
+    ["Geography", ["What is the capital city of Egypt?", "इजिप्तची राजधानी कोणती आहे?"], ["Cairo", "कैरो"], [["Alexandria", "अलेक्झांड्रिया"], ["Giza", "गिझा"], ["Luxor", "लक्सर"]]],
+    ["Geography", ["What is the capital city of South Korea?", "दक्षिण कोरियाची राजधानी कोणती आहे?"], ["Seoul", "सेऊल"], [["Busan", "बुसान"], ["Incheon", "इंचॉन"], ["Daegu", "दाएगू"]]],
+    ["Geography", ["What is the capital city of Kenya?", "केनियाची राजधानी कोणती आहे?"], ["Nairobi", "नैरोबी"], [["Mombasa", "मोम्बासा"], ["Kisumu", "किसुमू"], ["Nakuru", "नाकुरू"]]],
+    ["Geography", ["Which is the highest mountain above sea level?", "समुद्रसपाटीपासून सर्वात उंच पर्वत कोणता आहे?"], ["Mount Everest", "माउंट एव्हरेस्ट"], [["K2", "के२"], ["Kangchenjunga", "कांचनजुंगा"], ["Lhotse", "ल्होत्से"]]],
+    ["Geography", ["Which is the largest country in the world by land area?", "क्षेत्रफळाने जगातील सर्वात मोठा देश कोणता आहे?"], ["Russia", "रशिया"], [["Canada", "कॅनडा"], ["China", "चीन"], ["The United States", "अमेरिका"]]],
+    ["Geography", ["Which is the smallest country in the world by land area?", "क्षेत्रफळाने जगातील सर्वात लहान देश कोणता आहे?"], ["Vatican City", "व्हॅटिकन सिटी"], [["Monaco", "मोनॅको"], ["Nauru", "नाउरू"], ["San Marino", "सॅन मारिनो"]]],
+    ["Geography", ["Which is the largest island in the world?", "जगातील सर्वात मोठे बेट कोणते आहे?"], ["Greenland", "ग्रीनलँड"], [["New Guinea", "न्यू गिनी"], ["Borneo", "बोर्निओ"], ["Madagascar", "मादागास्कर"]]],
+    ["Geography", ["Which river flows through Paris?", "पॅरिस शहरातून कोणती नदी वाहते?"], ["The Seine", "सीन"], [["The Rhine", "ऱ्हाईन"], ["The Loire", "लॉयर"], ["The Rhône", "ऱ्होन"]]],
+    ["Geography", ["Which river flows through London?", "लंडन शहरातून कोणती नदी वाहते?"], ["The Thames", "टेम्स"], [["The Severn", "सेव्हर्न"], ["The Mersey", "मर्सी"], ["The Tyne", "टाईन"]]],
+    ["Geography", ["Which mountain range is traditionally taken as the boundary between Europe and Asia?", "युरोप व आशिया यांच्यातील पारंपरिक सीमा म्हणून कोणती पर्वतरांग मानली जाते?"], ["The Urals", "युराल"], [["The Alps", "आल्प्स"], ["The Carpathians", "कार्पेथियन"], ["The Pyrenees", "पिरेनीज"]]],
+    ["Geography", ["Mount Kilimanjaro lies in which country?", "माउंट किलिमांजारो कोणत्या देशात आहे?"], ["Tanzania", "टांझानिया"], [["Kenya", "केनिया"], ["Uganda", "युगांडा"], ["Ethiopia", "इथिओपिया"]]],
+    ["Geography", ["The Great Barrier Reef lies off the coast of which country?", "ग्रेट बॅरियर रीफ कोणत्या देशाच्या किनाऱ्यालगत आहे?"], ["Australia", "ऑस्ट्रेलिया"], [["Indonesia", "इंडोनेशिया"], ["The Philippines", "फिलिपिन्स"], ["Fiji", "फिजी"]]],
+    ["Geography", ["In which country would you find Machu Picchu?", "माचू पिचू कोणत्या देशात आहे?"], ["Peru", "पेरू"], [["Chile", "चिली"], ["Bolivia", "बोलिव्हिया"], ["Ecuador", "इक्वेडोर"]]],
+    ["Geography", ["Angel Falls, the world's highest uninterrupted waterfall, is in which country?", "जगातील सर्वात उंच अखंड धबधबा एंजल फॉल्स कोणत्या देशात आहे?"], ["Venezuela", "व्हेनेझुएला"], [["Brazil", "ब्राझील"], ["Colombia", "कोलंबिया"], ["Guyana", "गयाना"]]],
+    ["Geography", ["Lake Baikal, the world's deepest lake, lies in which country?", "जगातील सर्वात खोल सरोवर बैकल कोणत्या देशात आहे?"], ["Russia", "रशिया"], [["Mongolia", "मंगोलिया"], ["Kazakhstan", "कझाकस्तान"], ["China", "चीन"]]],
+    ["Geography", ["Which desert covers much of Mongolia and northern China?", "मंगोलिया व उत्तर चीनचा मोठा भाग कोणत्या वाळवंटाने व्यापला आहे?"], ["The Gobi", "गोबी"], [["The Taklamakan", "ताक्लामाकान"], ["The Karakum", "काराकुम"], ["The Thar", "थर"]]],
+    ["Geography", ["The Dead Sea lies between Israel and which other country?", "मृत समुद्र इस्रायल आणि कोणत्या देशादरम्यान आहे?"], ["Jordan", "जॉर्डन"], [["Egypt", "इजिप्त"], ["Syria", "सीरिया"], ["Lebanon", "लेबनॉन"]]],
+    ["Geography", ["Which strait separates Spain from Morocco?", "स्पेन व मोरोक्को यांना कोणती सामुद्रधुनी वेगळे करते?"], ["The Strait of Gibraltar", "जिब्राल्टरची सामुद्रधुनी"], [["The Bosphorus", "बॉस्पोरस"], ["The Dardanelles", "दार्दानेल्स"], ["The Bering Strait", "बेरिंग सामुद्रधुनी"]]],
+    ["Geography", ["The city of Istanbul spans which two continents?", "इस्तंबूल शहर कोणत्या दोन खंडांत पसरलेले आहे?"], ["Europe and Asia", "युरोप आणि आशिया"], [["Asia and Africa", "आशिया आणि आफ्रिका"], ["Europe and Africa", "युरोप आणि आफ्रिका"], ["Asia and Oceania", "आशिया आणि ओशनिया"]]],
+    ["Geography", ["Which two countries share the world's longest international border?", "जगातील सर्वात लांब आंतरराष्ट्रीय सीमा कोणत्या दोन देशांमध्ये आहे?"], ["Canada and the United States", "कॅनडा आणि अमेरिका"], [["Russia and China", "रशिया आणि चीन"], ["Argentina and Chile", "अर्जेंटिना आणि चिली"], ["India and China", "भारत आणि चीन"]]],
+    ["Geography", ["Which line of latitude sits at 0 degrees?", "0 अंशावर कोणते अक्षवृत्त आहे?"], ["The Equator", "विषुववृत्त"], [["The Tropic of Cancer", "कर्कवृत्त"], ["The Prime Meridian", "मूळ रेखावृत्त"], ["The Tropic of Capricorn", "मकरवृत्त"]]],
+    ["Geography", ["The Prime Meridian passes through which London borough?", "मूळ रेखावृत्त लंडनच्या कोणत्या भागातून जाते?"], ["Greenwich", "ग्रीनविच"], [["Westminster", "वेस्टमिन्स्टर"], ["Camden", "कॅम्डेन"], ["Hackney", "हॅकनी"]]],
+    ["Geography", ["Which is the largest US state by area?", "क्षेत्रफळाने अमेरिकेतील सर्वात मोठे राज्य कोणते आहे?"], ["Alaska", "अलास्का"], [["Texas", "टेक्सास"], ["California", "कॅलिफोर्निया"], ["Montana", "मोंटाना"]]],
+    ["Geography", ["Which country is known as the Land of the Rising Sun?", "उगवत्या सूर्याचा देश म्हणून कोणता देश ओळखला जातो?"], ["Japan", "जपान"], [["China", "चीन"], ["South Korea", "दक्षिण कोरिया"], ["Thailand", "थायलंड"]]],
+    ["Geography", ["Which country's flag features a single red maple leaf?", "कोणत्या देशाच्या ध्वजावर एकच लाल मॅपलचे पान आहे?"], ["Canada", "कॅनडा"], [["Lebanon", "लेबनॉन"], ["Norway", "नॉर्वे"], ["Switzerland", "स्वित्झर्लंड"]]],
 
     /* History */
-    ["History", "In which year did the Second World War end?", "1945", ["1943", "1944", "1946"]],
-    ["History", "In which year did the First World War begin?", "1914", ["1912", "1916", "1918"]],
-    ["History", "Who was the first President of the United States?", "George Washington", ["Thomas Jefferson", "John Adams", "Abraham Lincoln"]],
-    ["History", "Who was the first person to walk on the Moon?", "Neil Armstrong", ["Buzz Aldrin", "Yuri Gagarin", "Michael Collins"]],
-    ["History", "Who was the first human to travel into space?", "Yuri Gagarin", ["Alan Shepard", "John Glenn", "Neil Armstrong"]],
-    ["History", "Which civilisation built the pyramids at Giza?", "The ancient Egyptians", ["The Romans", "The Greeks", "The Persians"]],
-    ["History", "Who led India's non-violent movement for independence?", "Mahatma Gandhi", ["Jawaharlal Nehru", "Subhas Chandra Bose", "Bal Gangadhar Tilak"]],
-    ["History", "In which year did India gain independence?", "1947", ["1942", "1945", "1950"]],
-    ["History", "Who chaired the drafting committee of the Constitution of India?", "B. R. Ambedkar", ["Jawaharlal Nehru", "Vallabhbhai Patel", "Rajendra Prasad"]],
-    ["History", "Who was the first Prime Minister of India?", "Jawaharlal Nehru", ["Mahatma Gandhi", "Vallabhbhai Patel", "Lal Bahadur Shastri"]],
-    ["History", "In which year did the Berlin Wall fall?", "1989", ["1985", "1987", "1991"]],
-    ["History", "Who was the first woman to be awarded a Nobel Prize?", "Marie Curie", ["Mother Teresa", "Dorothy Hodgkin", "Irène Joliot-Curie"]],
-    ["History", "Julius Caesar was a leader of which ancient state?", "Rome", ["Greece", "Egypt", "Persia"]],
-    ["History", "In which year did the Titanic sink?", "1912", ["1905", "1918", "1920"]],
-    ["History", "Which explorer reached the Americas in 1492?", "Christopher Columbus", ["Vasco da Gama", "Ferdinand Magellan", "Amerigo Vespucci"]],
-    ["History", "Who was the first emperor of a unified China?", "Qin Shi Huang", ["Kublai Khan", "Sun Yat-sen", "Puyi"]],
-    ["History", "In which year did the French Revolution begin?", "1789", ["1776", "1799", "1804"]],
-    ["History", "Which US president issued the Emancipation Proclamation?", "Abraham Lincoln", ["Andrew Johnson", "Ulysses S. Grant", "James Buchanan"]],
-    ["History", "Who is generally regarded as the first Prime Minister of Great Britain?", "Robert Walpole", ["William Pitt the Younger", "Benjamin Disraeli", "Winston Churchill"]],
-    ["History", "In which year was Magna Carta sealed?", "1215", ["1066", "1300", "1415"]],
-    ["History", "The Battle of Waterloo in 1815 ended the rule of which leader?", "Napoleon Bonaparte", ["Louis XVI", "Charles X", "Maximilien Robespierre"]],
-    ["History", "Apartheid was a system of enforced racial segregation in which country?", "South Africa", ["Zimbabwe", "Kenya", "Namibia"]],
-    ["History", "Which country gifted the Statue of Liberty to the United States?", "France", ["Britain", "Spain", "Italy"]],
-    ["History", "Which British monarch reigned when the Spanish Armada was defeated in 1588?", "Elizabeth I", ["Victoria", "Mary I", "Anne"]],
+    ["History", ["In which year did the Second World War end?", "दुसरे महायुद्ध कोणत्या वर्षी संपले?"], "1945", ["1943", "1944", "1946"]],
+    ["History", ["In which year did the First World War begin?", "पहिले महायुद्ध कोणत्या वर्षी सुरू झाले?"], "1914", ["1912", "1916", "1918"]],
+    ["History", ["Who was the first President of the United States?", "अमेरिकेचे पहिले राष्ट्राध्यक्ष कोण होते?"], ["George Washington", "जॉर्ज वॉशिंग्टन"], [["Thomas Jefferson", "थॉमस जेफरसन"], ["John Adams", "जॉन ॲडम्स"], ["Abraham Lincoln", "अब्राहम लिंकन"]]],
+    ["History", ["Who was the first person to walk on the Moon?", "चंद्रावर पाऊल ठेवणारी पहिली व्यक्ती कोण होती?"], ["Neil Armstrong", "नील आर्मस्ट्राँग"], [["Buzz Aldrin", "बझ आल्ड्रिन"], ["Yuri Gagarin", "युरी गागारिन"], ["Michael Collins", "मायकेल कॉलिन्स"]]],
+    ["History", ["Who was the first human to travel into space?", "अंतराळात प्रवास करणारा पहिला माणूस कोण होता?"], ["Yuri Gagarin", "युरी गागारिन"], [["Alan Shepard", "ॲलन शेपर्ड"], ["John Glenn", "जॉन ग्लेन"], ["Neil Armstrong", "नील आर्मस्ट्राँग"]]],
+    ["History", ["Which civilisation built the pyramids at Giza?", "गिझा येथील पिरॅमिड कोणत्या संस्कृतीने बांधले?"], ["The ancient Egyptians", "प्राचीन इजिप्शियन"], [["The Romans", "रोमन"], ["The Greeks", "ग्रीक"], ["The Persians", "पर्शियन"]]],
+    ["History", ["Who led India's non-violent movement for independence?", "भारताच्या अहिंसक स्वातंत्र्यलढ्याचे नेतृत्व कोणी केले?"], ["Mahatma Gandhi", "महात्मा गांधी"], [["Jawaharlal Nehru", "जवाहरलाल नेहरू"], ["Subhas Chandra Bose", "सुभाषचंद्र बोस"], ["Bal Gangadhar Tilak", "बाळ गंगाधर टिळक"]]],
+    ["History", ["In which year did India gain independence?", "भारताला स्वातंत्र्य कोणत्या वर्षी मिळाले?"], "1947", ["1942", "1945", "1950"]],
+    ["History", ["Who chaired the drafting committee of the Constitution of India?", "भारतीय संविधानाच्या मसुदा समितीचे अध्यक्ष कोण होते?"], ["B. R. Ambedkar", "डॉ. बाबासाहेब आंबेडकर"], [["Jawaharlal Nehru", "जवाहरलाल नेहरू"], ["Vallabhbhai Patel", "वल्लभभाई पटेल"], ["Rajendra Prasad", "राजेंद्र प्रसाद"]]],
+    ["History", ["Who was the first Prime Minister of India?", "भारताचे पहिले पंतप्रधान कोण होते?"], ["Jawaharlal Nehru", "जवाहरलाल नेहरू"], [["Mahatma Gandhi", "महात्मा गांधी"], ["Vallabhbhai Patel", "वल्लभभाई पटेल"], ["Lal Bahadur Shastri", "लालबहादूर शास्त्री"]]],
+    ["History", ["In which year did the Berlin Wall fall?", "बर्लिनची भिंत कोणत्या वर्षी पडली?"], "1989", ["1985", "1987", "1991"]],
+    ["History", ["Who was the first woman to be awarded a Nobel Prize?", "नोबेल पारितोषिक मिळवणारी पहिली महिला कोण होती?"], ["Marie Curie", "मेरी क्युरी"], [["Mother Teresa", "मदर तेरेसा"], ["Dorothy Hodgkin", "डोरोथी हॉजकिन"], ["Irène Joliot-Curie", "इरेन जोलिओ-क्युरी"]]],
+    ["History", ["Julius Caesar was a leader of which ancient state?", "ज्युलियस सीझर कोणत्या प्राचीन राज्याचा नेता होता?"], ["Rome", "रोम"], [["Greece", "ग्रीस"], ["Egypt", "इजिप्त"], ["Persia", "पर्शिया"]]],
+    ["History", ["In which year did the Titanic sink?", "टायटॅनिक जहाज कोणत्या वर्षी बुडाले?"], "1912", ["1905", "1918", "1920"]],
+    ["History", ["Which explorer reached the Americas in 1492?", "1492 मध्ये अमेरिका खंडात पोहोचलेला समुद्रप्रवासी कोण होता?"], ["Christopher Columbus", "ख्रिस्तोफर कोलंबस"], [["Vasco da Gama", "वास्को द गामा"], ["Ferdinand Magellan", "फर्डिनांड मॅगेलन"], ["Amerigo Vespucci", "अमेरिगो व्हेस्पुची"]]],
+    ["History", ["Who was the first emperor of a unified China?", "एकसंध चीनचा पहिला सम्राट कोण होता?"], ["Qin Shi Huang", "छिन शी हुआंग"], [["Kublai Khan", "कुबलाई खान"], ["Sun Yat-sen", "सन यत-सेन"], ["Puyi", "पुयी"]]],
+    ["History", ["In which year did the French Revolution begin?", "फ्रेंच राज्यक्रांती कोणत्या वर्षी सुरू झाली?"], "1789", ["1776", "1799", "1804"]],
+    ["History", ["Which US president issued the Emancipation Proclamation?", "गुलामगिरी मुक्तीचा जाहीरनामा कोणत्या अमेरिकन राष्ट्राध्यक्षाने काढला?"], ["Abraham Lincoln", "अब्राहम लिंकन"], [["Andrew Johnson", "अँड्र्यू जॉन्सन"], ["Ulysses S. Grant", "युलिसिस एस. ग्रँट"], ["James Buchanan", "जेम्स बुकानन"]]],
+    ["History", ["Who is generally regarded as the first Prime Minister of Great Britain?", "ग्रेट ब्रिटनचे पहिले पंतप्रधान कोणाला मानले जाते?"], ["Robert Walpole", "रॉबर्ट वॉलपोल"], [["William Pitt the Younger", "विल्यम पिट (धाकटे)"], ["Benjamin Disraeli", "बेंजामिन डिझरायली"], ["Winston Churchill", "विन्स्टन चर्चिल"]]],
+    ["History", ["In which year was Magna Carta sealed?", "मॅग्ना कार्टा कोणत्या वर्षी मंजूर झाला?"], "1215", ["1066", "1300", "1415"]],
+    ["History", ["The Battle of Waterloo in 1815 ended the rule of which leader?", "1815 च्या वॉटर्लूच्या लढाईने कोणत्या नेत्याची सत्ता संपुष्टात आली?"], ["Napoleon Bonaparte", "नेपोलियन बोनापार्ट"], [["Louis XVI", "सोळावा लुई"], ["Charles X", "दहावा चार्ल्स"], ["Maximilien Robespierre", "मॅक्सिमिलियन रोबेस्पिएर"]]],
+    ["History", ["Apartheid was a system of enforced racial segregation in which country?", "वर्णभेदाची (अपार्थाइड) व्यवस्था कोणत्या देशात लागू होती?"], ["South Africa", "दक्षिण आफ्रिका"], [["Zimbabwe", "झिम्बाब्वे"], ["Kenya", "केनिया"], ["Namibia", "नामिबिया"]]],
+    ["History", ["Which country gifted the Statue of Liberty to the United States?", "स्वातंत्र्यदेवतेचा पुतळा अमेरिकेला कोणत्या देशाने भेट दिला?"], ["France", "फ्रान्स"], [["Britain", "ब्रिटन"], ["Spain", "स्पेन"], ["Italy", "इटली"]]],
+    ["History", ["Which British monarch reigned when the Spanish Armada was defeated in 1588?", "1588 मध्ये स्पॅनिश आरमाराचा पराभव झाला तेव्हा ब्रिटनवर कोणाचे राज्य होते?"], ["Elizabeth I", "पहिली एलिझाबेथ"], [["Victoria", "व्हिक्टोरिया"], ["Mary I", "पहिली मेरी"], ["Anne", "ॲन"]]],
 
     /* Science */
-    ["Science", "What does DNA stand for?", "Deoxyribonucleic acid", ["Dinucleic acid", "Diribonucleic acid", "Deoxyribose nucleus acid"]],
-    ["Science", "Which vitamin does the skin produce when exposed to sunlight?", "Vitamin D", ["Vitamin A", "Vitamin C", "Vitamin B12"]],
-    ["Science", "Which is the most abundant element in the universe?", "Hydrogen", ["Helium", "Oxygen", "Carbon"]],
-    ["Science", "Who formulated the three laws of motion?", "Isaac Newton", ["Albert Einstein", "Galileo Galilei", "Johannes Kepler"]],
-    ["Science", "Which instrument measures atmospheric pressure?", "A barometer", ["A thermometer", "A hygrometer", "An anemometer"]],
-    ["Science", "Which instrument measures wind speed?", "An anemometer", ["A barometer", "An altimeter", "A seismograph"]],
-    ["Science", "What is the scientific study of fossils called?", "Palaeontology", ["Archaeology", "Anthropology", "Geology"]],
-    ["Science", "Sound travels fastest through which of these?", "Steel", ["Water", "Air", "A vacuum"]],
-    ["Science", "Which gas is used to make party balloons float?", "Helium", ["Hydrogen", "Nitrogen", "Neon"]],
-    ["Science", "What is the approximate normal temperature of the human body?", "37 °C", ["35 °C", "39 °C", "41 °C"]],
+    ["Science", ["What does DNA stand for?", "DNA चे पूर्ण रूप काय आहे?"], ["Deoxyribonucleic acid", "डीऑक्सिरायबोन्यूक्लिइक आम्ल"], [["Dinucleic acid", "डायन्यूक्लिइक आम्ल"], ["Diribonucleic acid", "डायरायबोन्यूक्लिइक आम्ल"], ["Deoxyribose nucleus acid", "डीऑक्सिरायबोज न्यूक्लियस आम्ल"]]],
+    ["Science", ["Which vitamin does the skin produce when exposed to sunlight?", "सूर्यप्रकाशाच्या संपर्कात त्वचेमध्ये कोणते जीवनसत्त्व तयार होते?"], ["Vitamin D", "ड जीवनसत्त्व"], [["Vitamin A", "अ जीवनसत्त्व"], ["Vitamin C", "क जीवनसत्त्व"], ["Vitamin B12", "ब१२ जीवनसत्त्व"]]],
+    ["Science", ["Which is the most abundant element in the universe?", "विश्वात सर्वाधिक प्रमाणात आढळणारे मूलद्रव्य कोणते आहे?"], ["Hydrogen", "हायड्रोजन"], [["Helium", "हेलियम"], ["Oxygen", "ऑक्सिजन"], ["Carbon", "कार्बन"]]],
+    ["Science", ["Who formulated the three laws of motion?", "गतीचे तीन नियम कोणी मांडले?"], ["Isaac Newton", "आयझॅक न्यूटन"], [["Albert Einstein", "अल्बर्ट आइनस्टाइन"], ["Galileo Galilei", "गॅलिलिओ गॅलिली"], ["Johannes Kepler", "योहान केप्लर"]]],
+    ["Science", ["Which instrument measures atmospheric pressure?", "वातावरणाचा दाब कोणत्या उपकरणाने मोजतात?"], ["A barometer", "बॅरोमीटर"], [["A thermometer", "थर्मामीटर"], ["A hygrometer", "हायग्रोमीटर"], ["An anemometer", "ॲनिमोमीटर"]]],
+    ["Science", ["Which instrument measures wind speed?", "वाऱ्याचा वेग कोणत्या उपकरणाने मोजतात?"], ["An anemometer", "ॲनिमोमीटर"], [["A barometer", "बॅरोमीटर"], ["An altimeter", "अल्टिमीटर"], ["A seismograph", "सिस्मोग्राफ"]]],
+    ["Science", ["What is the scientific study of fossils called?", "जीवाश्मांच्या शास्त्रीय अभ्यासाला काय म्हणतात?"], ["Palaeontology", "पुराजीवशास्त्र"], [["Archaeology", "पुरातत्त्वशास्त्र"], ["Anthropology", "मानववंशशास्त्र"], ["Geology", "भूगर्भशास्त्र"]]],
+    ["Science", ["Sound travels fastest through which of these?", "ध्वनी यापैकी कशातून सर्वात वेगाने प्रवास करतो?"], ["Steel", "पोलाद"], [["Water", "पाणी"], ["Air", "हवा"], ["A vacuum", "निर्वात पोकळी"]]],
+    ["Science", ["Which gas is used to make party balloons float?", "फुगे हवेत तरंगण्यासाठी कोणता वायू वापरला जातो?"], ["Helium", "हेलियम"], [["Hydrogen", "हायड्रोजन"], ["Nitrogen", "नायट्रोजन"], ["Neon", "निऑन"]]],
+    ["Science", ["What is the approximate normal temperature of the human body?", "माणसाच्या शरीराचे सर्वसाधारण तापमान अंदाजे किती असते?"], "37 °C", ["35 °C", "39 °C", "41 °C"]],
 
     /* Biology */
-    ["Biology", "How many chambers does the human heart have?", "4", ["2", "3", "5"]],
-    ["Biology", "Which organ produces insulin?", "The pancreas", ["The liver", "The kidney", "The thyroid"]],
-    ["Biology", "How many teeth does an adult human normally have?", "32", ["28", "30", "36"]],
-    ["Biology", "Which is the longest bone in the human body?", "The femur", ["The tibia", "The humerus", "The fibula"]],
-    ["Biology", "Which is the largest organ of the human body?", "The skin", ["The liver", "The lungs", "The intestine"]],
-    ["Biology", "Which is the largest internal organ of the human body?", "The liver", ["The heart", "The stomach", "The spleen"]],
-    ["Biology", "Which blood type is known as the universal donor?", "O negative", ["AB positive", "A positive", "B negative"]],
-    ["Biology", "Which blood cells defend the body against infection?", "White blood cells", ["Red blood cells", "Platelets", "Plasma cells"]],
-    ["Biology", "How many pairs of chromosomes does a human cell normally contain?", "23", ["21", "24", "46"]],
-    ["Biology", "Which part of the eye controls how much light enters?", "The iris", ["The retina", "The cornea", "The lens"]],
-    ["Biology", "Which deficiency causes the disease scurvy?", "Vitamin C", ["Vitamin D", "Iron", "Calcium"]],
-    ["Biology", "Which is the fastest land animal?", "The cheetah", ["The lion", "The horse", "The gazelle"]],
-    ["Biology", "How many hearts does an octopus have?", "3", ["1", "2", "5"]],
-    ["Biology", "Which mammal lays eggs?", "The platypus", ["The kangaroo", "The sloth", "The bat"]],
-    ["Biology", "What is a young frog called before it becomes an adult?", "A tadpole", ["A larva", "A nymph", "A fry"]],
-    ["Biology", "Which is the largest living bird, and cannot fly?", "The ostrich", ["The emu", "The penguin", "The kiwi"]],
-    ["Biology", "What is the transformation of a caterpillar into a butterfly called?", "Metamorphosis", ["Mitosis", "Germination", "Regeneration"]],
-    ["Biology", "What is the basic unit of heredity called?", "The gene", ["The cell", "The protein", "The enzyme"]],
-    ["Biology", "Animals that eat only plants are called what?", "Herbivores", ["Carnivores", "Omnivores", "Insectivores"]],
-    ["Biology", "Through which part do plants absorb most of their water?", "The roots", ["The leaves", "The stem", "The flowers"]],
+    ["Biology", ["How many chambers does the human heart have?", "माणसाच्या हृदयाला किती कप्पे असतात?"], "4", ["2", "3", "5"]],
+    ["Biology", ["Which organ produces insulin?", "इन्शुलिन कोणता अवयव तयार करतो?"], ["The pancreas", "स्वादुपिंड"], [["The liver", "यकृत"], ["The kidney", "मूत्रपिंड"], ["The thyroid", "थायरॉइड ग्रंथी"]]],
+    ["Biology", ["How many teeth does an adult human normally have?", "प्रौढ माणसाला सर्वसाधारणपणे किती दात असतात?"], "32", ["28", "30", "36"]],
+    ["Biology", ["Which is the longest bone in the human body?", "माणसाच्या शरीरातील सर्वात लांब हाड कोणते आहे?"], ["The femur", "मांडीचे हाड (फीमर)"], [["The tibia", "टिबिया"], ["The humerus", "ह्युमरस"], ["The fibula", "फिब्युला"]]],
+    ["Biology", ["Which is the largest organ of the human body?", "माणसाच्या शरीरातील सर्वात मोठा अवयव कोणता आहे?"], ["The skin", "त्वचा"], [["The liver", "यकृत"], ["The lungs", "फुप्फुसे"], ["The intestine", "आतडे"]]],
+    ["Biology", ["Which is the largest internal organ of the human body?", "माणसाच्या शरीरातील सर्वात मोठा अंतर्गत अवयव कोणता आहे?"], ["The liver", "यकृत"], [["The heart", "हृदय"], ["The stomach", "जठर"], ["The spleen", "प्लीहा"]]],
+    ["Biology", ["Which blood type is known as the universal donor?", "कोणत्या रक्तगटाला सर्वदाता म्हणून ओळखले जाते?"], ["O negative", "ओ निगेटिव्ह"], [["AB positive", "एबी पॉझिटिव्ह"], ["A positive", "ए पॉझिटिव्ह"], ["B negative", "बी निगेटिव्ह"]]],
+    ["Biology", ["Which blood cells defend the body against infection?", "संसर्गापासून शरीराचे रक्षण कोणत्या रक्तपेशी करतात?"], ["White blood cells", "पांढऱ्या रक्तपेशी"], [["Red blood cells", "लाल रक्तपेशी"], ["Platelets", "रक्तबिंबिका"], ["Plasma cells", "प्लाझ्मा पेशी"]]],
+    ["Biology", ["How many pairs of chromosomes does a human cell normally contain?", "माणसाच्या पेशीत गुणसूत्रांच्या किती जोड्या असतात?"], "23", ["21", "24", "46"]],
+    ["Biology", ["Which part of the eye controls how much light enters?", "डोळ्यात येणाऱ्या प्रकाशाचे प्रमाण कोणता भाग नियंत्रित करतो?"], ["The iris", "बुबुळ (आयरिस)"], [["The retina", "दृष्टिपटल"], ["The cornea", "स्वच्छमंडल"], ["The lens", "भिंग"]]],
+    ["Biology", ["Which deficiency causes the disease scurvy?", "स्कर्व्ही हा रोग कोणत्या घटकाच्या कमतरतेमुळे होतो?"], ["Vitamin C", "क जीवनसत्त्व"], [["Vitamin D", "ड जीवनसत्त्व"], ["Iron", "लोह"], ["Calcium", "कॅल्शियम"]]],
+    ["Biology", ["Which is the fastest land animal?", "जमिनीवरील सर्वात वेगवान प्राणी कोणता आहे?"], ["The cheetah", "चित्ता"], [["The lion", "सिंह"], ["The horse", "घोडा"], ["The gazelle", "काळवीट"]]],
+    ["Biology", ["How many hearts does an octopus have?", "ऑक्टोपसला किती हृदये असतात?"], "3", ["1", "2", "5"]],
+    ["Biology", ["Which mammal lays eggs?", "कोणता सस्तन प्राणी अंडी घालतो?"], ["The platypus", "प्लॅटिपस"], [["The kangaroo", "कांगारू"], ["The sloth", "स्लॉथ"], ["The bat", "वटवाघूळ"]]],
+    ["Biology", ["What is a young frog called before it becomes an adult?", "बेडकाच्या पिल्लाला प्रौढ होण्यापूर्वी काय म्हणतात?"], ["A tadpole", "बेडूकमासा (टॅडपोल)"], [["A larva", "अळी"], ["A nymph", "निम्फ"], ["A fry", "मत्स्यपिल्लू"]]],
+    ["Biology", ["Which is the largest living bird, and cannot fly?", "उडू न शकणारा जगातील सर्वात मोठा पक्षी कोणता आहे?"], ["The ostrich", "शहामृग"], [["The emu", "इमू"], ["The penguin", "पेंग्विन"], ["The kiwi", "किवी"]]],
+    ["Biology", ["What is the transformation of a caterpillar into a butterfly called?", "सुरवंटाचे फुलपाखरात रूपांतर होण्याच्या क्रियेला काय म्हणतात?"], ["Metamorphosis", "रूपांतरण"], [["Mitosis", "सूत्री विभाजन"], ["Germination", "अंकुरण"], ["Regeneration", "पुनर्निर्मिती"]]],
+    ["Biology", ["What is the basic unit of heredity called?", "आनुवंशिकतेच्या मूलभूत घटकाला काय म्हणतात?"], ["The gene", "जनुक"], [["The cell", "पेशी"], ["The protein", "प्रथिन"], ["The enzyme", "विकर"]]],
+    ["Biology", ["Animals that eat only plants are called what?", "फक्त वनस्पती खाणाऱ्या प्राण्यांना काय म्हणतात?"], ["Herbivores", "शाकाहारी"], [["Carnivores", "मांसाहारी"], ["Omnivores", "मिश्राहारी"], ["Insectivores", "कीटकभक्षी"]]],
+    ["Biology", ["Through which part do plants absorb most of their water?", "वनस्पती पाणी मुख्यतः कोणत्या भागातून शोषून घेतात?"], ["The roots", "मुळे"], [["The leaves", "पाने"], ["The stem", "खोड"], ["The flowers", "फुले"]]],
 
     /* Chemistry */
-    ["Chemistry", "What is the chemical formula for water?", "H₂O", ["HO₂", "H₂O₂", "OH₂"]],
-    ["Chemistry", "What is the chemical symbol for gold?", "Au", ["Ag", "Gd", "Go"]],
-    ["Chemistry", "What is the chemical symbol for iron?", "Fe", ["Ir", "In", "Fr"]],
-    ["Chemistry", "What is the chemical symbol for sodium?", "Na", ["So", "Sd", "Sn"]],
-    ["Chemistry", "What is the chemical symbol for lead?", "Pb", ["Ld", "Pl", "Le"]],
-    ["Chemistry", "What is the atomic number of carbon?", "6", ["4", "8", "12"]],
-    ["Chemistry", "Which metal is a liquid at room temperature?", "Mercury", ["Lead", "Zinc", "Aluminium"]],
-    ["Chemistry", "Rust is chemically which compound?", "Iron oxide", ["Iron sulphate", "Iron carbonate", "Iron chloride"]],
-    ["Chemistry", "A solution with a pH below 7 is described as what?", "Acidic", ["Alkaline", "Neutral", "Saturated"]],
-    ["Chemistry", "Which noble gas is used in glowing advertising signs?", "Neon", ["Argon", "Helium", "Krypton"]],
-    ["Chemistry", "What is the common name for sodium bicarbonate?", "Baking soda", ["Table salt", "Washing soda", "Bleach"]],
-    ["Chemistry", "Which gas makes up most of natural gas?", "Methane", ["Propane", "Butane", "Ethane"]],
-    ["Chemistry", "Diamond and graphite are both forms of which element?", "Carbon", ["Silicon", "Sulphur", "Boron"]],
-    ["Chemistry", "What is the change of a solid directly into a gas called?", "Sublimation", ["Evaporation", "Condensation", "Fusion"]],
-    ["Chemistry", "Which element is essential for making thyroid hormones?", "Iodine", ["Iron", "Zinc", "Fluorine"]],
+    ["Chemistry", ["What is the chemical formula for water?", "पाण्याचे रासायनिक सूत्र काय आहे?"], "H₂O", ["HO₂", "H₂O₂", "OH₂"]],
+    ["Chemistry", ["What is the chemical symbol for gold?", "सोन्याचे रासायनिक चिन्ह काय आहे?"], "Au", ["Ag", "Gd", "Go"]],
+    ["Chemistry", ["What is the chemical symbol for iron?", "लोखंडाचे रासायनिक चिन्ह काय आहे?"], "Fe", ["Ir", "In", "Fr"]],
+    ["Chemistry", ["What is the chemical symbol for sodium?", "सोडियमचे रासायनिक चिन्ह काय आहे?"], "Na", ["So", "Sd", "Sn"]],
+    ["Chemistry", ["What is the chemical symbol for lead?", "शिशाचे रासायनिक चिन्ह काय आहे?"], "Pb", ["Ld", "Pl", "Le"]],
+    ["Chemistry", ["What is the atomic number of carbon?", "कार्बनचा अणुक्रमांक किती आहे?"], "6", ["4", "8", "12"]],
+    ["Chemistry", ["Which metal is a liquid at room temperature?", "खोलीच्या तापमानाला द्रवरूप असणारा धातू कोणता आहे?"], ["Mercury", "पारा"], [["Lead", "शिसे"], ["Zinc", "जस्त"], ["Aluminium", "ॲल्युमिनियम"]]],
+    ["Chemistry", ["Rust is chemically which compound?", "गंज हे रासायनिकदृष्ट्या कोणते संयुग आहे?"], ["Iron oxide", "लोह ऑक्साइड"], [["Iron sulphate", "लोह सल्फेट"], ["Iron carbonate", "लोह कार्बोनेट"], ["Iron chloride", "लोह क्लोराइड"]]],
+    ["Chemistry", ["A solution with a pH below 7 is described as what?", "7 पेक्षा कमी pH असलेले द्रावण कसे असते?"], ["Acidic", "आम्लधर्मी"], [["Alkaline", "आम्लारिधर्मी"], ["Neutral", "उदासीन"], ["Saturated", "संपृक्त"]]],
+    ["Chemistry", ["Which noble gas is used in glowing advertising signs?", "चमकणाऱ्या जाहिरात फलकांमध्ये कोणता निष्क्रिय वायू वापरतात?"], ["Neon", "निऑन"], [["Argon", "आर्गॉन"], ["Helium", "हेलियम"], ["Krypton", "क्रिप्टॉन"]]],
+    ["Chemistry", ["What is the common name for sodium bicarbonate?", "सोडियम बायकार्बोनेटला सामान्य भाषेत काय म्हणतात?"], ["Baking soda", "खाण्याचा सोडा"], [["Table salt", "खाण्याचे मीठ"], ["Washing soda", "धुण्याचा सोडा"], ["Bleach", "ब्लीच"]]],
+    ["Chemistry", ["Which gas makes up most of natural gas?", "नैसर्गिक वायूमध्ये सर्वाधिक प्रमाणात कोणता वायू असतो?"], ["Methane", "मिथेन"], [["Propane", "प्रोपेन"], ["Butane", "ब्युटेन"], ["Ethane", "इथेन"]]],
+    ["Chemistry", ["Diamond and graphite are both forms of which element?", "हिरा व ग्रॅफाइट ही कोणत्या मूलद्रव्याची रूपे आहेत?"], ["Carbon", "कार्बन"], [["Silicon", "सिलिकॉन"], ["Sulphur", "गंधक"], ["Boron", "बोरॉन"]]],
+    ["Chemistry", ["What is the change of a solid directly into a gas called?", "स्थायूचे थेट वायूत रूपांतर होण्याच्या क्रियेला काय म्हणतात?"], ["Sublimation", "संप्लवन"], [["Evaporation", "बाष्पीभवन"], ["Condensation", "संघनन"], ["Fusion", "द्रवीभवन"]]],
+    ["Chemistry", ["Which element is essential for making thyroid hormones?", "थायरॉइड संप्रेरके तयार होण्यासाठी कोणते मूलद्रव्य आवश्यक आहे?"], ["Iodine", "आयोडीन"], [["Iron", "लोह"], ["Zinc", "जस्त"], ["Fluorine", "फ्लोरिन"]]],
 
     /* Physics */
-    ["Physics", "What is the SI unit of force?", "The newton", ["The joule", "The pascal", "The watt"]],
-    ["Physics", "What is the SI unit of power?", "The watt", ["The newton", "The joule", "The volt"]],
-    ["Physics", "What is the SI unit of frequency?", "The hertz", ["The decibel", "The tesla", "The henry"]],
-    ["Physics", "What does a voltmeter measure?", "Potential difference", ["Current", "Resistance", "Power"]],
-    ["Physics", "Which colour of visible light has the longest wavelength?", "Red", ["Violet", "Green", "Blue"]],
-    ["Physics", "What is the approximate acceleration due to gravity at Earth's surface?", "9.8 m/s²", ["1.6 m/s²", "3.7 m/s²", "19.6 m/s²"]],
-    ["Physics", "What does a convex lens do to parallel rays of light?", "Converges them", ["Diverges them", "Absorbs them", "Polarises them"]],
-    ["Physics", "What kind of energy does a moving object possess?", "Kinetic energy", ["Potential energy", "Thermal energy", "Chemical energy"]],
-    ["Physics", "Which type of mirror is used in car wing mirrors to widen the field of view?", "A convex mirror", ["A concave mirror", "A plane mirror", "A parabolic mirror"]],
-    ["Physics", "What is the bending of light as it passes from air into water called?", "Refraction", ["Reflection", "Diffraction", "Dispersion"]],
-    ["Physics", "Who is credited with discovering the principle of buoyancy?", "Archimedes", ["Isaac Newton", "Blaise Pascal", "Robert Boyle"]],
-    ["Physics", "Through which of these can sound not travel?", "A vacuum", ["Water", "Steel", "Air"]],
+    ["Physics", ["What is the SI unit of force?", "बलाचे SI एकक कोणते आहे?"], ["The newton", "न्यूटन"], [["The joule", "ज्यूल"], ["The pascal", "पास्कल"], ["The watt", "वॅट"]]],
+    ["Physics", ["What is the SI unit of power?", "शक्तीचे SI एकक कोणते आहे?"], ["The watt", "वॅट"], [["The newton", "न्यूटन"], ["The joule", "ज्यूल"], ["The volt", "व्होल्ट"]]],
+    ["Physics", ["What is the SI unit of frequency?", "वारंवारतेचे SI एकक कोणते आहे?"], ["The hertz", "हर्ट्झ"], [["The decibel", "डेसिबल"], ["The tesla", "टेस्ला"], ["The henry", "हेन्री"]]],
+    ["Physics", ["What does a voltmeter measure?", "व्होल्टमीटर काय मोजतो?"], ["Potential difference", "विभवांतर"], [["Current", "विद्युत प्रवाह"], ["Resistance", "रोध"], ["Power", "शक्ती"]]],
+    ["Physics", ["Which colour of visible light has the longest wavelength?", "दृश्य प्रकाशातील कोणत्या रंगाची तरंगलांबी सर्वाधिक असते?"], ["Red", "लाल"], [["Violet", "जांभळा"], ["Green", "हिरवा"], ["Blue", "निळा"]]],
+    ["Physics", ["What is the approximate acceleration due to gravity at Earth's surface?", "पृथ्वीच्या पृष्ठभागावर गुरुत्वीय त्वरण अंदाजे किती असते?"], "9.8 m/s²", ["1.6 m/s²", "3.7 m/s²", "19.6 m/s²"]],
+    ["Physics", ["What does a convex lens do to parallel rays of light?", "बहिर्गोल भिंग समांतर प्रकाशकिरणांचे काय करते?"], ["Converges them", "त्यांचे अभिसरण करते"], [["Diverges them", "त्यांचे अपसरण करते"], ["Absorbs them", "ते शोषून घेते"], ["Polarises them", "त्यांचे ध्रुवीकरण करते"]]],
+    ["Physics", ["What kind of energy does a moving object possess?", "गतिमान वस्तूमध्ये कोणत्या प्रकारची ऊर्जा असते?"], ["Kinetic energy", "गतिज ऊर्जा"], [["Potential energy", "स्थितिज ऊर्जा"], ["Thermal energy", "औष्णिक ऊर्जा"], ["Chemical energy", "रासायनिक ऊर्जा"]]],
+    ["Physics", ["Which type of mirror is used in car wing mirrors to widen the field of view?", "वाहनांच्या बाजूच्या आरशात विस्तृत दृश्य मिळण्यासाठी कोणता आरसा वापरतात?"], ["A convex mirror", "बहिर्गोल आरसा"], [["A concave mirror", "अंतर्गोल आरसा"], ["A plane mirror", "सपाट आरसा"], ["A parabolic mirror", "पॅराबोलिक आरसा"]]],
+    ["Physics", ["What is the bending of light as it passes from air into water called?", "हवेतून पाण्यात जाताना प्रकाश वळण्याच्या क्रियेला काय म्हणतात?"], ["Refraction", "अपवर्तन"], [["Reflection", "परावर्तन"], ["Diffraction", "विवर्तन"], ["Dispersion", "अपस्करण"]]],
+    ["Physics", ["Who is credited with discovering the principle of buoyancy?", "उत्प्लावकतेचे तत्त्व कोणी शोधले असे मानले जाते?"], ["Archimedes", "आर्किमिडीज"], [["Isaac Newton", "आयझॅक न्यूटन"], ["Blaise Pascal", "ब्लेझ पास्कल"], ["Robert Boyle", "रॉबर्ट बॉईल"]]],
+    ["Physics", ["Through which of these can sound not travel?", "ध्वनी यापैकी कशातून प्रवास करू शकत नाही?"], ["A vacuum", "निर्वात पोकळी"], [["Water", "पाणी"], ["Steel", "पोलाद"], ["Air", "हवा"]]],
 
     /* Astronomy */
-    ["Astronomy", "Which planet has the most prominent ring system?", "Saturn", ["Jupiter", "Uranus", "Neptune"]],
-    ["Astronomy", "How many planets are there in the Solar System?", "8", ["7", "9", "10"]],
-    ["Astronomy", "Which is the closest star to Earth?", "The Sun", ["Proxima Centauri", "Sirius", "Alpha Centauri A"]],
-    ["Astronomy", "Which planet has the hottest surface?", "Venus", ["Mercury", "Mars", "Jupiter"]],
-    ["Astronomy", "Which galaxy contains our Solar System?", "The Milky Way", ["Andromeda", "The Whirlpool Galaxy", "The Triangulum Galaxy"]],
-    ["Astronomy", "What happens during a solar eclipse?", "The Moon passes between Earth and the Sun", ["Earth passes between the Sun and the Moon", "The Sun passes behind Jupiter", "The Moon enters Earth's shadow"]],
-    ["Astronomy", "Roughly how long does sunlight take to reach Earth?", "About 8 minutes", ["About 8 seconds", "About 80 minutes", "About 8 hours"]],
-    ["Astronomy", "Which planet is known for its Great Red Spot?", "Jupiter", ["Mars", "Saturn", "Neptune"]],
-    ["Astronomy", "Which planet is tipped so far over that it appears to spin on its side?", "Uranus", ["Neptune", "Venus", "Saturn"]],
-    ["Astronomy", "A shooting star is really what?", "A meteor", ["A comet", "A distant star", "A satellite"]],
+    ["Astronomy", ["Which planet has the most prominent ring system?", "कोणत्या ग्रहाभोवती सर्वात ठळक कड्यांची रचना आहे?"], ["Saturn", "शनी"], [["Jupiter", "गुरू"], ["Uranus", "युरेनस"], ["Neptune", "नेपच्यून"]]],
+    ["Astronomy", ["How many planets are there in the Solar System?", "सूर्यमालेत किती ग्रह आहेत?"], "8", ["7", "9", "10"]],
+    ["Astronomy", ["Which is the closest star to Earth?", "पृथ्वीच्या सर्वात जवळचा तारा कोणता आहे?"], ["The Sun", "सूर्य"], [["Proxima Centauri", "प्रॉक्सिमा सेंटॉरी"], ["Sirius", "व्याध"], ["Alpha Centauri A", "अल्फा सेंटॉरी ए"]]],
+    ["Astronomy", ["Which planet has the hottest surface?", "कोणत्या ग्रहाच्या पृष्ठभागाचे तापमान सर्वाधिक आहे?"], ["Venus", "शुक्र"], [["Mercury", "बुध"], ["Mars", "मंगळ"], ["Jupiter", "गुरू"]]],
+    ["Astronomy", ["Which galaxy contains our Solar System?", "आपली सूर्यमाला कोणत्या दीर्घिकेत आहे?"], ["The Milky Way", "आकाशगंगा"], [["Andromeda", "अँड्रोमेडा"], ["The Whirlpool Galaxy", "व्हर्लपूल दीर्घिका"], ["The Triangulum Galaxy", "ट्रँग्युलम दीर्घिका"]]],
+    ["Astronomy", ["What happens during a solar eclipse?", "सूर्यग्रहणाच्या वेळी काय घडते?"], ["The Moon passes between Earth and the Sun", "चंद्र पृथ्वी व सूर्य यांच्यामध्ये येतो"], [["Earth passes between the Sun and the Moon", "पृथ्वी सूर्य व चंद्र यांच्यामध्ये येते"], ["The Sun passes behind Jupiter", "सूर्य गुरूच्या मागे जातो"], ["The Moon enters Earth's shadow", "चंद्र पृथ्वीच्या छायेत येतो"]]],
+    ["Astronomy", ["Roughly how long does sunlight take to reach Earth?", "सूर्यप्रकाश पृथ्वीवर पोहोचण्यास अंदाजे किती वेळ लागतो?"], ["About 8 minutes", "सुमारे 8 मिनिटे"], [["About 8 seconds", "सुमारे 8 सेकंद"], ["About 80 minutes", "सुमारे 80 मिनिटे"], ["About 8 hours", "सुमारे 8 तास"]]],
+    ["Astronomy", ["Which planet is known for its Great Red Spot?", "महाकाय लाल ठिपक्यासाठी कोणता ग्रह ओळखला जातो?"], ["Jupiter", "गुरू"], [["Mars", "मंगळ"], ["Saturn", "शनी"], ["Neptune", "नेपच्यून"]]],
+    ["Astronomy", ["Which planet is tipped so far over that it appears to spin on its side?", "कोणता ग्रह इतका कलला आहे की तो कुशीवर फिरत असल्यासारखा भासतो?"], ["Uranus", "युरेनस"], [["Neptune", "नेपच्यून"], ["Venus", "शुक्र"], ["Saturn", "शनी"]]],
+    ["Astronomy", ["A shooting star is really what?", "तुटणारा तारा प्रत्यक्षात काय असतो?"], ["A meteor", "उल्का"], [["A comet", "धूमकेतू"], ["A distant star", "दूरचा तारा"], ["A satellite", "उपग्रह"]]],
 
     /* Maths */
-    ["Maths", "How many degrees are there in a full circle?", "360", ["180", "270", "400"]],
-    ["Maths", "What is 12 × 12?", "144", ["124", "132", "156"]],
-    ["Maths", "What is 7 × 8?", "56", ["48", "54", "63"]],
-    ["Maths", "What is 30% of 90?", "27", ["18", "24", "33"]],
-    ["Maths", "How many sides does a pentagon have?", "5", ["4", "6", "7"]],
-    ["Maths", "How many sides does an octagon have?", "8", ["6", "7", "10"]],
-    ["Maths", "What is the formula for the area of a circle?", "πr²", ["2πr", "πd", "πr²h"]],
-    ["Maths", "Which number is neither prime nor composite?", "1", ["0", "2", "9"]],
-    ["Maths", "What is the value of 5 factorial (5!)?", "120", ["25", "60", "720"]],
-    ["Maths", "A triangle with all three sides equal is called what?", "Equilateral", ["Isosceles", "Scalene", "Right-angled"]],
-    ["Maths", "What do the interior angles of a quadrilateral add up to?", "360°", ["180°", "270°", "540°"]],
-    ["Maths", "Which is the next prime number after 7?", "11", ["8", "9", "13"]],
+    ["Maths", ["How many degrees are there in a full circle?", "पूर्ण वर्तुळात किती अंश असतात?"], "360", ["180", "270", "400"]],
+    ["Maths", ["What is 12 × 12?", "12 × 12 किती होतात?"], "144", ["124", "132", "156"]],
+    ["Maths", ["What is 7 × 8?", "7 × 8 किती होतात?"], "56", ["48", "54", "63"]],
+    ["Maths", ["What is 30% of 90?", "90 चा 30% किती आहे?"], "27", ["18", "24", "33"]],
+    ["Maths", ["How many sides does a pentagon have?", "पंचकोनाला किती बाजू असतात?"], "5", ["4", "6", "7"]],
+    ["Maths", ["How many sides does an octagon have?", "अष्टकोनाला किती बाजू असतात?"], "8", ["6", "7", "10"]],
+    ["Maths", ["What is the formula for the area of a circle?", "वर्तुळाच्या क्षेत्रफळाचे सूत्र कोणते आहे?"], "πr²", ["2πr", "πd", "πr²h"]],
+    ["Maths", ["Which number is neither prime nor composite?", "कोणती संख्या मूळ संख्या नाही आणि संयुक्त संख्याही नाही?"], "1", ["0", "2", "9"]],
+    ["Maths", ["What is the value of 5 factorial (5!)?", "5 चा फॅक्टोरियल (5!) किती आहे?"], "120", ["25", "60", "720"]],
+    ["Maths", ["A triangle with all three sides equal is called what?", "तिन्ही बाजू समान असलेल्या त्रिकोणाला काय म्हणतात?"], ["Equilateral", "समभुज"], [["Isosceles", "समद्विभुज"], ["Scalene", "विषमभुज"], ["Right-angled", "काटकोन"]]],
+    ["Maths", ["What do the interior angles of a quadrilateral add up to?", "चौकोनाच्या अंतर्गत कोनांची बेरीज किती असते?"], "360°", ["180°", "270°", "540°"]],
+    ["Maths", ["Which is the next prime number after 7?", "7 नंतरची पुढील मूळ संख्या कोणती आहे?"], "11", ["8", "9", "13"]],
 
     /* Computing */
-    ["Computing", "What does WWW stand for?", "World Wide Web", ["World Web Work", "Wide World Web", "Web Wide World"]],
-    ["Computing", "What does RAM stand for?", "Random Access Memory", ["Rapid Access Module", "Read And Modify", "Runtime Allocated Memory"]],
-    ["Computing", "What does URL stand for?", "Uniform Resource Locator", ["Universal Reference Link", "Unified Routing Label", "User Resource Locator"]],
-    ["Computing", "What does GPU stand for?", "Graphics Processing Unit", ["General Purpose Unit", "Graphic Pixel Utility", "Global Processing Unit"]],
-    ["Computing", "What does PDF stand for?", "Portable Document Format", ["Printable Document File", "Public Data Format", "Paged Display File"]],
-    ["Computing", "Who is credited with inventing the World Wide Web?", "Tim Berners-Lee", ["Bill Gates", "Vint Cerf", "Linus Torvalds"]],
-    ["Computing", "Which company developed the Windows operating system?", "Microsoft", ["Apple", "IBM", "Google"]],
-    ["Computing", "Who co-founded Apple alongside Steve Wozniak?", "Steve Jobs", ["Bill Gates", "Michael Dell", "Jeff Bezos"]],
-    ["Computing", "Which of these is an input device?", "A keyboard", ["A monitor", "A printer", "A speaker"]],
-    ["Computing", "One kilobyte is conventionally how many bytes?", "1,024", ["100", "1,000", "2,048"]],
-    ["Computing", "Which of these is an operating system?", "Linux", ["Excel", "Photoshop", "Chrome"]],
+    ["Computing", ["What does WWW stand for?", "WWW चे पूर्ण रूप काय आहे?"], "World Wide Web", ["World Web Work", "Wide World Web", "Web Wide World"]],
+    ["Computing", ["What does RAM stand for?", "RAM चे पूर्ण रूप काय आहे?"], "Random Access Memory", ["Rapid Access Module", "Read And Modify", "Runtime Allocated Memory"]],
+    ["Computing", ["What does URL stand for?", "URL चे पूर्ण रूप काय आहे?"], "Uniform Resource Locator", ["Universal Reference Link", "Unified Routing Label", "User Resource Locator"]],
+    ["Computing", ["What does GPU stand for?", "GPU चे पूर्ण रूप काय आहे?"], "Graphics Processing Unit", ["General Purpose Unit", "Graphic Pixel Utility", "Global Processing Unit"]],
+    ["Computing", ["What does PDF stand for?", "PDF चे पूर्ण रूप काय आहे?"], "Portable Document Format", ["Printable Document File", "Public Data Format", "Paged Display File"]],
+    ["Computing", ["Who is credited with inventing the World Wide Web?", "वर्ल्ड वाइड वेबचा शोध कोणी लावला असे मानले जाते?"], ["Tim Berners-Lee", "टिम बर्नर्स-ली"], [["Bill Gates", "बिल गेट्स"], ["Vint Cerf", "व्हिंट सर्फ"], ["Linus Torvalds", "लायनस टोरवाल्ड्स"]]],
+    ["Computing", ["Which company developed the Windows operating system?", "विंडोज ही संगणक प्रणाली कोणत्या कंपनीने विकसित केली?"], ["Microsoft", "मायक्रोसॉफ्ट"], [["Apple", "ॲपल"], ["IBM", "आयबीएम"], ["Google", "गुगल"]]],
+    ["Computing", ["Who co-founded Apple alongside Steve Wozniak?", "स्टीव्ह वोझ्नियाक यांच्यासोबत ॲपलची स्थापना कोणी केली?"], ["Steve Jobs", "स्टीव्ह जॉब्ज"], [["Bill Gates", "बिल गेट्स"], ["Michael Dell", "मायकेल डेल"], ["Jeff Bezos", "जेफ बेझोस"]]],
+    ["Computing", ["Which of these is an input device?", "यापैकी कोणते आदान (इनपुट) साधन आहे?"], ["A keyboard", "कीबोर्ड"], [["A monitor", "मॉनिटर"], ["A printer", "प्रिंटर"], ["A speaker", "स्पीकर"]]],
+    ["Computing", ["One kilobyte is conventionally how many bytes?", "एक किलोबाइट म्हणजे संकेतानुसार किती बाइट?"], "1,024", ["100", "1,000", "2,048"]],
+    ["Computing", ["Which of these is an operating system?", "यापैकी कोणती संगणक प्रणाली (ऑपरेटिंग सिस्टीम) आहे?"], "Linux", ["Excel", "Photoshop", "Chrome"]],
 
     /* Literature */
-    ["Literature", "Who wrote the novel <em>1984</em>?", "George Orwell", ["Aldous Huxley", "Ray Bradbury", "H. G. Wells"]],
-    ["Literature", "Who wrote the <em>Harry Potter</em> series?", "J. K. Rowling", ["Philip Pullman", "Roald Dahl", "C. S. Lewis"]],
-    ["Literature", "Who created the detective Sherlock Holmes?", "Arthur Conan Doyle", ["Agatha Christie", "Wilkie Collins", "Edgar Allan Poe"]],
-    ["Literature", "Who wrote <em>Oliver Twist</em>?", "Charles Dickens", ["Thomas Hardy", "George Eliot", "Anthony Trollope"]],
-    ["Literature", "Who wrote <em>The Jungle Book</em>?", "Rudyard Kipling", ["Robert Louis Stevenson", "Jack London", "E. M. Forster"]],
-    ["Literature", "Who wrote <em>Gitanjali</em> and won the Nobel Prize in Literature in 1913?", "Rabindranath Tagore", ["Sarojini Naidu", "R. K. Narayan", "Munshi Premchand"]],
-    ["Literature", "Who wrote <em>War and Peace</em>?", "Leo Tolstoy", ["Fyodor Dostoevsky", "Anton Chekhov", "Ivan Turgenev"]],
-    ["Literature", "Who wrote <em>The Old Man and the Sea</em>?", "Ernest Hemingway", ["John Steinbeck", "F. Scott Fitzgerald", "William Faulkner"]],
-    ["Literature", "Who wrote <em>Things Fall Apart</em>?", "Chinua Achebe", ["Wole Soyinka", "Ngũgĩ wa Thiong'o", "Ben Okri"]],
-    ["Literature", "Which epic poem tells of the wrath of Achilles?", "The Iliad", ["The Odyssey", "The Aeneid", "The Divine Comedy"]],
-    ["Literature", "Who wrote <em>Don Quixote</em>?", "Miguel de Cervantes", ["Lope de Vega", "Dante Alighieri", "Voltaire"]],
-    ["Literature", "Who wrote <em>To Kill a Mockingbird</em>?", "Harper Lee", ["Toni Morrison", "Flannery O'Connor", "Carson McCullers"]],
-    ["Literature", "Who wrote <em>On the Origin of Species</em>?", "Charles Darwin", ["Gregor Mendel", "Alfred Russel Wallace", "Jean-Baptiste Lamarck"]],
-    ["Literature", "Who wrote <em>Alice's Adventures in Wonderland</em>?", "Lewis Carroll", ["J. M. Barrie", "Kenneth Grahame", "Edward Lear"]],
+    ["Literature", ["Who wrote the novel <em>1984</em>?", "<em>1984</em> ही कादंबरी कोणी लिहिली?"], ["George Orwell", "जॉर्ज ऑर्वेल"], [["Aldous Huxley", "ऑल्डस हक्सली"], ["Ray Bradbury", "रे ब्रॅडबरी"], ["H. G. Wells", "एच. जी. वेल्स"]]],
+    ["Literature", ["Who wrote the <em>Harry Potter</em> series?", "<em>Harry Potter</em> ही मालिका कोणी लिहिली?"], ["J. K. Rowling", "जे. के. रोलिंग"], [["Philip Pullman", "फिलिप पुलमन"], ["Roald Dahl", "रोआल्ड डाल"], ["C. S. Lewis", "सी. एस. लुईस"]]],
+    ["Literature", ["Who created the detective Sherlock Holmes?", "शेरलॉक होम्स हे गुप्तहेर पात्र कोणी निर्माण केले?"], ["Arthur Conan Doyle", "आर्थर कॉनन डॉयल"], [["Agatha Christie", "अगाथा ख्रिस्ती"], ["Wilkie Collins", "विल्की कॉलिन्स"], ["Edgar Allan Poe", "एडगर ॲलन पो"]]],
+    ["Literature", ["Who wrote <em>Oliver Twist</em>?", "<em>Oliver Twist</em> ही कादंबरी कोणी लिहिली?"], ["Charles Dickens", "चार्ल्स डिकन्स"], [["Thomas Hardy", "थॉमस हार्डी"], ["George Eliot", "जॉर्ज एलियट"], ["Anthony Trollope", "अँथनी ट्रॉलोप"]]],
+    ["Literature", ["Who wrote <em>The Jungle Book</em>?", "<em>The Jungle Book</em> हे पुस्तक कोणी लिहिले?"], ["Rudyard Kipling", "रुडयार्ड किपलिंग"], [["Robert Louis Stevenson", "रॉबर्ट लुई स्टीव्हन्सन"], ["Jack London", "जॅक लंडन"], ["E. M. Forster", "ई. एम. फॉर्स्टर"]]],
+    ["Literature", ["Who wrote <em>Gitanjali</em> and won the Nobel Prize in Literature in 1913?", "<em>गीतांजली</em> लिहून 1913 चे साहित्यातील नोबेल पारितोषिक कोणी मिळवले?"], ["Rabindranath Tagore", "रवींद्रनाथ टागोर"], [["Sarojini Naidu", "सरोजिनी नायडू"], ["R. K. Narayan", "आर. के. नारायण"], ["Munshi Premchand", "मुन्शी प्रेमचंद"]]],
+    ["Literature", ["Who wrote <em>War and Peace</em>?", "<em>War and Peace</em> ही कादंबरी कोणी लिहिली?"], ["Leo Tolstoy", "लिओ टॉलस्टॉय"], [["Fyodor Dostoevsky", "फ्योदोर दोस्तोयेव्स्की"], ["Anton Chekhov", "अँटोन चेकॉव्ह"], ["Ivan Turgenev", "इव्हान तुर्गेनेव्ह"]]],
+    ["Literature", ["Who wrote <em>The Old Man and the Sea</em>?", "<em>The Old Man and the Sea</em> ही कादंबरी कोणी लिहिली?"], ["Ernest Hemingway", "अर्नेस्ट हेमिंग्वे"], [["John Steinbeck", "जॉन स्टाइनबेक"], ["F. Scott Fitzgerald", "एफ. स्कॉट फिट्झजेराल्ड"], ["William Faulkner", "विल्यम फॉकनर"]]],
+    ["Literature", ["Who wrote <em>Things Fall Apart</em>?", "<em>Things Fall Apart</em> ही कादंबरी कोणी लिहिली?"], ["Chinua Achebe", "चिनुआ अचेबे"], [["Wole Soyinka", "वोले शोयिंका"], ["Ngũgĩ wa Thiong'o", "न्गुगी वा थिओंगो"], ["Ben Okri", "बेन ओक्री"]]],
+    ["Literature", ["Which epic poem tells of the wrath of Achilles?", "अकिलीसच्या क्रोधाची कथा कोणत्या महाकाव्यात आहे?"], ["The Iliad", "इलियड"], [["The Odyssey", "ओडिसी"], ["The Aeneid", "एनीड"], ["The Divine Comedy", "डिव्हाइन कॉमेडी"]]],
+    ["Literature", ["Who wrote <em>Don Quixote</em>?", "<em>Don Quixote</em> ही कादंबरी कोणी लिहिली?"], ["Miguel de Cervantes", "मिगेल दे सर्व्हांतेस"], [["Lope de Vega", "लोपे दे व्हेगा"], ["Dante Alighieri", "दान्ते अलिघिएरी"], ["Voltaire", "व्हॉल्तेर"]]],
+    ["Literature", ["Who wrote <em>To Kill a Mockingbird</em>?", "<em>To Kill a Mockingbird</em> ही कादंबरी कोणी लिहिली?"], ["Harper Lee", "हार्पर ली"], [["Toni Morrison", "टोनी मॉरिसन"], ["Flannery O'Connor", "फ्लॅनरी ओ'कॉनर"], ["Carson McCullers", "कार्सन मॅककलर्स"]]],
+    ["Literature", ["Who wrote <em>On the Origin of Species</em>?", "<em>On the Origin of Species</em> हा ग्रंथ कोणी लिहिला?"], ["Charles Darwin", "चार्ल्स डार्विन"], [["Gregor Mendel", "ग्रेगर मेंडेल"], ["Alfred Russel Wallace", "आल्फ्रेड रसेल वॉलेस"], ["Jean-Baptiste Lamarck", "जीन-बाप्तिस्त लामार्क"]]],
+    ["Literature", ["Who wrote <em>Alice's Adventures in Wonderland</em>?", "<em>Alice's Adventures in Wonderland</em> हे पुस्तक कोणी लिहिले?"], ["Lewis Carroll", "लुईस कॅरोल"], [["J. M. Barrie", "जे. एम. बॅरी"], ["Kenneth Grahame", "केनेथ ग्रॅहम"], ["Edward Lear", "एडवर्ड लिअर"]]],
 
     /* Art and music */
-    ["Art", "Who painted <em>The Starry Night</em>?", "Vincent van Gogh", ["Claude Monet", "Paul Cézanne", "Edvard Munch"]],
-    ["Art", "Who sculpted the marble statue of <em>David</em> in Florence?", "Michelangelo", ["Donatello", "Bernini", "Rodin"]],
-    ["Art", "Who painted the ceiling of the Sistine Chapel?", "Michelangelo", ["Leonardo da Vinci", "Raphael", "Titian"]],
-    ["Art", "Which art movement is Pablo Picasso most associated with?", "Cubism", ["Impressionism", "Surrealism", "Baroque"]],
-    ["Music", "How many keys does a standard full-size piano have?", "88", ["66", "76", "96"]],
-    ["Music", "How many strings does a standard acoustic guitar have?", "6", ["4", "5", "7"]],
-    ["Music", "Who composed <em>The Four Seasons</em>?", "Antonio Vivaldi", ["Johann Sebastian Bach", "George Handel", "Joseph Haydn"]],
-    ["Music", "Which composer wrote nine symphonies while progressively losing his hearing?", "Ludwig van Beethoven", ["Wolfgang Amadeus Mozart", "Franz Schubert", "Johannes Brahms"]],
-    ["Music", "To which instrument family does the violin belong?", "Strings", ["Woodwind", "Brass", "Percussion"]],
+    ["Art", ["Who painted <em>The Starry Night</em>?", "<em>The Starry Night</em> हे चित्र कोणी काढले?"], ["Vincent van Gogh", "व्हिन्सेंट व्हॅन गॉग"], [["Claude Monet", "क्लोद मोने"], ["Paul Cézanne", "पॉल सेझान"], ["Edvard Munch", "एडवर्ड मुंक"]]],
+    ["Art", ["Who sculpted the marble statue of <em>David</em> in Florence?", "फ्लॉरेन्समधील <em>David</em> हा संगमरवरी पुतळा कोणी घडवला?"], ["Michelangelo", "मायकेलअँजेलो"], [["Donatello", "दोनातेल्लो"], ["Bernini", "बर्निनी"], ["Rodin", "रोदँ"]]],
+    ["Art", ["Who painted the ceiling of the Sistine Chapel?", "सिस्टिन चॅपेलचे छत कोणी रंगवले?"], ["Michelangelo", "मायकेलअँजेलो"], [["Leonardo da Vinci", "लिओनार्दो दा विंची"], ["Raphael", "राफेल"], ["Titian", "तिशियन"]]],
+    ["Art", ["Which art movement is Pablo Picasso most associated with?", "पाब्लो पिकासो प्रामुख्याने कोणत्या कलाचळवळीशी जोडला जातो?"], ["Cubism", "घनवाद"], [["Impressionism", "प्रभाववाद"], ["Surrealism", "अतिवास्तववाद"], ["Baroque", "बरोक"]]],
+    ["Music", ["How many keys does a standard full-size piano have?", "प्रमाणित पूर्ण आकाराच्या पियानोला किती पट्ट्या असतात?"], "88", ["66", "76", "96"]],
+    ["Music", ["How many strings does a standard acoustic guitar have?", "प्रमाणित ॲकॉस्टिक गिटारला किती तारा असतात?"], "6", ["4", "5", "7"]],
+    ["Music", ["Who composed <em>The Four Seasons</em>?", "<em>The Four Seasons</em> ही रचना कोणी केली?"], ["Antonio Vivaldi", "आंतोनियो व्हिवाल्दी"], [["Johann Sebastian Bach", "योहान सेबास्टियन बाख"], ["George Handel", "जॉर्ज हँडेल"], ["Joseph Haydn", "योझेफ हायडन"]]],
+    ["Music", ["Which composer wrote nine symphonies while progressively losing his hearing?", "हळूहळू श्रवणशक्ती गमावत असतानाही नऊ सिम्फनी रचणारा संगीतकार कोण?"], ["Ludwig van Beethoven", "लुडविग व्हान बीथोव्हन"], [["Wolfgang Amadeus Mozart", "व्होल्फगांग आमाडेउस मोझार्ट"], ["Franz Schubert", "फ्रान्झ शुबर्ट"], ["Johannes Brahms", "योहानेस ब्राह्म्स"]]],
+    ["Music", ["To which instrument family does the violin belong?", "व्हायोलिन कोणत्या वाद्यगटात मोडते?"], ["Strings", "तंतुवाद्य"], [["Woodwind", "काष्ठ सुषिरवाद्य"], ["Brass", "पितळी सुषिरवाद्य"], ["Percussion", "तालवाद्य"]]],
 
     /* Sport */
-    ["Sport", "How many players from each side are on the pitch in a football match?", "11", ["9", "10", "12"]],
-    ["Sport", "How often are the Summer Olympic Games held?", "Every four years", ["Every two years", "Every three years", "Every five years"]],
-    ["Sport", "In which sport is a score of zero called 'love'?", "Tennis", ["Cricket", "Golf", "Squash"]],
-    ["Sport", "How many players from each team are on court in basketball?", "5", ["4", "6", "7"]],
-    ["Sport", "Which country hosted the first modern Olympic Games in 1896?", "Greece", ["France", "Italy", "Britain"]],
-    ["Sport", "How many balls are bowled in a standard over in cricket?", "6", ["4", "5", "8"]],
-    ["Sport", "Which sport is played with a shuttlecock?", "Badminton", ["Table tennis", "Squash", "Volleyball"]],
-    ["Sport", "How many rings appear on the Olympic flag?", "5", ["4", "6", "7"]],
-    ["Sport", "What is the highest possible break in a standard frame of snooker?", "147", ["100", "120", "155"]],
+    ["Sport", ["How many players from each side are on the pitch in a football match?", "फुटबॉल सामन्यात प्रत्येक संघाचे किती खेळाडू मैदानात असतात?"], "11", ["9", "10", "12"]],
+    ["Sport", ["How often are the Summer Olympic Games held?", "उन्हाळी ऑलिंपिक खेळ किती वर्षांनी भरवले जातात?"], ["Every four years", "दर चार वर्षांनी"], [["Every two years", "दर दोन वर्षांनी"], ["Every three years", "दर तीन वर्षांनी"], ["Every five years", "दर पाच वर्षांनी"]]],
+    ["Sport", ["In which sport is a score of zero called 'love'?", "कोणत्या खेळात शून्य गुणाला 'लव्ह' म्हणतात?"], ["Tennis", "टेनिस"], [["Cricket", "क्रिकेट"], ["Golf", "गोल्फ"], ["Squash", "स्क्वॅश"]]],
+    ["Sport", ["How many players from each team are on court in basketball?", "बास्केटबॉलमध्ये प्रत्येक संघाचे किती खेळाडू कोर्टवर असतात?"], "5", ["4", "6", "7"]],
+    ["Sport", ["Which country hosted the first modern Olympic Games in 1896?", "1896 मधील पहिले आधुनिक ऑलिंपिक खेळ कोणत्या देशात झाले?"], ["Greece", "ग्रीस"], [["France", "फ्रान्स"], ["Italy", "इटली"], ["Britain", "ब्रिटन"]]],
+    ["Sport", ["How many balls are bowled in a standard over in cricket?", "क्रिकेटमध्ये एका प्रमाणित षटकात किती चेंडू टाकले जातात?"], "6", ["4", "5", "8"]],
+    ["Sport", ["Which sport is played with a shuttlecock?", "शटलकॉकने कोणता खेळ खेळला जातो?"], ["Badminton", "बॅडमिंटन"], [["Table tennis", "टेबल टेनिस"], ["Squash", "स्क्वॅश"], ["Volleyball", "व्हॉलीबॉल"]]],
+    ["Sport", ["How many rings appear on the Olympic flag?", "ऑलिंपिक ध्वजावर किती वर्तुळे असतात?"], "5", ["4", "6", "7"]],
+    ["Sport", ["What is the highest possible break in a standard frame of snooker?", "स्नूकरच्या प्रमाणित फ्रेममध्ये जास्तीत जास्त किती ब्रेक शक्य आहे?"], "147", ["100", "120", "155"]],
 
     /* Language */
-    ["Language", "How many letters are there in the English alphabet?", "26", ["24", "25", "28"]],
-    ["Language", "How many vowels are there in the English alphabet?", "5", ["4", "6", "7"]],
-    ["Language", "Which language has the most native speakers worldwide?", "Mandarin Chinese", ["English", "Spanish", "Hindi"]],
-    ["Language", "What is a word with the opposite meaning to another called?", "An antonym", ["A synonym", "A homonym", "A pseudonym"]],
-    ["Language", "What is the plural of 'child'?", "Children", ["Childs", "Childes", "Childrens"]],
+    ["Language", ["How many letters are there in the English alphabet?", "इंग्रजी वर्णमालेत किती अक्षरे आहेत?"], "26", ["24", "25", "28"]],
+    ["Language", ["How many vowels are there in the English alphabet?", "इंग्रजी वर्णमालेत किती स्वर आहेत?"], "5", ["4", "6", "7"]],
+    ["Language", ["Which language has the most native speakers worldwide?", "जगात सर्वाधिक लोकांची मातृभाषा कोणती आहे?"], ["Mandarin Chinese", "मँडरिन चिनी"], [["English", "इंग्रजी"], ["Spanish", "स्पॅनिश"], ["Hindi", "हिंदी"]]],
+    ["Language", ["What is a word with the opposite meaning to another called?", "विरुद्ध अर्थ असलेल्या शब्दाला काय म्हणतात?"], ["An antonym", "विरुद्धार्थी शब्द"], [["A synonym", "समानार्थी शब्द"], ["A homonym", "समध्वनी शब्द"], ["A pseudonym", "टोपणनाव"]]],
+    ["Language", ["What is the plural of 'child'?", "'child' या शब्दाचे अनेकवचन काय आहे?"], "Children", ["Childs", "Childes", "Childrens"]],
 
     /* Mythology */
-    ["Mythology", "Who is the Greek god of the sea?", "Poseidon", ["Zeus", "Hades", "Apollo"]],
-    ["Mythology", "Who is the king of the gods in Greek mythology?", "Zeus", ["Kronos", "Hermes", "Ares"]],
-    ["Mythology", "Who is the Roman god of war?", "Mars", ["Jupiter", "Neptune", "Mercury"]],
-    ["Mythology", "Which creature of Greek myth is half man and half horse?", "A centaur", ["A minotaur", "A satyr", "A griffin"]],
-    ["Mythology", "Who is the Norse god of thunder?", "Thor", ["Odin", "Loki", "Freyr"]],
+    ["Mythology", ["Who is the Greek god of the sea?", "ग्रीक पुराणकथांतील समुद्राची देवता कोण आहे?"], ["Poseidon", "पोसायडन"], [["Zeus", "झ्यूस"], ["Hades", "हेडीस"], ["Apollo", "अपोलो"]]],
+    ["Mythology", ["Who is the king of the gods in Greek mythology?", "ग्रीक पुराणकथांत देवांचा राजा कोण आहे?"], ["Zeus", "झ्यूस"], [["Kronos", "क्रोनोस"], ["Hermes", "हर्मीस"], ["Ares", "एरेस"]]],
+    ["Mythology", ["Who is the Roman god of war?", "रोमन पुराणकथांतील युद्धाची देवता कोण आहे?"], ["Mars", "मार्स"], [["Jupiter", "ज्युपिटर"], ["Neptune", "नेपच्यून"], ["Mercury", "मर्क्युरी"]]],
+    ["Mythology", ["Which creature of Greek myth is half man and half horse?", "ग्रीक पुराणकथांतील अर्धा माणूस व अर्धा घोडा असलेला प्राणी कोणता?"], ["A centaur", "सेंटॉर"], [["A minotaur", "मिनोटॉर"], ["A satyr", "सॅटायर"], ["A griffin", "ग्रिफिन"]]],
+    ["Mythology", ["Who is the Norse god of thunder?", "नॉर्स पुराणकथांतील मेघगर्जनेची देवता कोण आहे?"], ["Thor", "थॉर"], [["Odin", "ओडिन"], ["Loki", "लोकी"], ["Freyr", "फ्रेयर"]]],
 
     /* Economics and institutions */
-    ["Economics", "What is the currency of the United Kingdom?", "The pound sterling", ["The euro", "The krone", "The franc"]],
-    ["Economics", "What is the currency of India?", "The rupee", ["The taka", "The rupiah", "The dinar"]],
-    ["Economics", "What does GDP stand for?", "Gross Domestic Product", ["General Domestic Price", "Gross Deposit Percentage", "Global Development Plan"]],
-    ["Economics", "Which currency is used by most European Union member states?", "The euro", ["The pound sterling", "The Swiss franc", "The US dollar"]],
-    ["Economics", "In which city are the headquarters of the United Nations?", "New York", ["Geneva", "Brussels", "The Hague"]]
+    ["Economics", ["What is the currency of the United Kingdom?", "युनायटेड किंग्डमचे चलन कोणते आहे?"], ["The pound sterling", "पाउंड स्टर्लिंग"], [["The euro", "युरो"], ["The krone", "क्रोन"], ["The franc", "फ्रँक"]]],
+    ["Economics", ["What is the currency of India?", "भारताचे चलन कोणते आहे?"], ["The rupee", "रुपया"], [["The taka", "टका"], ["The rupiah", "रुपिया"], ["The dinar", "दिनार"]]],
+    ["Economics", ["What does GDP stand for?", "GDP चे पूर्ण रूप काय आहे?"], "Gross Domestic Product", ["General Domestic Price", "Gross Deposit Percentage", "Global Development Plan"]],
+    ["Economics", ["Which currency is used by most European Union member states?", "युरोपियन संघातील बहुतांश सदस्य देश कोणते चलन वापरतात?"], ["The euro", "युरो"], [["The pound sterling", "पाउंड स्टर्लिंग"], ["The Swiss franc", "स्विस फ्रँक"], ["The US dollar", "अमेरिकन डॉलर"]]],
+    ["Economics", ["In which city are the headquarters of the United Nations?", "संयुक्त राष्ट्रांचे मुख्यालय कोणत्या शहरात आहे?"], ["New York", "न्यूयॉर्क"], [["Geneva", "जिनिव्हा"], ["Brussels", "ब्रुसेल्स"], ["The Hague", "हेग"]]]
   ];
 
   const LETTERS = ["A", "B", "C", "D"];
+
+  const CAT_MR = {
+    Science: "विज्ञान", Maths: "गणित", Geography: "भूगोल", Biology: "जीवशास्त्र",
+    Chemistry: "रसायनशास्त्र", Physics: "भौतिकशास्त्र", Astronomy: "खगोलशास्त्र",
+    Computing: "संगणक", History: "इतिहास", Literature: "साहित्य", Art: "कला",
+    Music: "संगीत", Sport: "क्रीडा", Language: "भाषा", Mythology: "पुराणकथा",
+    Economics: "अर्थशास्त्र", General: "सामान्य"
+  };
+
+  /* A field is either a plain string (identical in both languages —
+     numbers, chemical symbols) or an [english, marathi] pair. Live API
+     questions arrive as plain strings, so they render English-only. */
+  const pair = (v) => Array.isArray(v) ? { en: v[0], mr: v[1] || "" } : { en: v, mr: "" };
+
+  /* Stack the two languages, English above Marathi. */
+  const bi = (v) => {
+    const t = pair(v);
+    return `<span class="en">${t.en}</span>` + (t.mr ? `<span class="mr">${t.mr}</span>` : "");
+  };
+
+  const KEY_SHOW = 'Show answer key<span class="mr">उत्तरतालिका</span>';
+  const KEY_HIDE = 'Hide answer key<span class="mr">तालिका लपवा</span>';
+
 
   const el = (id) => document.getElementById(id);
   const ui = {
@@ -948,15 +1047,20 @@
     ui.quiz.classList.add("hidden");
     ui.result.classList.add("hidden");
     ui.review.classList.add("hidden");
-    el("toggle-review").textContent = "Show answer key";
+    el("toggle-review").innerHTML = KEY_SHOW;
     ui.loading.classList.remove("hidden");
-    ui.loading.textContent = "Drawing questions…";
+    ui.loading.innerHTML = 'Drawing questions…<span class="mr">प्रश्न निवडत आहे…</span>';
 
     let drawn = null;
-    try {
-      drawn = await fetchLive(PER_ROUND);
-      sourceLabel = "live";
-    } catch (err) {
+    if (USE_LIVE_API) {
+      try {
+        drawn = await fetchLive(PER_ROUND);
+        sourceLabel = "live";
+      } catch (err) {
+        drawn = null;
+      }
+    }
+    if (!drawn) {
       drawn = shuffle(BANK).slice(0, PER_ROUND);
       sourceLabel = "local";
     }
@@ -968,8 +1072,8 @@
 
     at = 0; score = 0; streak = 0; bestStreak = 0; log = [];
     ui.source.textContent = sourceLabel === "live"
-      ? "Bank: live · Open Trivia DB"
-      : `Bank: local · ${BANK.length} questions`;
+      ? "Bank: live · Open Trivia DB · English only"
+      : `Bank: local · ${BANK.length} questions · English + मराठी`;
 
     buildStrip();
     ui.loading.classList.add("hidden");
@@ -1001,8 +1105,8 @@
 
     ui.qNum.textContent = at + 1;
     ui.qOf.textContent = `/${paper.length}`;
-    ui.qTag.textContent = item.cat;
-    ui.qText.innerHTML = item.q;
+    ui.qTag.innerHTML = item.cat + (CAT_MR[item.cat] ? `<span class="mr">${CAT_MR[item.cat]}</span>` : "");
+    ui.qText.innerHTML = bi(item.q);
 
     pips().forEach((p, i) => {
       if (!p.dataset.state || p.dataset.state === "active") {
@@ -1018,16 +1122,20 @@
       b.innerHTML =
         `<span class="letter">${LETTERS[i]}</span>` +
         `<span class="bubble" aria-hidden="true"></span>` +
-        `<span class="text">${text}</span>` +
+        `<span class="text">${bi(text)}</span>` +
         `<span class="stamp" aria-hidden="true"></span>`;
       b.addEventListener("click", () => answer(i));
       ui.options.appendChild(b);
     });
 
     ui.verdict.dataset.tone = "";
-    ui.verdict.innerHTML = 'Pick an option — or press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd>';
+    ui.verdict.innerHTML =
+      'Pick an option — or press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd>' +
+      '<span class="mr">पर्याय निवडा</span>';
     ui.next.disabled = true;
-    ui.next.textContent = at === paper.length - 1 ? "Grade my sheet" : "Next question";
+    ui.next.innerHTML = at === paper.length - 1
+      ? 'Grade my sheet<span class="mr">पेपर तपासा</span>'
+      : 'Next question<span class="mr">पुढील प्रश्न</span>';
     syncFields();
   }
 
@@ -1069,10 +1177,15 @@
     log.push({ q: item.q, picked: item.opts[picked], right: item.right, ok: right });
     pips()[at].dataset.state = right ? "right" : "wrong";
 
+    const ans = pair(item.right);
     ui.verdict.dataset.tone = right ? "right" : "wrong";
-    ui.verdict.innerHTML = right
-      ? `Correct — <strong>${item.right}</strong>.${streak >= 3 ? ` ${streak} in a row.` : ""}`
-      : `Not quite. The answer is <strong>${item.right}</strong>.`;
+    ui.verdict.innerHTML =
+      (right
+        ? `Correct — <strong>${ans.en}</strong>${streak >= 3 ? ` · ${streak} in a row` : ""}`
+        : `Not quite — the answer is <strong>${ans.en}</strong>`) +
+      `<span class="mr">${right
+        ? `बरोबर${ans.mr ? " — " + ans.mr : ""}${streak >= 3 ? ` · सलग ${streak}` : ""}`
+        : `चूक — योग्य उत्तर: ${ans.mr || ans.en}`}</span>`;
 
     ui.next.disabled = false;
     ui.next.focus({ preventScroll: true });
@@ -1101,20 +1214,32 @@
     ui.rPct.textContent = `of ${paper.length} · ${pct}% · ${elapsed}`;
 
     const grade =
-      pct === 100 ? "A clean sheet. Every bubble matched the answer key."
-      : pct >= 80 ? "Strong pass. Look over the two or three you dropped and sit another sheet."
-      : pct >= 50 ? "A working pass. The answer key below is where the marks are hiding."
-      : "Below the line this time — read the key, then run a fresh sheet on the same topics.";
-    ui.rGrade.textContent = `${grade}${bestStreak >= 3 ? ` Best run: ${bestStreak} correct in a row.` : ""}`;
+      pct === 100 ? ["A clean sheet. Every bubble matched the answer key.",
+                     "संपूर्ण बरोबर! प्रत्येक उत्तर उत्तरतालिकेशी जुळले."]
+      : pct >= 80 ? ["Strong pass. Look over the two or three you dropped and sit another sheet.",
+                     "चांगले गुण. चुकलेले दोन-तीन प्रश्न पाहा आणि पुन्हा एक पेपर सोडवा."]
+      : pct >= 50 ? ["A working pass. The answer key below is where the marks are hiding.",
+                     "समाधानकारक. खालील उत्तरतालिकेत आणखी गुण मिळवण्याची संधी आहे."]
+      : ["Below the line this time — read the key, then run a fresh sheet on the same topics.",
+         "यावेळी गुण कमी पडले — उत्तरतालिका वाचा आणि त्याच विषयांवर नवीन पेपर सोडवा."];
+    const run = bestStreak >= 3;
+    ui.rGrade.innerHTML =
+      `${grade[0]}${run ? ` Best run: ${bestStreak} correct in a row.` : ""}` +
+      `<span class="mr">${grade[1]}${run ? ` सर्वोत्तम सलग: ${bestStreak}.` : ""}</span>`;
+
+    const both = (v) => {
+      const t = pair(v);
+      return t.en + (t.mr ? `<span class="mr">${t.mr}</span>` : "");
+    };
 
     ui.review.innerHTML = log.map((r, i) => `
       <div class="row">
         <div class="n">${String(i + 1).padStart(2, "0")}</div>
-        <div class="q">${r.q}</div>
+        <div class="q">${bi(r.q)}</div>
         <div class="a">
           ${r.ok
-            ? `<em>You answered</em> <span class="yes">${r.picked}</span>`
-            : `<em>You answered</em> <span class="no">${r.picked}</span><br><em>Answer key</em> <span class="yes">${r.right}</span>`}
+            ? `<em>You answered</em> <span class="yes">${both(r.picked)}</span>`
+            : `<em>You answered</em> <span class="no">${both(r.picked)}</span><br><em>Answer key</em> <span class="yes">${both(r.right)}</span>`}
         </div>
       </div>`).join("");
   }
@@ -1125,7 +1250,7 @@
 
   el("toggle-review").addEventListener("click", (e) => {
     const hidden = ui.review.classList.toggle("hidden");
-    e.currentTarget.textContent = hidden ? "Show answer key" : "Hide answer key";
+    e.currentTarget.innerHTML = hidden ? KEY_SHOW : KEY_HIDE;
   });
 
   document.addEventListener("keydown", (e) => {
