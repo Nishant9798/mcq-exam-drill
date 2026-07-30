@@ -27,6 +27,7 @@ python3 -m http.server 8000
 - **10 questions per sheet**, drawn at random, with the four options shuffled every time — so a question's correct answer moves position between attempts.
 - **No repeats until the bank runs out.** The bank is shuffled once and drawn down across sheets, so every one of the 887 questions comes up before any of them comes up twice.
 - **Instant marking.** Red for wrong, green for right, with a ✓/✕ stamp. The answer key row is revealed as soon as you commit.
+- **An explanation on every question.** All 887 carry a one- or two-line bilingual note, headed `WHY · कारण`, that appears under the options the moment you answer and again beside that question in the answer key. Where there is a rule to teach rather than a fact to restate, the note teaches it: *Double the term and add 1 each time: 31 × 2 + 1 = 63.*
 - **Live readouts** for score, correct streak, and elapsed time.
 - **Bubble progress strip** across the top, filling red/green as you work through the sheet.
 - **Keyboard answering** — <kbd>A</kbd>–<kbd>D</kbd> or <kbd>1</kbd>–<kbd>4</kbd> to pick, <kbd>Enter</kbd> to advance.
@@ -104,20 +105,27 @@ Series, coding-decoding and letter-based questions keep Latin letters and digits
 
 ## Adding your own questions
 
-Each entry in the `BANK` array is `[subject, question, correctAnswer, [threeWrongAnswers]]`. Any of those text fields may be either a **plain string** (rendered once, for anything identical in both languages) or an **`[english, marathi]` pair** (rendered as two stacked lines):
+Each entry in the `BANK` array is `[subject, question, correctAnswer, [threeWrongAnswers], note]`. The fifth field is the explanation and is **optional** — an entry without one simply shows no panel, which is how live API questions arrive. Any of those text fields may be either a **plain string** (rendered once, for anything identical in both languages) or an **`[english, marathi]` pair** (rendered as two stacked lines):
 
 ```js
-// bilingual — question and every option differ between languages
+// bilingual — question, every option and the note differ between languages
 ["Biology",
   ["Which organ produces insulin?", "इन्शुलिन कोणता अवयव तयार करतो?"],
   ["The pancreas", "स्वादुपिंड"],
-  [["The liver", "यकृत"], ["The kidney", "मूत्रपिंड"], ["The thyroid", "थायरॉइड ग्रंथी"]]],
+  [["The liver", "यकृत"], ["The kidney", "मूत्रपिंड"], ["The thyroid", "थायरॉइड ग्रंथी"]],
+  ["Insulin is made by the beta cells in the islets of the pancreas.",
+   "स्वादुपिंडातील बेटांमधील बीटा पेशी इन्शुलिन तयार करतात."]],
 
 // question is bilingual, but the options are numbers — single strings
 ["Maths",
   ["What is 12 × 12?", "12 × 12 किती होतात?"],
-  "144", ["124", "132", "156"]],
+  "144", ["124", "132", "156"],
+  "12 × 12 = 144, the square of 12."],
 ```
+
+A note that reads identically in both languages — a bare calculation, say — is stored as one string and rendered once, exactly like the option fields.
+
+Write the note to earn its place. For reasoning, that means the **rule**, so the next question of that type becomes solvable; for recall subjects, a date, a cause or a nearby confusable that fixes the fact in place. Restating the answer in a longer sentence adds nothing.
 
 Because plain strings are still accepted everywhere, the older English-only format keeps working unchanged — that is also how live API questions render.
 
