@@ -1,0 +1,1159 @@
+<title>Practice Sheet — MCQ Exam Drill</title>
+
+<style>
+  /* ── tokens ───────────────────────────────────────────────── */
+  :root {
+    --ground: #e2e5ea;
+    --paper: #f7f8fa;
+    --paper-edge: #d3d8e0;
+    --ink: #161a22;
+    --ink-soft: #5b6472;
+    --ink-faint: #8b93a1;
+    --rule: #ccd3dd;
+    --accent: #2547a8;
+    --accent-wash: #dfe5f6;
+    --correct: #0e7a52;
+    --correct-wash: #d9eee4;
+    --wrong: #c0342b;
+    --wrong-wash: #f8dedb;
+    --shadow: 0 1px 2px rgba(22, 26, 34, .06), 0 12px 32px -12px rgba(22, 26, 34, .22);
+
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0f1319;
+      --paper: #171c24;
+      --paper-edge: #262d38;
+      --ink: #e6e9ef;
+      --ink-soft: #98a2b3;
+      --ink-faint: #6b7686;
+      --rule: #2b333f;
+      --accent: #7fa0f0;
+      --accent-wash: #1e2735;
+      --correct: #3dd68c;
+      --correct-wash: #14261f;
+      --wrong: #ff6b5e;
+      --wrong-wash: #2a1a1a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 16px 40px -16px rgba(0, 0, 0, .7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0f1319;
+    --paper: #171c24;
+    --paper-edge: #262d38;
+    --ink: #e6e9ef;
+    --ink-soft: #98a2b3;
+    --ink-faint: #6b7686;
+    --rule: #2b333f;
+    --accent: #7fa0f0;
+    --accent-wash: #1e2735;
+    --correct: #3dd68c;
+    --correct-wash: #14261f;
+    --wrong: #ff6b5e;
+    --wrong-wash: #2a1a1a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 16px 40px -16px rgba(0, 0, 0, .7);
+  }
+
+  :root[data-theme="light"] {
+    --ground: #e2e5ea;
+    --paper: #f7f8fa;
+    --paper-edge: #d3d8e0;
+    --ink: #161a22;
+    --ink-soft: #5b6472;
+    --ink-faint: #8b93a1;
+    --rule: #ccd3dd;
+    --accent: #2547a8;
+    --accent-wash: #dfe5f6;
+    --correct: #0e7a52;
+    --correct-wash: #d9eee4;
+    --wrong: #c0342b;
+    --wrong-wash: #f8dedb;
+    --shadow: 0 1px 2px rgba(22, 26, 34, .06), 0 12px 32px -12px rgba(22, 26, 34, .22);
+  }
+
+  /* ── page ─────────────────────────────────────────────────── */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 56px) clamp(12px, 4vw, 32px);
+  }
+
+  .shell { width: 100%; max-width: 720px; }
+
+  /* the sheet, with registration marks + OMR timing strip */
+  .sheet {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--paper-edge);
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+    padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 44px) clamp(22px, 4vw, 36px) clamp(30px, 5vw, 62px);
+  }
+
+  /* timing marks down the left edge, like a real scannable form */
+  .sheet::before {
+    content: "";
+    position: absolute;
+    top: 34px;
+    bottom: 34px;
+    left: 12px;
+    width: 7px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--ink) 0 6px,
+      transparent 6px 16px
+    );
+    opacity: .3;
+  }
+
+  .marks { position: absolute; inset: 9px; pointer-events: none; }
+  .marks i {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border: 1.5px solid var(--ink);
+    opacity: .35;
+  }
+  .marks i:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+  .marks i:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+  .marks i:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+  .marks i:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+  /* ── header ───────────────────────────────────────────────── */
+  .masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px 20px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(24px, 5vw, 33px);
+    line-height: 1.05;
+    letter-spacing: -.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  /* boxed form fields for the live readouts */
+  .fields { display: flex; gap: 8px; }
+
+  .field {
+    border: 1px solid var(--rule);
+    background: color-mix(in srgb, var(--paper) 70%, var(--ground));
+    padding: 5px 10px 6px;
+    min-width: 70px;
+  }
+  .field span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .field strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.25;
+  }
+
+  /* ── progress bubbles ─────────────────────────────────────── */
+  .strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    padding: 15px 0 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .strip .label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-right: 4px;
+  }
+  .pip {
+    width: 19px; height: 19px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    display: grid;
+    place-items: center;
+    transition: transform .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease;
+  }
+  .pip[data-state="active"] {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-wash);
+  }
+  .pip[data-state="right"] { background: var(--correct); border-color: var(--correct); color: var(--paper); }
+  .pip[data-state="wrong"] { background: var(--wrong); border-color: var(--wrong); color: var(--paper); }
+
+  /* ── question ─────────────────────────────────────────────── */
+  .question { display: flex; gap: 16px; padding: 26px 0 22px; }
+
+  .qnum {
+    flex: none;
+    border: 1.5px solid var(--ink);
+    padding: 2px 9px 4px;
+    text-align: center;
+    align-self: flex-start;
+  }
+  .qnum b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 21px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+  }
+  .qnum span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: .1em;
+    color: var(--ink-faint);
+  }
+
+  .qbody { min-width: 0; }
+  .qtag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  .qtext {
+    font-family: var(--serif);
+    font-size: clamp(19px, 3.4vw, 23px);
+    line-height: 1.38;
+    margin: 0;
+    max-width: 34em;
+    text-wrap: pretty;
+  }
+
+  /* ── options ──────────────────────────────────────────────── */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    background: color-mix(in srgb, var(--paper) 82%, var(--ground));
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    padding: 13px 15px;
+    cursor: pointer;
+    transition: border-color .16s ease, background-color .16s ease, transform .16s ease;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); transform: translateX(3px); }
+  .opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .opt:disabled { cursor: default; }
+
+  .letter {
+    flex: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--ink-faint);
+    width: 13px;
+  }
+
+  /* the bubble */
+  .bubble {
+    flex: none;
+    position: relative;
+    width: 21px; height: 21px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink-faint);
+    transition: border-color .16s ease;
+  }
+  .bubble::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    transform: scale(0);
+    transition: transform .2s cubic-bezier(.34, 1.56, .64, 1);
+  }
+  .opt:hover:not(:disabled) .bubble { border-color: var(--accent); }
+
+  .opt .text { font-size: 15.5px; line-height: 1.4; }
+
+  /* graded states */
+  .opt[data-mark="right"] {
+    border-color: var(--correct);
+    background: var(--correct-wash);
+    color: var(--correct);
+  }
+  .opt[data-mark="right"] .bubble { border-color: var(--correct); }
+  .opt[data-mark="right"] .bubble::after { transform: scale(1); }
+  .opt[data-mark="right"] .letter { color: var(--correct); }
+
+  .opt[data-mark="wrong"] {
+    border-color: var(--wrong);
+    background: var(--wrong-wash);
+    color: var(--wrong);
+    animation: strike .34s ease;
+  }
+  .opt[data-mark="wrong"] .bubble { border-color: var(--wrong); }
+  .opt[data-mark="wrong"] .bubble::after { transform: scale(1); }
+  .opt[data-mark="wrong"] .letter { color: var(--wrong); }
+
+  .opt[data-mark="key"] {
+    border-color: var(--correct);
+    border-style: dashed;
+    color: var(--correct);
+  }
+  .opt[data-mark="key"] .bubble { border-color: var(--correct); }
+  .opt[data-mark="muted"] { opacity: .45; }
+
+  /* the marker's tick / cross, stamped at the row end */
+  .stamp {
+    margin-left: auto;
+    flex: none;
+    font-family: var(--mono);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0;
+  }
+  .opt[data-mark="right"] .stamp,
+  .opt[data-mark="wrong"] .stamp { animation: stamp .26s .06s cubic-bezier(.34, 1.56, .64, 1) forwards; }
+
+  @keyframes strike {
+    0%, 100% { transform: translateX(0); }
+    22% { transform: translateX(-7px); }
+    55% { transform: translateX(6px); }
+    80% { transform: translateX(-3px); }
+  }
+  @keyframes stamp {
+    from { opacity: 0; transform: scale(.4) rotate(-14deg); }
+    to { opacity: 1; transform: scale(1) rotate(-7deg); }
+  }
+
+  /* ── footer / verdict ─────────────────────────────────────── */
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 18px;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .verdict {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .02em;
+    color: var(--ink-soft);
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    max-width: 42ch;
+    line-height: 1.45;
+  }
+  .verdict[data-tone="right"] { color: var(--correct); }
+  .verdict[data-tone="wrong"] { color: var(--wrong); }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+    padding: 11px 20px;
+    cursor: pointer;
+    transition: opacity .16s ease, transform .16s ease;
+  }
+  .btn:hover:not(:disabled) { transform: translateY(-1px); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn:disabled { opacity: .28; cursor: default; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+
+  kbd {
+    font-family: var(--mono);
+    font-size: 10px;
+    border: 1px solid var(--rule);
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    padding: 1px 4px;
+    color: var(--ink-soft);
+  }
+
+  /* ── results ──────────────────────────────────────────────── */
+  .result { padding: 30px 0 4px; }
+  .score {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .score b { font-size: clamp(52px, 12vw, 76px); font-weight: 700; line-height: .9; letter-spacing: -.03em; }
+  .score i { font-style: normal; font-size: 19px; color: var(--ink-faint); }
+  .grade {
+    font-family: var(--serif);
+    font-size: clamp(19px, 4vw, 24px);
+    margin: 18px 0 26px;
+    max-width: 30em;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .review { border-top: 1px solid var(--rule); }
+  .row {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 3px 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .row .n {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    padding-top: 3px;
+  }
+  .row .q { font-family: var(--serif); font-size: 16px; line-height: 1.4; }
+  .row .a {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    line-height: 1.65;
+    grid-column: 2;
+  }
+  .row .a em { font-style: normal; color: var(--ink-faint); }
+  .row .a .yes { color: var(--correct); }
+  .row .a .no { color: var(--wrong); text-decoration: line-through; text-decoration-thickness: 1px; }
+
+  /* ── loading ──────────────────────────────────────────────── */
+  .loading {
+    padding: 60px 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ── colophon ─────────────────────────────────────────────── */
+  .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-top: 14px;
+    padding: 0 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .06em;
+    color: var(--ink-faint);
+  }
+  .colophon button {
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .colophon button:hover { color: var(--ink); }
+
+  .hidden { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .masthead { align-items: flex-start; }
+    .fields { width: 100%; }
+    .field { flex: 1; min-width: 0; }
+    .question { gap: 12px; }
+  }
+</style>
+
+<div class="shell">
+  <main class="sheet">
+    <div class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">Practice answer sheet · No. 001</p>
+        <h1>MCQ Exam Drill</h1>
+      </div>
+      <div class="fields">
+        <div class="field">
+          <span>Score</span>
+          <strong id="f-score">0/0</strong>
+        </div>
+        <div class="field">
+          <span>Streak</span>
+          <strong id="f-streak">0</strong>
+        </div>
+        <div class="field">
+          <span>Time</span>
+          <strong id="f-time">0:00</strong>
+        </div>
+      </div>
+    </header>
+
+    <div class="strip" id="strip" aria-hidden="true">
+      <span class="label">Responses</span>
+    </div>
+
+    <div class="loading" id="loading">Loading question bank…</div>
+
+    <section id="quiz" class="hidden">
+      <div class="question">
+        <div class="qnum">
+          <b id="q-num">1</b>
+          <span id="q-of">/10</span>
+        </div>
+        <div class="qbody">
+          <p class="qtag" id="q-tag">General knowledge</p>
+          <p class="qtext" id="q-text"></p>
+        </div>
+      </div>
+
+      <div class="options" id="options" role="group" aria-label="Answer options"></div>
+
+      <div class="footer">
+        <p class="verdict" id="verdict" role="status" aria-live="polite">
+          Pick an option — or press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd>
+        </p>
+        <button class="btn" id="next" disabled>Next question</button>
+      </div>
+    </section>
+
+    <section id="result" class="hidden">
+      <div class="result">
+        <p class="eyebrow">Sheet graded</p>
+        <div class="score"><b id="r-score">0</b><i id="r-pct">of 10 · 0%</i></div>
+        <p class="grade" id="r-grade"></p>
+        <div class="footer" style="margin-top:0;border-top:0;padding-top:0">
+          <button class="btn" id="again">Start a new sheet</button>
+          <button class="btn ghost" id="toggle-review">Show answer key</button>
+        </div>
+      </div>
+      <div class="review hidden" id="review"></div>
+    </section>
+  </main>
+
+  <div class="colophon">
+    <span id="source">Bank: local · 236 questions</span>
+    <button id="theme">Switch theme</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const PER_ROUND = 10;
+
+  /* Fallback bank — used whenever the live API is unreachable
+     (the published sandbox blocks outbound requests). */
+  const BANK = [
+    ["Science", "What is the chemical symbol for potassium?", "K", ["Na", "P", "Pt"]],
+    ["Science", "Which planet in our solar system is the largest?", "Jupiter", ["Saturn", "Neptune", "Earth"]],
+    ["Maths", "What is the square root of 169?", "13", ["11", "17", "23"]],
+    ["Biology", "Which organelle is known as the powerhouse of the cell?", "Mitochondria", ["Ribosome", "Nucleus", "Golgi apparatus"]],
+    ["Geography", "What is the capital city of Australia?", "Canberra", ["Sydney", "Melbourne", "Perth"]],
+    ["Literature", "Who wrote the novel <em>Pride and Prejudice</em>?", "Jane Austen", ["Charlotte Brontë", "Emily Dickinson", "Mary Shelley"]],
+    ["Physics", "The speed of light in a vacuum is closest to which value?", "3.0 × 10⁸ m/s", ["3.0 × 10⁶ m/s", "1.5 × 10⁸ m/s", "9.8 × 10⁸ m/s"]],
+    ["Geography", "What is the longest river in Africa?", "The Nile", ["The Congo", "The Niger", "The Zambezi"]],
+    ["Maths", "What do the interior angles of a triangle add up to?", "180°", ["90°", "270°", "360°"]],
+    ["Biology", "Which gas do plants absorb from the air for photosynthesis?", "Carbon dioxide", ["Oxygen", "Nitrogen", "Hydrogen"]],
+    ["Biology", "How many bones are there in the adult human body?", "206", ["186", "224", "252"]],
+    ["Physics", "Who proposed the general theory of relativity?", "Albert Einstein", ["Isaac Newton", "Niels Bohr", "Galileo Galilei"]],
+    ["Science", "Which is the hardest naturally occurring mineral?", "Diamond", ["Quartz", "Topaz", "Corundum"]],
+    ["Computing", "In computing, what does CPU stand for?", "Central Processing Unit", ["Computer Power Unit", "Central Program Utility", "Core Processing Interface"]],
+    ["Computing", "What is the decimal number 10 in binary?", "1010", ["1100", "1001", "1110"]],
+    ["Geography", "Which is the largest ocean on Earth?", "The Pacific", ["The Atlantic", "The Indian", "The Arctic"]],
+    ["Science", "What is the freezing point of water in Fahrenheit?", "32 °F", ["0 °F", "48 °F", "100 °F"]],
+    ["Science", "What is the scientific study of earthquakes called?", "Seismology", ["Geology", "Volcanology", "Meteorology"]],
+    ["Chemistry", "Which element is first on the periodic table?", "Hydrogen", ["Helium", "Lithium", "Carbon"]],
+    ["Maths", "What is the value of π to two decimal places?", "3.14", ["3.41", "3.12", "3.16"]],
+    ["General", "What is the currency of Japan?", "The yen", ["The won", "The yuan", "The ringgit"]],
+    ["Art", "Who painted the <em>Mona Lisa</em>?", "Leonardo da Vinci", ["Michelangelo", "Raphael", "Sandro Botticelli"]],
+    ["Maths", "What is 15% of 200?", "30", ["15", "45", "20"]],
+    ["Biology", "What is the largest mammal alive today?", "The blue whale", ["The African elephant", "The giraffe", "The sperm whale"]],
+    ["Astronomy", "Which planet is known as the Red Planet?", "Mars", ["Venus", "Mercury", "Jupiter"]],
+    ["Computing", "What does HTML stand for?", "HyperText Markup Language", ["HighText Machine Language", "Hyperlink Text Marking Logic", "Home Tool Markup Language"]],
+    ["Geography", "How many continents are there on Earth?", "7", ["5", "6", "8"]],
+    ["Chemistry", "Which acid gives lemons their sour taste?", "Citric acid", ["Acetic acid", "Lactic acid", "Sulphuric acid"]],
+    ["Science", "Who discovered penicillin?", "Alexander Fleming", ["Louis Pasteur", "Joseph Lister", "Edward Jenner"]],
+    ["Maths", "What is the smallest prime number?", "2", ["0", "1", "3"]],
+    ["Chemistry", "What is the chemical formula for table salt?", "NaCl", ["KCl", "NaOH", "H₂SO₄"]],
+    ["Biology", "Which organ filters waste from the blood to make urine?", "The kidneys", ["The liver", "The spleen", "The pancreas"]],
+    ["Physics", "What is the SI unit of electric current?", "The ampere", ["The volt", "The watt", "The ohm"]],
+    ["Geography", "In which country would you find the Great Wall?", "China", ["Japan", "Mongolia", "India"]],
+    ["Literature", "Who wrote the play <em>Romeo and Juliet</em>?", "William Shakespeare", ["Christopher Marlowe", "Ben Jonson", "John Webster"]],
+    ["Maths", "What is 2 raised to the power of 8?", "256", ["128", "512", "64"]],
+    ["Chemistry", "Which gas is most abundant in Earth's atmosphere?", "Nitrogen", ["Oxygen", "Carbon dioxide", "Argon"]],
+    ["Computing", "Which programming language runs natively in a web browser?", "JavaScript", ["Python", "C++", "Swift"]],
+    ["Science", "At sea level, water boils at what temperature?", "100 °C", ["90 °C", "110 °C", "120 °C"]],
+    ["Geography", "Which is the largest hot desert in the world?", "The Sahara", ["The Gobi", "The Kalahari", "The Arabian"]],
+    ["Computing", "Who is regarded as the father of the computer?", "Charles Babbage", ["Alan Turing", "John von Neumann", "Blaise Pascal"]],
+    ["Maths", "What is the derivative of x² with respect to x?", "2x", ["x", "x²/2", "2"]],
+    ["Biology", "How many bones make up the middle ear?", "3", ["1", "2", "5"]],
+    ["Physics", "Which force keeps the planets in orbit around the Sun?", "Gravity", ["Magnetism", "Friction", "The strong nuclear force"]],
+    ["Chemistry", "What is the pH of a neutral solution at 25 °C?", "7", ["0", "1", "14"]],
+
+    /* Geography */
+    ["Geography", "What is the capital city of Canada?", "Ottawa", ["Toronto", "Vancouver", "Montreal"]],
+    ["Geography", "What is the capital city of Brazil?", "Brasília", ["Rio de Janeiro", "São Paulo", "Salvador"]],
+    ["Geography", "What is the capital city of New Zealand?", "Wellington", ["Auckland", "Christchurch", "Dunedin"]],
+    ["Geography", "What is the capital city of Turkey?", "Ankara", ["Istanbul", "Izmir", "Bursa"]],
+    ["Geography", "Which city is the seat of the Swiss federal government?", "Bern", ["Zurich", "Geneva", "Basel"]],
+    ["Geography", "What is the capital city of Egypt?", "Cairo", ["Alexandria", "Giza", "Luxor"]],
+    ["Geography", "What is the capital city of South Korea?", "Seoul", ["Busan", "Incheon", "Daegu"]],
+    ["Geography", "What is the capital city of Kenya?", "Nairobi", ["Mombasa", "Kisumu", "Nakuru"]],
+    ["Geography", "Which is the highest mountain above sea level?", "Mount Everest", ["K2", "Kangchenjunga", "Lhotse"]],
+    ["Geography", "Which is the largest country in the world by land area?", "Russia", ["Canada", "China", "The United States"]],
+    ["Geography", "Which is the smallest country in the world by land area?", "Vatican City", ["Monaco", "Nauru", "San Marino"]],
+    ["Geography", "Which is the largest island in the world?", "Greenland", ["New Guinea", "Borneo", "Madagascar"]],
+    ["Geography", "Which river flows through Paris?", "The Seine", ["The Rhine", "The Loire", "The Rhône"]],
+    ["Geography", "Which river flows through London?", "The Thames", ["The Severn", "The Mersey", "The Tyne"]],
+    ["Geography", "Which mountain range is traditionally taken as the boundary between Europe and Asia?", "The Urals", ["The Alps", "The Carpathians", "The Pyrenees"]],
+    ["Geography", "Mount Kilimanjaro lies in which country?", "Tanzania", ["Kenya", "Uganda", "Ethiopia"]],
+    ["Geography", "The Great Barrier Reef lies off the coast of which country?", "Australia", ["Indonesia", "The Philippines", "Fiji"]],
+    ["Geography", "In which country would you find Machu Picchu?", "Peru", ["Chile", "Bolivia", "Ecuador"]],
+    ["Geography", "Angel Falls, the world's highest uninterrupted waterfall, is in which country?", "Venezuela", ["Brazil", "Colombia", "Guyana"]],
+    ["Geography", "Lake Baikal, the world's deepest lake, lies in which country?", "Russia", ["Mongolia", "Kazakhstan", "China"]],
+    ["Geography", "Which desert covers much of Mongolia and northern China?", "The Gobi", ["The Taklamakan", "The Karakum", "The Thar"]],
+    ["Geography", "The Dead Sea lies between Israel and which other country?", "Jordan", ["Egypt", "Syria", "Lebanon"]],
+    ["Geography", "Which strait separates Spain from Morocco?", "The Strait of Gibraltar", ["The Bosphorus", "The Dardanelles", "The Bering Strait"]],
+    ["Geography", "The city of Istanbul spans which two continents?", "Europe and Asia", ["Asia and Africa", "Europe and Africa", "Asia and Oceania"]],
+    ["Geography", "Which two countries share the world's longest international border?", "Canada and the United States", ["Russia and China", "Argentina and Chile", "India and China"]],
+    ["Geography", "Which line of latitude sits at 0 degrees?", "The Equator", ["The Tropic of Cancer", "The Prime Meridian", "The Tropic of Capricorn"]],
+    ["Geography", "The Prime Meridian passes through which London borough?", "Greenwich", ["Westminster", "Camden", "Hackney"]],
+    ["Geography", "Which is the largest US state by area?", "Alaska", ["Texas", "California", "Montana"]],
+    ["Geography", "Which country is known as the Land of the Rising Sun?", "Japan", ["China", "South Korea", "Thailand"]],
+    ["Geography", "Which country's flag features a single red maple leaf?", "Canada", ["Lebanon", "Norway", "Switzerland"]],
+
+    /* History */
+    ["History", "In which year did the Second World War end?", "1945", ["1943", "1944", "1946"]],
+    ["History", "In which year did the First World War begin?", "1914", ["1912", "1916", "1918"]],
+    ["History", "Who was the first President of the United States?", "George Washington", ["Thomas Jefferson", "John Adams", "Abraham Lincoln"]],
+    ["History", "Who was the first person to walk on the Moon?", "Neil Armstrong", ["Buzz Aldrin", "Yuri Gagarin", "Michael Collins"]],
+    ["History", "Who was the first human to travel into space?", "Yuri Gagarin", ["Alan Shepard", "John Glenn", "Neil Armstrong"]],
+    ["History", "Which civilisation built the pyramids at Giza?", "The ancient Egyptians", ["The Romans", "The Greeks", "The Persians"]],
+    ["History", "Who led India's non-violent movement for independence?", "Mahatma Gandhi", ["Jawaharlal Nehru", "Subhas Chandra Bose", "Bal Gangadhar Tilak"]],
+    ["History", "In which year did India gain independence?", "1947", ["1942", "1945", "1950"]],
+    ["History", "Who chaired the drafting committee of the Constitution of India?", "B. R. Ambedkar", ["Jawaharlal Nehru", "Vallabhbhai Patel", "Rajendra Prasad"]],
+    ["History", "Who was the first Prime Minister of India?", "Jawaharlal Nehru", ["Mahatma Gandhi", "Vallabhbhai Patel", "Lal Bahadur Shastri"]],
+    ["History", "In which year did the Berlin Wall fall?", "1989", ["1985", "1987", "1991"]],
+    ["History", "Who was the first woman to be awarded a Nobel Prize?", "Marie Curie", ["Mother Teresa", "Dorothy Hodgkin", "Irène Joliot-Curie"]],
+    ["History", "Julius Caesar was a leader of which ancient state?", "Rome", ["Greece", "Egypt", "Persia"]],
+    ["History", "In which year did the Titanic sink?", "1912", ["1905", "1918", "1920"]],
+    ["History", "Which explorer reached the Americas in 1492?", "Christopher Columbus", ["Vasco da Gama", "Ferdinand Magellan", "Amerigo Vespucci"]],
+    ["History", "Who was the first emperor of a unified China?", "Qin Shi Huang", ["Kublai Khan", "Sun Yat-sen", "Puyi"]],
+    ["History", "In which year did the French Revolution begin?", "1789", ["1776", "1799", "1804"]],
+    ["History", "Which US president issued the Emancipation Proclamation?", "Abraham Lincoln", ["Andrew Johnson", "Ulysses S. Grant", "James Buchanan"]],
+    ["History", "Who is generally regarded as the first Prime Minister of Great Britain?", "Robert Walpole", ["William Pitt the Younger", "Benjamin Disraeli", "Winston Churchill"]],
+    ["History", "In which year was Magna Carta sealed?", "1215", ["1066", "1300", "1415"]],
+    ["History", "The Battle of Waterloo in 1815 ended the rule of which leader?", "Napoleon Bonaparte", ["Louis XVI", "Charles X", "Maximilien Robespierre"]],
+    ["History", "Apartheid was a system of enforced racial segregation in which country?", "South Africa", ["Zimbabwe", "Kenya", "Namibia"]],
+    ["History", "Which country gifted the Statue of Liberty to the United States?", "France", ["Britain", "Spain", "Italy"]],
+    ["History", "Which British monarch reigned when the Spanish Armada was defeated in 1588?", "Elizabeth I", ["Victoria", "Mary I", "Anne"]],
+
+    /* Science */
+    ["Science", "What does DNA stand for?", "Deoxyribonucleic acid", ["Dinucleic acid", "Diribonucleic acid", "Deoxyribose nucleus acid"]],
+    ["Science", "Which vitamin does the skin produce when exposed to sunlight?", "Vitamin D", ["Vitamin A", "Vitamin C", "Vitamin B12"]],
+    ["Science", "Which is the most abundant element in the universe?", "Hydrogen", ["Helium", "Oxygen", "Carbon"]],
+    ["Science", "Who formulated the three laws of motion?", "Isaac Newton", ["Albert Einstein", "Galileo Galilei", "Johannes Kepler"]],
+    ["Science", "Which instrument measures atmospheric pressure?", "A barometer", ["A thermometer", "A hygrometer", "An anemometer"]],
+    ["Science", "Which instrument measures wind speed?", "An anemometer", ["A barometer", "An altimeter", "A seismograph"]],
+    ["Science", "What is the scientific study of fossils called?", "Palaeontology", ["Archaeology", "Anthropology", "Geology"]],
+    ["Science", "Sound travels fastest through which of these?", "Steel", ["Water", "Air", "A vacuum"]],
+    ["Science", "Which gas is used to make party balloons float?", "Helium", ["Hydrogen", "Nitrogen", "Neon"]],
+    ["Science", "What is the approximate normal temperature of the human body?", "37 °C", ["35 °C", "39 °C", "41 °C"]],
+
+    /* Biology */
+    ["Biology", "How many chambers does the human heart have?", "4", ["2", "3", "5"]],
+    ["Biology", "Which organ produces insulin?", "The pancreas", ["The liver", "The kidney", "The thyroid"]],
+    ["Biology", "How many teeth does an adult human normally have?", "32", ["28", "30", "36"]],
+    ["Biology", "Which is the longest bone in the human body?", "The femur", ["The tibia", "The humerus", "The fibula"]],
+    ["Biology", "Which is the largest organ of the human body?", "The skin", ["The liver", "The lungs", "The intestine"]],
+    ["Biology", "Which is the largest internal organ of the human body?", "The liver", ["The heart", "The stomach", "The spleen"]],
+    ["Biology", "Which blood type is known as the universal donor?", "O negative", ["AB positive", "A positive", "B negative"]],
+    ["Biology", "Which blood cells defend the body against infection?", "White blood cells", ["Red blood cells", "Platelets", "Plasma cells"]],
+    ["Biology", "How many pairs of chromosomes does a human cell normally contain?", "23", ["21", "24", "46"]],
+    ["Biology", "Which part of the eye controls how much light enters?", "The iris", ["The retina", "The cornea", "The lens"]],
+    ["Biology", "Which deficiency causes the disease scurvy?", "Vitamin C", ["Vitamin D", "Iron", "Calcium"]],
+    ["Biology", "Which is the fastest land animal?", "The cheetah", ["The lion", "The horse", "The gazelle"]],
+    ["Biology", "How many hearts does an octopus have?", "3", ["1", "2", "5"]],
+    ["Biology", "Which mammal lays eggs?", "The platypus", ["The kangaroo", "The sloth", "The bat"]],
+    ["Biology", "What is a young frog called before it becomes an adult?", "A tadpole", ["A larva", "A nymph", "A fry"]],
+    ["Biology", "Which is the largest living bird, and cannot fly?", "The ostrich", ["The emu", "The penguin", "The kiwi"]],
+    ["Biology", "What is the transformation of a caterpillar into a butterfly called?", "Metamorphosis", ["Mitosis", "Germination", "Regeneration"]],
+    ["Biology", "What is the basic unit of heredity called?", "The gene", ["The cell", "The protein", "The enzyme"]],
+    ["Biology", "Animals that eat only plants are called what?", "Herbivores", ["Carnivores", "Omnivores", "Insectivores"]],
+    ["Biology", "Through which part do plants absorb most of their water?", "The roots", ["The leaves", "The stem", "The flowers"]],
+
+    /* Chemistry */
+    ["Chemistry", "What is the chemical formula for water?", "H₂O", ["HO₂", "H₂O₂", "OH₂"]],
+    ["Chemistry", "What is the chemical symbol for gold?", "Au", ["Ag", "Gd", "Go"]],
+    ["Chemistry", "What is the chemical symbol for iron?", "Fe", ["Ir", "In", "Fr"]],
+    ["Chemistry", "What is the chemical symbol for sodium?", "Na", ["So", "Sd", "Sn"]],
+    ["Chemistry", "What is the chemical symbol for lead?", "Pb", ["Ld", "Pl", "Le"]],
+    ["Chemistry", "What is the atomic number of carbon?", "6", ["4", "8", "12"]],
+    ["Chemistry", "Which metal is a liquid at room temperature?", "Mercury", ["Lead", "Zinc", "Aluminium"]],
+    ["Chemistry", "Rust is chemically which compound?", "Iron oxide", ["Iron sulphate", "Iron carbonate", "Iron chloride"]],
+    ["Chemistry", "A solution with a pH below 7 is described as what?", "Acidic", ["Alkaline", "Neutral", "Saturated"]],
+    ["Chemistry", "Which noble gas is used in glowing advertising signs?", "Neon", ["Argon", "Helium", "Krypton"]],
+    ["Chemistry", "What is the common name for sodium bicarbonate?", "Baking soda", ["Table salt", "Washing soda", "Bleach"]],
+    ["Chemistry", "Which gas makes up most of natural gas?", "Methane", ["Propane", "Butane", "Ethane"]],
+    ["Chemistry", "Diamond and graphite are both forms of which element?", "Carbon", ["Silicon", "Sulphur", "Boron"]],
+    ["Chemistry", "What is the change of a solid directly into a gas called?", "Sublimation", ["Evaporation", "Condensation", "Fusion"]],
+    ["Chemistry", "Which element is essential for making thyroid hormones?", "Iodine", ["Iron", "Zinc", "Fluorine"]],
+
+    /* Physics */
+    ["Physics", "What is the SI unit of force?", "The newton", ["The joule", "The pascal", "The watt"]],
+    ["Physics", "What is the SI unit of power?", "The watt", ["The newton", "The joule", "The volt"]],
+    ["Physics", "What is the SI unit of frequency?", "The hertz", ["The decibel", "The tesla", "The henry"]],
+    ["Physics", "What does a voltmeter measure?", "Potential difference", ["Current", "Resistance", "Power"]],
+    ["Physics", "Which colour of visible light has the longest wavelength?", "Red", ["Violet", "Green", "Blue"]],
+    ["Physics", "What is the approximate acceleration due to gravity at Earth's surface?", "9.8 m/s²", ["1.6 m/s²", "3.7 m/s²", "19.6 m/s²"]],
+    ["Physics", "What does a convex lens do to parallel rays of light?", "Converges them", ["Diverges them", "Absorbs them", "Polarises them"]],
+    ["Physics", "What kind of energy does a moving object possess?", "Kinetic energy", ["Potential energy", "Thermal energy", "Chemical energy"]],
+    ["Physics", "Which type of mirror is used in car wing mirrors to widen the field of view?", "A convex mirror", ["A concave mirror", "A plane mirror", "A parabolic mirror"]],
+    ["Physics", "What is the bending of light as it passes from air into water called?", "Refraction", ["Reflection", "Diffraction", "Dispersion"]],
+    ["Physics", "Who is credited with discovering the principle of buoyancy?", "Archimedes", ["Isaac Newton", "Blaise Pascal", "Robert Boyle"]],
+    ["Physics", "Through which of these can sound not travel?", "A vacuum", ["Water", "Steel", "Air"]],
+
+    /* Astronomy */
+    ["Astronomy", "Which planet has the most prominent ring system?", "Saturn", ["Jupiter", "Uranus", "Neptune"]],
+    ["Astronomy", "How many planets are there in the Solar System?", "8", ["7", "9", "10"]],
+    ["Astronomy", "Which is the closest star to Earth?", "The Sun", ["Proxima Centauri", "Sirius", "Alpha Centauri A"]],
+    ["Astronomy", "Which planet has the hottest surface?", "Venus", ["Mercury", "Mars", "Jupiter"]],
+    ["Astronomy", "Which galaxy contains our Solar System?", "The Milky Way", ["Andromeda", "The Whirlpool Galaxy", "The Triangulum Galaxy"]],
+    ["Astronomy", "What happens during a solar eclipse?", "The Moon passes between Earth and the Sun", ["Earth passes between the Sun and the Moon", "The Sun passes behind Jupiter", "The Moon enters Earth's shadow"]],
+    ["Astronomy", "Roughly how long does sunlight take to reach Earth?", "About 8 minutes", ["About 8 seconds", "About 80 minutes", "About 8 hours"]],
+    ["Astronomy", "Which planet is known for its Great Red Spot?", "Jupiter", ["Mars", "Saturn", "Neptune"]],
+    ["Astronomy", "Which planet is tipped so far over that it appears to spin on its side?", "Uranus", ["Neptune", "Venus", "Saturn"]],
+    ["Astronomy", "A shooting star is really what?", "A meteor", ["A comet", "A distant star", "A satellite"]],
+
+    /* Maths */
+    ["Maths", "How many degrees are there in a full circle?", "360", ["180", "270", "400"]],
+    ["Maths", "What is 12 × 12?", "144", ["124", "132", "156"]],
+    ["Maths", "What is 7 × 8?", "56", ["48", "54", "63"]],
+    ["Maths", "What is 30% of 90?", "27", ["18", "24", "33"]],
+    ["Maths", "How many sides does a pentagon have?", "5", ["4", "6", "7"]],
+    ["Maths", "How many sides does an octagon have?", "8", ["6", "7", "10"]],
+    ["Maths", "What is the formula for the area of a circle?", "πr²", ["2πr", "πd", "πr²h"]],
+    ["Maths", "Which number is neither prime nor composite?", "1", ["0", "2", "9"]],
+    ["Maths", "What is the value of 5 factorial (5!)?", "120", ["25", "60", "720"]],
+    ["Maths", "A triangle with all three sides equal is called what?", "Equilateral", ["Isosceles", "Scalene", "Right-angled"]],
+    ["Maths", "What do the interior angles of a quadrilateral add up to?", "360°", ["180°", "270°", "540°"]],
+    ["Maths", "Which is the next prime number after 7?", "11", ["8", "9", "13"]],
+
+    /* Computing */
+    ["Computing", "What does WWW stand for?", "World Wide Web", ["World Web Work", "Wide World Web", "Web Wide World"]],
+    ["Computing", "What does RAM stand for?", "Random Access Memory", ["Rapid Access Module", "Read And Modify", "Runtime Allocated Memory"]],
+    ["Computing", "What does URL stand for?", "Uniform Resource Locator", ["Universal Reference Link", "Unified Routing Label", "User Resource Locator"]],
+    ["Computing", "What does GPU stand for?", "Graphics Processing Unit", ["General Purpose Unit", "Graphic Pixel Utility", "Global Processing Unit"]],
+    ["Computing", "What does PDF stand for?", "Portable Document Format", ["Printable Document File", "Public Data Format", "Paged Display File"]],
+    ["Computing", "Who is credited with inventing the World Wide Web?", "Tim Berners-Lee", ["Bill Gates", "Vint Cerf", "Linus Torvalds"]],
+    ["Computing", "Which company developed the Windows operating system?", "Microsoft", ["Apple", "IBM", "Google"]],
+    ["Computing", "Who co-founded Apple alongside Steve Wozniak?", "Steve Jobs", ["Bill Gates", "Michael Dell", "Jeff Bezos"]],
+    ["Computing", "Which of these is an input device?", "A keyboard", ["A monitor", "A printer", "A speaker"]],
+    ["Computing", "One kilobyte is conventionally how many bytes?", "1,024", ["100", "1,000", "2,048"]],
+    ["Computing", "Which of these is an operating system?", "Linux", ["Excel", "Photoshop", "Chrome"]],
+
+    /* Literature */
+    ["Literature", "Who wrote the novel <em>1984</em>?", "George Orwell", ["Aldous Huxley", "Ray Bradbury", "H. G. Wells"]],
+    ["Literature", "Who wrote the <em>Harry Potter</em> series?", "J. K. Rowling", ["Philip Pullman", "Roald Dahl", "C. S. Lewis"]],
+    ["Literature", "Who created the detective Sherlock Holmes?", "Arthur Conan Doyle", ["Agatha Christie", "Wilkie Collins", "Edgar Allan Poe"]],
+    ["Literature", "Who wrote <em>Oliver Twist</em>?", "Charles Dickens", ["Thomas Hardy", "George Eliot", "Anthony Trollope"]],
+    ["Literature", "Who wrote <em>The Jungle Book</em>?", "Rudyard Kipling", ["Robert Louis Stevenson", "Jack London", "E. M. Forster"]],
+    ["Literature", "Who wrote <em>Gitanjali</em> and won the Nobel Prize in Literature in 1913?", "Rabindranath Tagore", ["Sarojini Naidu", "R. K. Narayan", "Munshi Premchand"]],
+    ["Literature", "Who wrote <em>War and Peace</em>?", "Leo Tolstoy", ["Fyodor Dostoevsky", "Anton Chekhov", "Ivan Turgenev"]],
+    ["Literature", "Who wrote <em>The Old Man and the Sea</em>?", "Ernest Hemingway", ["John Steinbeck", "F. Scott Fitzgerald", "William Faulkner"]],
+    ["Literature", "Who wrote <em>Things Fall Apart</em>?", "Chinua Achebe", ["Wole Soyinka", "Ngũgĩ wa Thiong'o", "Ben Okri"]],
+    ["Literature", "Which epic poem tells of the wrath of Achilles?", "The Iliad", ["The Odyssey", "The Aeneid", "The Divine Comedy"]],
+    ["Literature", "Who wrote <em>Don Quixote</em>?", "Miguel de Cervantes", ["Lope de Vega", "Dante Alighieri", "Voltaire"]],
+    ["Literature", "Who wrote <em>To Kill a Mockingbird</em>?", "Harper Lee", ["Toni Morrison", "Flannery O'Connor", "Carson McCullers"]],
+    ["Literature", "Who wrote <em>On the Origin of Species</em>?", "Charles Darwin", ["Gregor Mendel", "Alfred Russel Wallace", "Jean-Baptiste Lamarck"]],
+    ["Literature", "Who wrote <em>Alice's Adventures in Wonderland</em>?", "Lewis Carroll", ["J. M. Barrie", "Kenneth Grahame", "Edward Lear"]],
+
+    /* Art and music */
+    ["Art", "Who painted <em>The Starry Night</em>?", "Vincent van Gogh", ["Claude Monet", "Paul Cézanne", "Edvard Munch"]],
+    ["Art", "Who sculpted the marble statue of <em>David</em> in Florence?", "Michelangelo", ["Donatello", "Bernini", "Rodin"]],
+    ["Art", "Who painted the ceiling of the Sistine Chapel?", "Michelangelo", ["Leonardo da Vinci", "Raphael", "Titian"]],
+    ["Art", "Which art movement is Pablo Picasso most associated with?", "Cubism", ["Impressionism", "Surrealism", "Baroque"]],
+    ["Music", "How many keys does a standard full-size piano have?", "88", ["66", "76", "96"]],
+    ["Music", "How many strings does a standard acoustic guitar have?", "6", ["4", "5", "7"]],
+    ["Music", "Who composed <em>The Four Seasons</em>?", "Antonio Vivaldi", ["Johann Sebastian Bach", "George Handel", "Joseph Haydn"]],
+    ["Music", "Which composer wrote nine symphonies while progressively losing his hearing?", "Ludwig van Beethoven", ["Wolfgang Amadeus Mozart", "Franz Schubert", "Johannes Brahms"]],
+    ["Music", "To which instrument family does the violin belong?", "Strings", ["Woodwind", "Brass", "Percussion"]],
+
+    /* Sport */
+    ["Sport", "How many players from each side are on the pitch in a football match?", "11", ["9", "10", "12"]],
+    ["Sport", "How often are the Summer Olympic Games held?", "Every four years", ["Every two years", "Every three years", "Every five years"]],
+    ["Sport", "In which sport is a score of zero called 'love'?", "Tennis", ["Cricket", "Golf", "Squash"]],
+    ["Sport", "How many players from each team are on court in basketball?", "5", ["4", "6", "7"]],
+    ["Sport", "Which country hosted the first modern Olympic Games in 1896?", "Greece", ["France", "Italy", "Britain"]],
+    ["Sport", "How many balls are bowled in a standard over in cricket?", "6", ["4", "5", "8"]],
+    ["Sport", "Which sport is played with a shuttlecock?", "Badminton", ["Table tennis", "Squash", "Volleyball"]],
+    ["Sport", "How many rings appear on the Olympic flag?", "5", ["4", "6", "7"]],
+    ["Sport", "What is the highest possible break in a standard frame of snooker?", "147", ["100", "120", "155"]],
+
+    /* Language */
+    ["Language", "How many letters are there in the English alphabet?", "26", ["24", "25", "28"]],
+    ["Language", "How many vowels are there in the English alphabet?", "5", ["4", "6", "7"]],
+    ["Language", "Which language has the most native speakers worldwide?", "Mandarin Chinese", ["English", "Spanish", "Hindi"]],
+    ["Language", "What is a word with the opposite meaning to another called?", "An antonym", ["A synonym", "A homonym", "A pseudonym"]],
+    ["Language", "What is the plural of 'child'?", "Children", ["Childs", "Childes", "Childrens"]],
+
+    /* Mythology */
+    ["Mythology", "Who is the Greek god of the sea?", "Poseidon", ["Zeus", "Hades", "Apollo"]],
+    ["Mythology", "Who is the king of the gods in Greek mythology?", "Zeus", ["Kronos", "Hermes", "Ares"]],
+    ["Mythology", "Who is the Roman god of war?", "Mars", ["Jupiter", "Neptune", "Mercury"]],
+    ["Mythology", "Which creature of Greek myth is half man and half horse?", "A centaur", ["A minotaur", "A satyr", "A griffin"]],
+    ["Mythology", "Who is the Norse god of thunder?", "Thor", ["Odin", "Loki", "Freyr"]],
+
+    /* Economics and institutions */
+    ["Economics", "What is the currency of the United Kingdom?", "The pound sterling", ["The euro", "The krone", "The franc"]],
+    ["Economics", "What is the currency of India?", "The rupee", ["The taka", "The rupiah", "The dinar"]],
+    ["Economics", "What does GDP stand for?", "Gross Domestic Product", ["General Domestic Price", "Gross Deposit Percentage", "Global Development Plan"]],
+    ["Economics", "Which currency is used by most European Union member states?", "The euro", ["The pound sterling", "The Swiss franc", "The US dollar"]],
+    ["Economics", "In which city are the headquarters of the United Nations?", "New York", ["Geneva", "Brussels", "The Hague"]]
+  ];
+
+  const LETTERS = ["A", "B", "C", "D"];
+
+  const el = (id) => document.getElementById(id);
+  const ui = {
+    loading: el("loading"), quiz: el("quiz"), result: el("result"),
+    strip: el("strip"), options: el("options"), verdict: el("verdict"),
+    next: el("next"), qNum: el("q-num"), qOf: el("q-of"),
+    qTag: el("q-tag"), qText: el("q-text"),
+    fScore: el("f-score"), fStreak: el("f-streak"), fTime: el("f-time"),
+    rScore: el("r-score"), rPct: el("r-pct"), rGrade: el("r-grade"),
+    review: el("review"), source: el("source")
+  };
+
+  let paper = [];      // this round's questions
+  let at = 0;          // current index
+  let score = 0;
+  let streak = 0, bestStreak = 0;
+  let locked = false;
+  let log = [];        // per-question record for the answer key
+  let started = 0, ticker = null;
+  let sourceLabel = "local";
+
+  /* ── helpers ────────────────────────────────────────────── */
+  const shuffle = (arr) => {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
+  const clock = (ms) => {
+    const s = Math.floor(ms / 1000);
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  };
+
+  /* Live questions from Open Trivia DB. Works when the page is
+     opened from disk or served; blocked in the published sandbox,
+     where we quietly fall back to BANK. */
+  async function fetchLive(n) {
+    const url = `https://opentdb.com/api.php?amount=${n}&type=multiple&encode=url3986`;
+    const ctrl = new AbortController();
+    const bail = setTimeout(() => ctrl.abort(), 6000);
+    try {
+      const res = await fetch(url, { signal: ctrl.signal });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (data.response_code !== 0 || !Array.isArray(data.results)) throw new Error("bad payload");
+      const d = decodeURIComponent;
+      return data.results.map((q) => [
+        d(q.category).replace(/^Entertainment: |^Science: /, ""),
+        d(q.question),
+        d(q.correct_answer),
+        q.incorrect_answers.map(d)
+      ]);
+    } finally {
+      clearTimeout(bail);
+    }
+  }
+
+  /* ── round setup ────────────────────────────────────────── */
+  async function newRound() {
+    ui.quiz.classList.add("hidden");
+    ui.result.classList.add("hidden");
+    ui.review.classList.add("hidden");
+    el("toggle-review").textContent = "Show answer key";
+    ui.loading.classList.remove("hidden");
+    ui.loading.textContent = "Drawing questions…";
+
+    let drawn = null;
+    try {
+      drawn = await fetchLive(PER_ROUND);
+      sourceLabel = "live";
+    } catch (err) {
+      drawn = shuffle(BANK).slice(0, PER_ROUND);
+      sourceLabel = "local";
+    }
+
+    paper = drawn.map(([cat, q, right, wrongs]) => {
+      const opts = shuffle([right, ...wrongs.slice(0, 3)]);
+      return { cat, q, right, opts, key: opts.indexOf(right) };
+    });
+
+    at = 0; score = 0; streak = 0; bestStreak = 0; log = [];
+    ui.source.textContent = sourceLabel === "live"
+      ? "Bank: live · Open Trivia DB"
+      : `Bank: local · ${BANK.length} questions`;
+
+    buildStrip();
+    ui.loading.classList.add("hidden");
+    ui.quiz.classList.remove("hidden");
+
+    started = performance.now();
+    clearInterval(ticker);
+    ticker = setInterval(() => { ui.fTime.textContent = clock(performance.now() - started); }, 250);
+
+    render();
+  }
+
+  function buildStrip() {
+    ui.strip.querySelectorAll(".pip").forEach((p) => p.remove());
+    paper.forEach((_, i) => {
+      const pip = document.createElement("div");
+      pip.className = "pip";
+      pip.textContent = i + 1;
+      ui.strip.appendChild(pip);
+    });
+  }
+
+  const pips = () => ui.strip.querySelectorAll(".pip");
+
+  /* ── render one question ────────────────────────────────── */
+  function render() {
+    const item = paper[at];
+    locked = false;
+
+    ui.qNum.textContent = at + 1;
+    ui.qOf.textContent = `/${paper.length}`;
+    ui.qTag.textContent = item.cat;
+    ui.qText.innerHTML = item.q;
+
+    pips().forEach((p, i) => {
+      if (!p.dataset.state || p.dataset.state === "active") {
+        p.dataset.state = i === at ? "active" : "";
+      }
+    });
+
+    ui.options.innerHTML = "";
+    item.opts.forEach((text, i) => {
+      const b = document.createElement("button");
+      b.className = "opt";
+      b.type = "button";
+      b.innerHTML =
+        `<span class="letter">${LETTERS[i]}</span>` +
+        `<span class="bubble" aria-hidden="true"></span>` +
+        `<span class="text">${text}</span>` +
+        `<span class="stamp" aria-hidden="true"></span>`;
+      b.addEventListener("click", () => answer(i));
+      ui.options.appendChild(b);
+    });
+
+    ui.verdict.dataset.tone = "";
+    ui.verdict.innerHTML = 'Pick an option — or press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd>';
+    ui.next.disabled = true;
+    ui.next.textContent = at === paper.length - 1 ? "Grade my sheet" : "Next question";
+    syncFields();
+  }
+
+  function syncFields() {
+    ui.fScore.textContent = `${score}/${log.length}`;
+    ui.fStreak.textContent = streak;
+  }
+
+  /* ── grading a single answer ────────────────────────────── */
+  function answer(picked) {
+    if (locked) return;
+    locked = true;
+
+    const item = paper[at];
+    const right = picked === item.key;
+    const rows = ui.options.querySelectorAll(".opt");
+
+    rows.forEach((row, i) => {
+      row.disabled = true;
+      const stamp = row.querySelector(".stamp");
+      if (i === picked) {
+        row.dataset.mark = right ? "right" : "wrong";
+        stamp.textContent = right ? "✓" : "✕";
+      } else if (i === item.key) {
+        row.dataset.mark = "key";
+      } else {
+        row.dataset.mark = "muted";
+      }
+    });
+
+    if (right) {
+      score++;
+      streak++;
+      bestStreak = Math.max(bestStreak, streak);
+    } else {
+      streak = 0;
+    }
+
+    log.push({ q: item.q, picked: item.opts[picked], right: item.right, ok: right });
+    pips()[at].dataset.state = right ? "right" : "wrong";
+
+    ui.verdict.dataset.tone = right ? "right" : "wrong";
+    ui.verdict.innerHTML = right
+      ? `Correct — <strong>${item.right}</strong>.${streak >= 3 ? ` ${streak} in a row.` : ""}`
+      : `Not quite. The answer is <strong>${item.right}</strong>.`;
+
+    ui.next.disabled = false;
+    ui.next.focus({ preventScroll: true });
+    syncFields();
+  }
+
+  /* ── advance / grade the sheet ──────────────────────────── */
+  function advance() {
+    if (!locked) return;
+    if (at < paper.length - 1) {
+      at++;
+      render();
+    } else {
+      finish();
+    }
+  }
+
+  function finish() {
+    clearInterval(ticker);
+    const pct = Math.round((score / paper.length) * 100);
+    const elapsed = clock(performance.now() - started);
+
+    ui.quiz.classList.add("hidden");
+    ui.result.classList.remove("hidden");
+    ui.rScore.textContent = score;
+    ui.rPct.textContent = `of ${paper.length} · ${pct}% · ${elapsed}`;
+
+    const grade =
+      pct === 100 ? "A clean sheet. Every bubble matched the answer key."
+      : pct >= 80 ? "Strong pass. Look over the two or three you dropped and sit another sheet."
+      : pct >= 50 ? "A working pass. The answer key below is where the marks are hiding."
+      : "Below the line this time — read the key, then run a fresh sheet on the same topics.";
+    ui.rGrade.textContent = `${grade}${bestStreak >= 3 ? ` Best run: ${bestStreak} correct in a row.` : ""}`;
+
+    ui.review.innerHTML = log.map((r, i) => `
+      <div class="row">
+        <div class="n">${String(i + 1).padStart(2, "0")}</div>
+        <div class="q">${r.q}</div>
+        <div class="a">
+          ${r.ok
+            ? `<em>You answered</em> <span class="yes">${r.picked}</span>`
+            : `<em>You answered</em> <span class="no">${r.picked}</span><br><em>Answer key</em> <span class="yes">${r.right}</span>`}
+        </div>
+      </div>`).join("");
+  }
+
+  /* ── wiring ─────────────────────────────────────────────── */
+  ui.next.addEventListener("click", advance);
+  el("again").addEventListener("click", newRound);
+
+  el("toggle-review").addEventListener("click", (e) => {
+    const hidden = ui.review.classList.toggle("hidden");
+    e.currentTarget.textContent = hidden ? "Show answer key" : "Hide answer key";
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (ui.quiz.classList.contains("hidden")) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    const k = e.key.toUpperCase();
+    const byLetter = LETTERS.indexOf(k);
+    const byDigit = "1234".indexOf(k);
+    const idx = byLetter > -1 ? byLetter : byDigit;
+
+    if (idx > -1 && !locked) {
+      e.preventDefault();
+      answer(idx);
+    } else if ((e.key === "Enter" || e.key === " ") && locked && document.activeElement !== ui.next) {
+      e.preventDefault();
+      advance();
+    }
+  });
+
+  el("theme").addEventListener("click", () => {
+    const root = document.documentElement;
+    const dark = root.dataset.theme
+      ? root.dataset.theme === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+  });
+
+  newRound();
+})();
+</script>
