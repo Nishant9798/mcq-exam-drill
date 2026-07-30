@@ -1,6 +1,6 @@
 # MCQ Exam Drill
 
-A single-file **bilingual (English + मराठी)** MCQ practice site for students, designed as an OMR answer sheet — the scannable bubble form used in real exams. Answer a bubble and it inks in immediately: **green with a ✓ if correct, red with an ✕ and a shake if wrong**, with the correct option outlined in dashed green so you learn it on the spot.
+A single-file **bilingual (English + मराठी)** MCQ practice site with a **737-question bank** aimed at Maharashtra competitive exams and school revision, designed as an OMR answer sheet — the scannable bubble form used in real exams. Answer a bubble and it inks in immediately: **green with a ✓ if correct, red with an ✕ and a shake if wrong**, with the correct option outlined in dashed green so you learn it on the spot.
 
 No build step, no dependencies, no framework. One HTML file.
 
@@ -22,7 +22,7 @@ python3 -m http.server 8000
 
 ## Features
 
-- **Bilingual throughout** — questions, options, verdicts, the answer key and the page chrome all carry Marathi.
+- **Bilingual throughout** — all 737 questions, their options, the verdicts, the answer key and the page chrome carry Marathi.
 - **10 questions per sheet**, drawn at random, with the four options shuffled every time — so a question's correct answer moves position between attempts.
 - **Instant marking.** Red for wrong, green for right, with a ✓/✕ stamp. The answer key row is revealed as soon as you commit.
 - **Live readouts** for score, correct streak, and elapsed time.
@@ -42,9 +42,16 @@ Devanagari uses system fonts (`Noto Sans Devanagari`, `Nirmala UI`, `Mangal`, `L
 
 > The Marathi was written to match school and competitive-exam usage: questions translated rather than transliterated, proper nouns in Devanagari, Latin digits for numbers and years. **It has not yet been proofread by a native speaker** — worth doing before students rely on it, particularly the science terminology, where Marathi textbooks vary between Marathi terms and Devanagari-spelled English ones.
 
+Two editorial rules apply throughout the bank:
+
+- **Nothing time-sensitive.** No current officeholders, record holders, or population figures, so answers don't go stale.
+- **Nothing genuinely contested.** Questions with disputed answers are rephrased to be unambiguous — hence "longest river in Africa" and "largest *hot* desert".
+
+Every entry is machine-checked: four unique options, no duplicate questions anywhere in the bank, and the correct answer verified to survive option shuffling.
+
 ## Where the questions come from
 
-**The bundled bilingual bank of 236 questions is the default source.**
+**The bundled bilingual bank of 737 questions is the default source.**
 
 There is also optional support for **Open Trivia DB** (`opentdb.com`), which offers a few thousand questions across ~24 categories — but it is **English-only**, and no Marathi trivia API exists. Because bilingual sheets are the point, the live feed is off by default. To enable it, flip one constant near the top of the script:
 
@@ -54,24 +61,22 @@ const USE_LIVE_API = true;   // draws English-only questions instead
 
 With it on, the API is tried first and the bilingual bank serves as the fallback if the request fails.
 
-The bundled bank is curated for school and general-knowledge revision:
+The bank is aimed at Maharashtra competitive exams (MPSC, Talathi, police bharti) as well as general school revision, across 25 subjects:
 
-| Subject | Questions | Subject | Questions |
-|---|---|---|---|
-| Geography | 36 | Physics | 16 |
-| Biology | 26 | Literature | 16 |
-| History | 24 | Computing | 16 |
-| Chemistry | 20 | Astronomy | 11 |
-| Maths | 19 | Art / Music | 10 |
-| Science | 17 | Sport | 9 |
-| | | Language / Mythology / Economics | 15 |
+| Subject | Q | Subject | Q | Subject | Q |
+|---|---|---|---|---|---|
+| Indian polity | 71 | Chemistry | 40 | Science | 17 |
+| Maharashtra history | 60 | Marathi literature | 40 | Literature | 16 |
+| Indian history | 60 | Geography (world) | 36 | Computing | 16 |
+| Maharashtra geography | 50 | Economics | 35 | Astronomy | 11 |
+| Indian geography | 50 | Physics | 34 | Sport | 9 |
+| Static GK | 50 | Maharashtra polity | 30 | Art / Music | 10 |
+| Biology | 48 | History (world) | 24 | Language / Mythology | 10 |
+| | | Maths | 19 | General | 1 |
 
-At 10 questions a sheet, that is 23 sheets before any question repeats.
+At 10 questions a sheet, that is **73 sheets before any question repeats**.
 
-Two editorial rules were applied to the bank:
-
-- **No time-sensitive facts.** No current officeholders, record holders, or population figures, so answers don't go stale.
-- **No contested facts.** Questions with genuinely disputed answers are phrased to be unambiguous — hence "longest river in Africa" and "largest *hot* desert".
+Maharashtra-focused coverage includes the Sahyadri and state rivers, districts and divisions, Shivaji Maharaj and the Marathas, the Peshwas, the social reformers (Phule, Ambedkar, Shahu Maharaj, Karve, Agarkar), the Samyukta Maharashtra movement, state administration from talathi to collector, the sant tradition and Marathi literature, and Marathi grammar and dialects.
 
 ## Adding your own questions
 
