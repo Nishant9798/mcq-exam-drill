@@ -2,21 +2,27 @@
 
 <style>
   /* ── tokens ───────────────────────────────────────────────── */
+  /* Paper is warm, not blue-grey: exam stock is never pure white, and a
+     touch of cream keeps the long Devanagari lines from glaring. */
   :root {
-    --ground: #e2e5ea;
-    --paper: #f7f8fa;
-    --paper-edge: #d3d8e0;
-    --ink: #161a22;
-    --ink-soft: #5b6472;
-    --ink-faint: #8b93a1;
-    --rule: #ccd3dd;
-    --accent: #2547a8;
-    --accent-wash: #dfe5f6;
-    --correct: #0e7a52;
-    --correct-wash: #d9eee4;
-    --wrong: #c0342b;
-    --wrong-wash: #f8dedb;
-    --shadow: 0 1px 2px rgba(22, 26, 34, .06), 0 12px 32px -12px rgba(22, 26, 34, .22);
+    --ground: #e6e2da;
+    --paper: #fcfbf8;
+    --paper-edge: #ded8cc;
+    --ink: #1a1815;
+    --ink-soft: #5d584f;
+    --ink-faint: #948e83;
+    --rule: #d9d3c7;
+    --accent: #2c4694;
+    --accent-wash: #e2e5f4;
+    --correct: #146b4a;
+    --correct-wash: #dcede3;
+    --wrong: #b23428;
+    --wrong-wash: #f7e1dd;
+    --shadow:
+      0 1px 1px rgba(40, 34, 24, .05),
+      0 2px 6px -2px rgba(40, 34, 24, .10),
+      0 18px 42px -18px rgba(40, 34, 24, .30);
+    --sheen: rgba(255, 255, 255, .8);
 
     --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
     --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -30,55 +36,61 @@
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --ground: #0f1319;
-      --paper: #171c24;
-      --paper-edge: #262d38;
-      --ink: #e6e9ef;
-      --ink-soft: #98a2b3;
-      --ink-faint: #6b7686;
-      --rule: #2b333f;
-      --accent: #7fa0f0;
-      --accent-wash: #1e2735;
-      --correct: #3dd68c;
-      --correct-wash: #14261f;
-      --wrong: #ff6b5e;
-      --wrong-wash: #2a1a1a;
-      --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 16px 40px -16px rgba(0, 0, 0, .7);
+      --ground: #131210;
+      --paper: #1c1b18;
+      --paper-edge: #2c2a26;
+      --ink: #ece8e1;
+      --ink-soft: #a29c91;
+      --ink-faint: #716b62;
+      --rule: #322f2a;
+      --accent: #8fa6f0;
+      --accent-wash: #232839;
+      --correct: #4ed399;
+      --correct-wash: #142621;
+      --wrong: #ff7a6b;
+      --wrong-wash: #2c1a16;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 20px 46px -20px rgba(0, 0, 0, .75);
+      --sheen: rgba(255, 255, 255, .045);
     }
   }
 
   :root[data-theme="dark"] {
-    --ground: #0f1319;
-    --paper: #171c24;
-    --paper-edge: #262d38;
-    --ink: #e6e9ef;
-    --ink-soft: #98a2b3;
-    --ink-faint: #6b7686;
-    --rule: #2b333f;
-    --accent: #7fa0f0;
-    --accent-wash: #1e2735;
-    --correct: #3dd68c;
-    --correct-wash: #14261f;
-    --wrong: #ff6b5e;
-    --wrong-wash: #2a1a1a;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 16px 40px -16px rgba(0, 0, 0, .7);
+    --ground: #131210;
+    --paper: #1c1b18;
+    --paper-edge: #2c2a26;
+    --ink: #ece8e1;
+    --ink-soft: #a29c91;
+    --ink-faint: #716b62;
+    --rule: #322f2a;
+    --accent: #8fa6f0;
+    --accent-wash: #232839;
+    --correct: #4ed399;
+    --correct-wash: #142621;
+    --wrong: #ff7a6b;
+    --wrong-wash: #2c1a16;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 20px 46px -20px rgba(0, 0, 0, .75);
+    --sheen: rgba(255, 255, 255, .045);
   }
 
   :root[data-theme="light"] {
-    --ground: #e2e5ea;
-    --paper: #f7f8fa;
-    --paper-edge: #d3d8e0;
-    --ink: #161a22;
-    --ink-soft: #5b6472;
-    --ink-faint: #8b93a1;
-    --rule: #ccd3dd;
-    --accent: #2547a8;
-    --accent-wash: #dfe5f6;
-    --correct: #0e7a52;
-    --correct-wash: #d9eee4;
-    --wrong: #c0342b;
-    --wrong-wash: #f8dedb;
-    --shadow: 0 1px 2px rgba(22, 26, 34, .06), 0 12px 32px -12px rgba(22, 26, 34, .22);
+    --ground: #e6e2da;
+    --paper: #fcfbf8;
+    --paper-edge: #ded8cc;
+    --ink: #1a1815;
+    --ink-soft: #5d584f;
+    --ink-faint: #948e83;
+    --rule: #d9d3c7;
+    --accent: #2c4694;
+    --accent-wash: #e2e5f4;
+    --correct: #146b4a;
+    --correct-wash: #dcede3;
+    --wrong: #b23428;
+    --wrong-wash: #f7e1dd;
+    --shadow:
+      0 1px 1px rgba(40, 34, 24, .05),
+      0 2px 6px -2px rgba(40, 34, 24, .10),
+      0 18px 42px -18px rgba(40, 34, 24, .30);
+      --sheen: rgba(255, 255, 255, .8);
   }
 
   /* ── page ─────────────────────────────────────────────────── */
@@ -105,7 +117,9 @@
     background: var(--paper);
     border: 1px solid var(--paper-edge);
     border-radius: 2px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow), inset 0 1px 0 var(--sheen);
+    background-image: linear-gradient(180deg,
+      color-mix(in srgb, var(--paper) 90%, #fff) 0, var(--paper) 280px);
     padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 44px) clamp(22px, 4vw, 36px) clamp(30px, 5vw, 62px);
   }
 
@@ -340,9 +354,26 @@
     cursor: pointer;
     transition: border-color .16s ease, background-color .16s ease, transform .16s ease;
   }
-  .opt:hover:not(:disabled) { border-color: var(--accent); transform: translateX(3px); }
+  .opt:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent-wash) 55%, var(--paper));
+    transform: translateX(2px);
+  }
+  .opt:active:not(:disabled) { transform: translateX(2px) scale(.994); }
   .opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .opt:disabled { cursor: default; }
+
+  /* Each sheet deals its options in rather than swapping them instantly,
+     so it reads as a new question rather than changed text. */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: none; }
+  }
+  .opt { animation: rise .26s ease both; }
+  .opt:nth-child(2) { animation-delay: .04s; }
+  .opt:nth-child(3) { animation-delay: .08s; }
+  .opt:nth-child(4) { animation-delay: .12s; }
+  .question.enter .qbody { animation: rise .3s ease both; }
 
   .letter {
     flex: none;
@@ -376,6 +407,26 @@
 
   .opt .text { font-size: 15.5px; line-height: 1.4; min-width: 0; }
   .opt .text .mr { font-size: .92em; margin-top: 1px; }
+
+  /* ── figures ──────────────────────────────────────────────
+     Reasoning diagrams ship as inline SVG, so the page stays a
+     single file with no external requests. Every stroke is
+     currentColor: a figure reads correctly in both themes and
+     picks up the graded red/green exactly as the text does. */
+  .fig {
+    display: block;
+    max-width: 430px;
+    margin: 2px 0 14px;
+  }
+  .fig.small { max-width: 152px; }
+  .fig svg { display: block; width: 100%; height: auto; }
+
+  .opt .text .fig { max-width: 118px; margin: 3px 0; }
+
+  @media (max-width: 520px) {
+    .fig { max-width: 100%; }
+    .opt .text .fig { max-width: 96px; }
+  }
 
   /* graded states */
   .opt[data-mark="right"] {
@@ -447,8 +498,10 @@
     letter-spacing: .02em;
     color: var(--ink-soft);
     min-height: 34px;
-    display: flex;
-    align-items: center;
+    /* Block, not flex: the Marathi gloss is a block-level span and a flex
+       parent would strand it beside the English instead of beneath it. */
+    display: block;
+    align-self: center;
     max-width: 42ch;
     line-height: 1.45;
   }
@@ -500,32 +553,85 @@
 
   /* ── results ──────────────────────────────────────────────── */
   .result { padding: 30px 0 4px; }
-  .score {
+
+  .scoreboard {
     display: flex;
-    align-items: baseline;
-    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(18px, 4vw, 34px);
+    margin: 14px 0 2px;
+  }
+
+  /* The dial reads the sheet at a glance; the boxed tallies beside it
+     repeat the masthead fields, so the graded page is the same form. */
+  .dial { position: relative; flex: none; width: 132px; height: 132px; }
+  .dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .dial circle { fill: none; stroke-width: 9; }
+  .dial-track { stroke: var(--rule); }
+  .dial-arc {
+    stroke: var(--accent);
+    stroke-linecap: round;
+    stroke-dasharray: 364.42;      /* 2πr, r = 58 */
+    stroke-dashoffset: 364.42;
+    transition: stroke-dashoffset .9s cubic-bezier(.22, .8, .3, 1);
+  }
+  .dial[data-band="high"] .dial-arc { stroke: var(--correct); }
+  .dial[data-band="low"] .dial-arc { stroke: var(--wrong); }
+
+  .dial-face {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
     font-family: var(--mono);
     font-variant-numeric: tabular-nums;
   }
-  .score b { font-size: clamp(52px, 12vw, 76px); font-weight: 700; line-height: .9; letter-spacing: -.03em; }
-  .score i { font-style: normal; font-size: 19px; color: var(--ink-faint); }
-  .grade {
-    font-family: var(--serif);
-    font-size: clamp(19px, 4vw, 24px);
-    margin: 18px 0 26px;
-    max-width: 30em;
-    line-height: 1.35;
-    text-wrap: balance;
+  .dial-face b { display: block; font-size: 42px; font-weight: 700; line-height: 1; letter-spacing: -.03em; }
+  .dial-face i {
+    display: block;
+    font-style: normal;
+    font-size: 9.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 6px;
   }
 
-  .review { border-top: 1px solid var(--rule); }
+  .tallies { flex-wrap: wrap; gap: 8px; }
+  .tallies .field { min-width: 86px; }
+
+  .grade {
+    font-family: var(--serif);
+    font-size: clamp(17px, 3.4vw, 21px);
+    margin: 24px 0 26px;
+    max-width: 32em;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+  /* Same dotted separator the question uses, so the two languages read
+     as one pair here too rather than as four loose lines. */
+  .grade .mr {
+    font-size: .84em;
+    margin-top: .45em;
+    padding-top: .4em;
+    border-top: 1px dotted var(--rule);
+  }
+
+  .review { border-top: 1px solid var(--rule); margin-top: 26px; }
+
+  /* A coloured rail down the left of each row, so the key can be skimmed
+     for the misses without reading a word of it. */
   .row {
     display: grid;
     grid-template-columns: 24px 1fr;
     gap: 3px 12px;
-    padding: 14px 0;
+    padding: 14px 0 14px 15px;
     border-bottom: 1px solid var(--rule);
+    border-left: 3px solid var(--rule);
   }
+  .row[data-ok="1"] { border-left-color: var(--correct); }
+  .row[data-ok="0"] { border-left-color: var(--wrong); background: color-mix(in srgb, var(--wrong-wash) 20%, transparent); }
   .row .n {
     font-family: var(--mono);
     font-size: 11px;
@@ -543,7 +649,14 @@
     line-height: 1.65;
     grid-column: 2;
   }
-  .row .a em { font-style: normal; color: var(--ink-faint); }
+  .row .a em {
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-right: 5px;
+  }
   .row .a .yes { color: var(--correct); }
   .row .a .no { color: var(--wrong); text-decoration: line-through; text-decoration-thickness: 1px; }
 
@@ -599,6 +712,12 @@
     .fields { width: 100%; }
     .field { flex: 1; min-width: 0; }
     .question { gap: 12px; }
+    /* Give the pips the whole row, or the tenth one wraps on its own. */
+    .strip .label { width: 100%; margin: 0 0 9px; }
+    .strip { gap: 6px; }
+    .scoreboard { gap: 20px; }
+    .tallies { width: 100%; }
+    .tallies .field { min-width: 0; }
   }
 </style>
 
@@ -659,7 +778,26 @@
     <section id="result" class="hidden">
       <div class="result">
         <p class="eyebrow">Sheet graded<span class="mr">पेपर तपासला</span></p>
-        <div class="score"><b id="r-score">0</b><i id="r-pct">of 10 · 0%</i></div>
+
+        <div class="scoreboard">
+          <div class="dial" id="r-dial">
+            <svg viewBox="0 0 132 132" aria-hidden="true">
+              <circle class="dial-track" cx="66" cy="66" r="58"/>
+              <circle class="dial-arc" id="r-arc" cx="66" cy="66" r="58"/>
+            </svg>
+            <div class="dial-face">
+              <b id="r-score">0</b>
+              <i id="r-pct">of 10</i>
+            </div>
+          </div>
+          <div class="fields tallies">
+            <div class="field"><span>Missed<span class="mr">चुकले</span></span><strong id="t-wrong">0</strong></div>
+            <div class="field"><span>Percent<span class="mr">टक्के</span></span><strong id="t-pct">0%</strong></div>
+            <div class="field"><span>Best run<span class="mr">सलग</span></span><strong id="t-run">0</strong></div>
+            <div class="field"><span>Time<span class="mr">वेळ</span></span><strong id="t-time">0:00</strong></div>
+          </div>
+        </div>
+
         <p class="grade" id="r-grade"></p>
         <div class="footer" style="margin-top:0;border-top:0;padding-top:0">
           <button class="btn" id="again">Start a new sheet<span class="mr">नवीन पेपर</span></button>
@@ -671,7 +809,7 @@
   </main>
 
   <div class="colophon">
-    <span id="source">Bank: local · 737 questions · English + मराठी</span>
+    <span id="source">Bank: local · 887 questions · English + मराठी</span>
     <button id="theme">Switch theme</button>
   </div>
 </div>
@@ -1477,6 +1615,178 @@
     ["GK", ["What does ATM stand for?", "ATM चे पूर्ण रूप काय आहे?"], "Automated Teller Machine", ["Automatic Transfer Machine", "Any Time Money", "Account Transaction Module"]],
     ["GK", ["What does PIN stand for in banking?", "बँकिंगमध्ये PIN चे पूर्ण रूप काय आहे?"], "Personal Identification Number", ["Private Internet Number", "Personal Internet Node", "Public Identity Number"]],
     ["GK", ["What does UPI stand for?", "UPI चे पूर्ण रूप काय आहे?"], "Unified Payments Interface", ["Universal Payment Identity", "United Payments Index", "Unique Personal Identifier"]],
+
+    /* ── Reasoning · number and letter series ──────────────── */
+    ["Reasoning", ["Which number comes next in the series: 2, 4, 8, 16, ?", "मालिकेतील पुढील संख्या कोणती: 2, 4, 8, 16, ?"], "32", ["24", "30", "64"]],
+    ["Reasoning", ["Which number comes next in the series: 3, 6, 9, 12, ?", "मालिकेतील पुढील संख्या कोणती: 3, 6, 9, 12, ?"], "15", ["14", "16", "18"]],
+    ["Reasoning", ["Which number comes next in the series: 1, 4, 9, 16, ?", "मालिकेतील पुढील संख्या कोणती: 1, 4, 9, 16, ?"], "25", ["20", "24", "36"]],
+    ["Reasoning", ["Which number comes next in the series: 5, 10, 20, 40, ?", "मालिकेतील पुढील संख्या कोणती: 5, 10, 20, 40, ?"], "80", ["60", "70", "100"]],
+    ["Reasoning", ["Which number comes next in the series: 1, 1, 2, 3, 5, 8, ?", "मालिकेतील पुढील संख्या कोणती: 1, 1, 2, 3, 5, 8, ?"], "13", ["11", "12", "14"]],
+    ["Reasoning", ["Which number comes next in the series: 100, 81, 64, 49, ?", "मालिकेतील पुढील संख्या कोणती: 100, 81, 64, 49, ?"], "36", ["25", "30", "42"]],
+    ["Reasoning", ["Which number comes next in the series: 2, 3, 5, 7, 11, ?", "मालिकेतील पुढील संख्या कोणती: 2, 3, 5, 7, 11, ?"], "13", ["12", "14", "15"]],
+    ["Reasoning", ["Which number comes next in the series: 7, 14, 28, 56, ?", "मालिकेतील पुढील संख्या कोणती: 7, 14, 28, 56, ?"], "112", ["84", "98", "124"]],
+    ["Reasoning", ["Which number comes next in the series: 1, 8, 27, 64, ?", "मालिकेतील पुढील संख्या कोणती: 1, 8, 27, 64, ?"], "125", ["81", "100", "216"]],
+    ["Reasoning", ["Which number comes next in the series: 4, 9, 16, 25, ?", "मालिकेतील पुढील संख्या कोणती: 4, 9, 16, 25, ?"], "36", ["30", "35", "49"]],
+    ["Reasoning", ["Which number comes next in the series: 2, 6, 12, 20, 30, ?", "मालिकेतील पुढील संख्या कोणती: 2, 6, 12, 20, 30, ?"], "42", ["36", "40", "44"]],
+    ["Reasoning", ["Which number comes next in the series: 120, 60, 30, 15, ?", "मालिकेतील पुढील संख्या कोणती: 120, 60, 30, 15, ?"], "7.5", ["5", "10", "12"]],
+    ["Reasoning", ["Which number comes next in the series: 3, 7, 15, 31, ?", "मालिकेतील पुढील संख्या कोणती: 3, 7, 15, 31, ?"], "63", ["47", "55", "127"]],
+    ["Reasoning", ["Which number comes next in the series: 11, 13, 17, 19, 23, ?", "मालिकेतील पुढील संख्या कोणती: 11, 13, 17, 19, 23, ?"], "29", ["25", "27", "31"]],
+    ["Reasoning", ["Which letter comes next in the series: A, C, E, G, ?", "मालिकेतील पुढील अक्षर कोणते: A, C, E, G, ?"], "I", ["H", "J", "K"]],
+    ["Reasoning", ["Which letter comes next in the series: B, D, G, K, ?", "मालिकेतील पुढील अक्षर कोणते: B, D, G, K, ?"], "P", ["N", "O", "Q"]],
+    ["Reasoning", ["Which letter comes next in the series: Z, X, V, T, ?", "मालिकेतील पुढील अक्षर कोणते: Z, X, V, T, ?"], "R", ["S", "Q", "P"]],
+    ["Reasoning", ["Which letter comes next in the series: A, B, D, H, ?", "मालिकेतील पुढील अक्षर कोणते: A, B, D, H, ?"], "P", ["N", "O", "Q"]],
+    ["Reasoning", ["Which pair comes next in the series: AZ, BY, CX, ?", "मालिकेतील पुढील जोडी कोणती: AZ, BY, CX, ?"], "DW", ["DV", "EW", "DX"]],
+    ["Reasoning", ["Which letter comes next in the series: C, F, I, L, ?", "मालिकेतील पुढील अक्षर कोणते: C, F, I, L, ?"], "O", ["M", "N", "P"]],
+
+    /* ── Reasoning · coding and decoding ───────────────────── */
+    ["Reasoning", ["If CAT is coded as DBU, how is DOG coded?", "जर CAT ला DBU असे संकेतांकित केले, तर DOG चा संकेत काय होईल?"], "EPH", ["CNF", "EPG", "FQI"]],
+    ["Reasoning", ["If MAN is written as NBO, how is BOY written?", "जर MAN हा शब्द NBO असा लिहिला जातो, तर BOY कसा लिहिला जाईल?"], "CPZ", ["APX", "CPY", "BPZ"]],
+    ["Reasoning", ["In a certain code every word is written backwards. How is TEACHER written?", "एका सांकेतिक भाषेत प्रत्येक शब्द उलट्या क्रमाने लिहिला जातो. TEACHER कसा लिहिला जाईल?"], "REHCAET", ["REHCATE", "TEHCAER", "REACHET"]],
+    ["Reasoning", ["If A = 1, B = 2, C = 3 and so on, what is the code for CAB?", "जर A = 1, B = 2, C = 3 याप्रमाणे असेल, तर CAB चा संकेत काय होईल?"], "312", ["321", "132", "213"]],
+    ["Reasoning", ["If PEN is coded as 16-5-14, how is CAP coded?", "जर PEN ला 16-5-14 असे संकेतांकित केले, तर CAP चा संकेत काय होईल?"], "3-1-16", ["3-1-15", "2-1-16", "3-2-16"]],
+    ["Reasoning", ["If FRIEND is coded as GSJFOE, how is MOTHER coded?", "जर FRIEND ला GSJFOE असे संकेतांकित केले, तर MOTHER चा संकेत काय होईल?"], "NPUIFS", ["NPUIFR", "NQUIFS", "LNSGDQ"]],
+    ["Reasoning", ["If BOOK is coded as KOOB, how is PAGE coded?", "जर BOOK ला KOOB असे संकेतांकित केले, तर PAGE चा संकेत काय होईल?"], "EGAP", ["EGPA", "GEAP", "APEG"]],
+    ["Reasoning", ["If 'sea' is called 'water', 'water' is called 'air' and 'air' is called 'sky', then where do fish live?", "जर 'समुद्र' ला 'पाणी', 'पाणी' ला 'हवा' आणि 'हवा' ला 'आकाश' म्हटले, तर मासे कशात राहतात?"], ["Water", "पाणी"], [["Air", "हवा"], ["Sky", "आकाश"], ["Sea", "समुद्र"]]],
+    ["Reasoning", ["If 1 = 3, 2 = 6 and 3 = 9, then 5 = ?", "जर 1 = 3, 2 = 6 आणि 3 = 9 असेल, तर 5 = ?"], "15", ["10", "12", "18"]],
+    ["Reasoning", ["In a code DELHI is written as 73541 and CALCUTTA as 82589662. How is CALICUT written?", "एका सांकेतिक भाषेत DELHI ला 73541 आणि CALCUTTA ला 82589662 असे लिहितात. CALICUT कसे लिहिले जाईल?"], "8251896", ["8252896", "5281896", "8251869"]],
+    ["Reasoning", ["If LONDON is written as MPOEPO, how is PARIS written?", "जर LONDON हा शब्द MPOEPO असा लिहिला जातो, तर PARIS कसा लिहिला जाईल?"], "QBSJT", ["QBSJS", "PBSJT", "QBRJT"]],
+    ["Reasoning", ["If Z = 26 and Y = 25, what is the value of W?", "जर Z = 26 आणि Y = 25 असेल, तर W चे मूल्य किती?"], "23", ["22", "24", "21"]],
+    ["Reasoning", ["If '+' means '÷', '÷' means '−', '−' means '×' and '×' means '+', what is 16 + 4 ÷ 2 − 3 × 6?", "जर '+' म्हणजे '÷', '÷' म्हणजे '−', '−' म्हणजे '×' आणि '×' म्हणजे '+' असेल, तर 16 + 4 ÷ 2 − 3 × 6 = ?"], "4", ["6", "10", "2"]],
+    ["Reasoning", ["If EARTH is coded as FBSUI, which word is coded as TVO?", "जर EARTH ला FBSUI असे संकेतांकित केले, तर TVO हा संकेत कोणत्या शब्दासाठी आहे?"], "SUN", ["SON", "TUN", "RUM"]],
+    ["Reasoning", ["If the letters of the word MASTER are arranged in alphabetical order, which letter comes third?", "MASTER या शब्दातील अक्षरे वर्णानुक्रमे मांडली, तर तिसरे अक्षर कोणते येईल?"], "M", ["E", "R", "S"]],
+
+    /* ── Reasoning · analogy ───────────────────────────────── */
+    ["Reasoning", ["Doctor : Hospital :: Teacher : ?", "डॉक्टर : रुग्णालय :: शिक्षक : ?"], ["School", "शाळा"], [["Library", "ग्रंथालय"], ["Court", "न्यायालय"], ["Factory", "कारखाना"]]],
+    ["Reasoning", ["Pen : Write :: Knife : ?", "लेखणी : लिहिणे :: सुरी : ?"], ["Cut", "कापणे"], [["Sharp", "धारदार"], ["Kitchen", "स्वयंपाकघर"], ["Metal", "धातू"]]],
+    ["Reasoning", ["Bird : Nest :: Bee : ?", "पक्षी : घरटे :: मधमाशी : ?"], ["Hive", "मोहोळ"], [["Flower", "फूल"], ["Honey", "मध"], ["Tree", "झाड"]]],
+    ["Reasoning", ["Foot : Man :: Hoof : ?", "पाय : माणूस :: खूर : ?"], ["Horse", "घोडा"], [["Dog", "कुत्रा"], ["Bird", "पक्षी"], ["Fish", "मासा"]]],
+    ["Reasoning", ["Cow : Calf :: Dog : ?", "गाय : वासरू :: कुत्रा : ?"], ["Puppy", "कुत्र्याचे पिल्लू"], [["Kitten", "मांजरीचे पिल्लू"], ["Cub", "बछडा"], ["Lamb", "कोकरू"]]],
+    ["Reasoning", ["Book : Author :: Painting : ?", "पुस्तक : लेखक :: चित्र : ?"], ["Painter", "चित्रकार"], [["Sculptor", "शिल्पकार"], ["Poet", "कवी"], ["Musician", "संगीतकार"]]],
+    ["Reasoning", ["Hunger : Food :: Thirst : ?", "भूक : अन्न :: तहान : ?"], ["Water", "पाणी"], [["Milk", "दूध"], ["Rain", "पाऊस"], ["Juice", "रस"]]],
+    ["Reasoning", ["Eye : Sight :: Ear : ?", "डोळा : दृष्टी :: कान : ?"], ["Hearing", "श्रवण"], [["Sound", "आवाज"], ["Nose", "नाक"], ["Smell", "वास"]]],
+    ["Reasoning", ["Triangle : 3 :: Pentagon : ?", "त्रिकोण : 3 :: पंचकोन : ?"], "5", ["4", "6", "8"]],
+    ["Reasoning", ["India : Rupee :: Japan : ?", "भारत : रुपया :: जपान : ?"], ["Yen", "येन"], [["Dollar", "डॉलर"], ["Euro", "युरो"], ["Pound", "पौंड"]]],
+    ["Reasoning", ["Mumbai : Maharashtra :: Jaipur : ?", "मुंबई : महाराष्ट्र :: जयपूर : ?"], ["Rajasthan", "राजस्थान"], [["Gujarat", "गुजरात"], ["Madhya Pradesh", "मध्य प्रदेश"], ["Punjab", "पंजाब"]]],
+    ["Reasoning", ["Fish : Gills :: Man : ?", "मासा : कल्ले :: माणूस : ?"], ["Lungs", "फुफ्फुसे"], [["Heart", "हृदय"], ["Skin", "त्वचा"], ["Liver", "यकृत"]]],
+    ["Reasoning", ["Teacher : Student :: Doctor : ?", "शिक्षक : विद्यार्थी :: डॉक्टर : ?"], ["Patient", "रुग्ण"], [["Nurse", "परिचारिका"], ["Medicine", "औषध"], ["Clinic", "दवाखाना"]]],
+    ["Reasoning", ["Word : Sentence :: Sentence : ?", "शब्द : वाक्य :: वाक्य : ?"], ["Paragraph", "परिच्छेद"], [["Letter", "अक्षर"], ["Word", "शब्द"], ["Book", "पुस्तक"]]],
+    ["Reasoning", ["Carpenter : Wood :: Blacksmith : ?", "सुतार : लाकूड :: लोहार : ?"], ["Iron", "लोखंड"], [["Gold", "सोने"], ["Stone", "दगड"], ["Cloth", "कापड"]]],
+
+    /* ── Reasoning · odd one out ───────────────────────────── */
+    ["Reasoning", ["Find the odd one out: Apple, Mango, Banana, Potato", "विसंगत घटक ओळखा: सफरचंद, आंबा, केळे, बटाटा"], ["Potato", "बटाटा"], [["Apple", "सफरचंद"], ["Mango", "आंबा"], ["Banana", "केळे"]]],
+    ["Reasoning", ["Find the odd one out: Wheat, Rice, Maize, Mustard", "विसंगत घटक ओळखा: गहू, तांदूळ, मका, मोहरी"], ["Mustard", "मोहरी"], [["Wheat", "गहू"], ["Rice", "तांदूळ"], ["Maize", "मका"]]],
+    ["Reasoning", ["Find the odd one out: Cricket, Hockey, Chess, Football", "विसंगत घटक ओळखा: क्रिकेट, हॉकी, बुद्धिबळ, फुटबॉल"], ["Chess", "बुद्धिबळ"], [["Cricket", "क्रिकेट"], ["Hockey", "हॉकी"], ["Football", "फुटबॉल"]]],
+    ["Reasoning", ["Find the odd one out: Copper, Iron, Silver, Wood", "विसंगत घटक ओळखा: तांबे, लोखंड, चांदी, लाकूड"], ["Wood", "लाकूड"], [["Copper", "तांबे"], ["Iron", "लोखंड"], ["Silver", "चांदी"]]],
+    ["Reasoning", ["Find the odd one out: Eagle, Sparrow, Crow, Bat", "विसंगत घटक ओळखा: गरुड, चिमणी, कावळा, वटवाघूळ"], ["Bat", "वटवाघूळ"], [["Eagle", "गरुड"], ["Sparrow", "चिमणी"], ["Crow", "कावळा"]]],
+    ["Reasoning", ["Find the odd one out: 3, 5, 7, 9", "विसंगत संख्या ओळखा: 3, 5, 7, 9"], "9", ["3", "5", "7"]],
+    ["Reasoning", ["Find the odd one out: 16, 25, 36, 40", "विसंगत संख्या ओळखा: 16, 25, 36, 40"], "40", ["16", "25", "36"]],
+    ["Reasoning", ["Find the odd one out: January, March, May, June", "विसंगत घटक ओळखा: जानेवारी, मार्च, मे, जून"], ["June", "जून"], [["January", "जानेवारी"], ["March", "मार्च"], ["May", "मे"]]],
+    ["Reasoning", ["Find the odd one out: Godavari, Krishna, Sahyadri, Bhima", "विसंगत घटक ओळखा: गोदावरी, कृष्णा, सह्याद्री, भीमा"], ["Sahyadri", "सह्याद्री"], [["Godavari", "गोदावरी"], ["Krishna", "कृष्णा"], ["Bhima", "भीमा"]]],
+    ["Reasoning", ["Find the odd one out: Pune, Nashik, Nagpur, Goa", "विसंगत घटक ओळखा: पुणे, नाशिक, नागपूर, गोवा"], ["Goa", "गोवा"], [["Pune", "पुणे"], ["Nashik", "नाशिक"], ["Nagpur", "नागपूर"]]],
+    ["Reasoning", ["Find the odd one out: Triangle, Square, Circle, Rectangle", "विसंगत घटक ओळखा: त्रिकोण, चौरस, वर्तुळ, आयत"], ["Circle", "वर्तुळ"], [["Triangle", "त्रिकोण"], ["Square", "चौरस"], ["Rectangle", "आयत"]]],
+    ["Reasoning", ["Find the odd one out: Marathi, Hindi, Gujarati, India", "विसंगत घटक ओळखा: मराठी, हिंदी, गुजराती, भारत"], ["India", "भारत"], [["Marathi", "मराठी"], ["Hindi", "हिंदी"], ["Gujarati", "गुजराती"]]],
+
+    /* ── Reasoning · blood relations ───────────────────────── */
+    ["Reasoning", ["Pointing to a photograph a man said, \"He is the son of my father's only son.\" Whose photograph is it?", "एका छायाचित्राकडे पाहून एक माणूस म्हणाला, \"हा माझ्या वडिलांच्या एकुलत्या एक मुलाचा मुलगा आहे.\" ते छायाचित्र कोणाचे आहे?"], ["His son", "त्याचा मुलगा"], [["His brother", "त्याचा भाऊ"], ["His father", "त्याचे वडील"], ["His nephew", "त्याचा पुतण्या"]]],
+    ["Reasoning", ["A is the brother of B, and B is the mother of C. How is A related to C?", "A हा B चा भाऊ आहे आणि B ही C ची आई आहे. A चे C शी नाते काय?"], ["Maternal uncle", "मामा"], [["Father", "वडील"], ["Brother", "भाऊ"], ["Paternal uncle", "काका"]]],
+    ["Reasoning", ["A boy said, \"She is the daughter of my mother's brother.\" How is she related to him?", "एक मुलगा म्हणाला, \"ती माझ्या आईच्या भावाची मुलगी आहे.\" तिचे त्याच्याशी नाते काय?"], ["Cousin", "मामेबहीण"], [["Sister", "बहीण"], ["Niece", "भाची"], ["Maternal aunt", "मावशी"]]],
+    ["Reasoning", ["Who is my father's wife's only daughter?", "माझ्या वडिलांच्या पत्नीची एकुलती एक मुलगी कोण?"], ["My sister", "माझी बहीण"], [["My mother", "माझी आई"], ["My daughter", "माझी मुलगी"], ["My aunt", "माझी मावशी"]]],
+    ["Reasoning", ["If 'A × B' means A is the mother of B and 'A + B' means A is the father of B, then in 'P + Q × R', how is P related to R?", "जर 'A × B' म्हणजे A ही B ची आई आणि 'A + B' म्हणजे A हे B चे वडील, तर 'P + Q × R' मध्ये P चे R शी नाते काय?"], ["Grandfather", "आजोबा"], [["Father", "वडील"], ["Maternal uncle", "मामा"], ["Brother", "भाऊ"]]],
+    ["Reasoning", ["A woman said, \"That man's mother is the only daughter of my mother.\" How is the woman related to the man?", "एक स्त्री म्हणाली, \"त्या माणसाची आई ही माझ्या आईची एकुलती एक मुलगी आहे.\" त्या स्त्रीचे त्या माणसाशी नाते काय?"], ["His mother", "त्याची आई"], [["His sister", "त्याची बहीण"], ["His maternal aunt", "त्याची मावशी"], ["His grandmother", "त्याची आजी"]]],
+    ["Reasoning", ["Ram's mother is the sister of Shyam's father. How is Shyam related to Ram?", "रामची आई ही श्यामच्या वडिलांची बहीण आहे. श्यामचे रामशी नाते काय?"], ["Cousin brother", "मामेभाऊ"], [["Brother", "भाऊ"], ["Nephew", "पुतण्या"], ["Paternal uncle", "काका"]]],
+    ["Reasoning", ["Introducing a boy, a girl said, \"He is the son of my grandfather's only son.\" How is the boy related to the girl?", "एका मुलाची ओळख करून देताना एक मुलगी म्हणाली, \"हा माझ्या आजोबांच्या एकुलत्या एक मुलाचा मुलगा आहे.\" त्या मुलाचे तिच्याशी नाते काय?"], ["Brother", "भाऊ"], [["Cousin", "चुलतभाऊ"], ["Paternal uncle", "काका"], ["Nephew", "पुतण्या"]]],
+    ["Reasoning", ["A is the father of B. B is the sister of C. C is the wife of D. How is A related to D?", "A हे B चे वडील आहेत. B ही C ची बहीण आहे. C ही D ची पत्नी आहे. A चे D शी नाते काय?"], ["Father-in-law", "सासरे"], [["Brother-in-law", "मेहुणा"], ["Grandfather", "आजोबा"], ["Paternal uncle", "काका"]]],
+    ["Reasoning", ["A man's sister's husband is his what?", "एका माणसाच्या बहिणीचा नवरा हा त्याचा कोण?"], ["Brother-in-law", "मेहुणा"], [["Paternal uncle", "काका"], ["Maternal uncle", "मामा"], ["Nephew", "पुतण्या"]]],
+    ["Reasoning", ["Your mother's sister is your what?", "तुमच्या आईची बहीण ही तुमची कोण?"], ["Maternal aunt", "मावशी"], [["Paternal aunt", "आत्या"], ["Maternal uncle's wife", "मामी"], ["Grandmother", "आजी"]]],
+    ["Reasoning", ["Your father's brother is your what?", "तुमच्या वडिलांचा भाऊ हा तुमचा कोण?"], ["Paternal uncle", "काका"], [["Maternal uncle", "मामा"], ["Paternal aunt", "आत्या"], ["Brother-in-law", "मेहुणा"]]],
+
+    /* ── Reasoning · direction sense ───────────────────────── */
+    ["Reasoning", ["A man walks 5 km towards the north, then turns right and walks 3 km. Which direction is he facing now?", "एक माणूस 5 किमी उत्तरेकडे चालतो, नंतर उजवीकडे वळून 3 किमी चालतो. आता तो कोणत्या दिशेला तोंड करून आहे?"], ["East", "पूर्व"], [["West", "पश्चिम"], ["North", "उत्तर"], ["South", "दक्षिण"]]],
+    ["Reasoning", ["A man walks 10 km towards the south, then turns left and later turns left again. Which direction is he facing now?", "एक माणूस 10 किमी दक्षिणेकडे चालतो, नंतर डावीकडे वळतो आणि पुन्हा डावीकडे वळतो. आता तो कोणत्या दिशेला तोंड करून आहे?"], ["North", "उत्तर"], [["South", "दक्षिण"], ["East", "पूर्व"], ["West", "पश्चिम"]]],
+    ["Reasoning", ["A boy stands facing the rising sun. Which direction is to his left?", "एक मुलगा उगवत्या सूर्याकडे तोंड करून उभा आहे. त्याच्या डाव्या बाजूला कोणती दिशा आहे?"], ["North", "उत्तर"], [["South", "दक्षिण"], ["East", "पूर्व"], ["West", "पश्चिम"]]],
+    ["Reasoning", ["Facing north, a man turns 90° clockwise and then turns 180° clockwise. Which direction is he facing now?", "उत्तरेकडे तोंड असलेला माणूस घड्याळाच्या दिशेने 90° वळतो आणि नंतर पुन्हा 180° वळतो. आता तो कोणत्या दिशेला तोंड करून आहे?"], ["West", "पश्चिम"], [["East", "पूर्व"], ["North", "उत्तर"], ["South", "दक्षिण"]]],
+    ["Reasoning", ["A man walks 4 km towards the east and then 3 km towards the north. How far is he from his starting point?", "एक माणूस 4 किमी पूर्वेकडे आणि नंतर 3 किमी उत्तरेकडे चालतो. तो सुरुवातीच्या ठिकाणापासून किती अंतरावर आहे?"], "5 km", ["7 km", "6 km", "12 km"]],
+    ["Reasoning", ["A man walks 6 km towards the south and then 8 km towards the east. How far is he from his starting point?", "एक माणूस 6 किमी दक्षिणेकडे आणि नंतर 8 किमी पूर्वेकडे चालतो. तो सुरुवातीच्या ठिकाणापासून किती अंतरावर आहे?"], "10 km", ["14 km", "12 km", "48 km"]],
+    ["Reasoning", ["Facing south, a man turns left, walks 2 km and then turns right. Which direction is he facing now?", "दक्षिणेकडे तोंड असलेला माणूस डावीकडे वळतो, 2 किमी चालतो आणि नंतर उजवीकडे वळतो. आता तो कोणत्या दिशेला तोंड करून आहे?"], ["South", "दक्षिण"], [["East", "पूर्व"], ["North", "उत्तर"], ["West", "पश्चिम"]]],
+    ["Reasoning", ["At sunrise, in which direction does a man's shadow fall?", "सूर्योदयाच्या वेळी माणसाची सावली कोणत्या दिशेला पडते?"], ["West", "पश्चिम"], [["East", "पूर्व"], ["North", "उत्तर"], ["South", "दक्षिण"]]],
+    ["Reasoning", ["At sunset, in which direction does a man's shadow fall?", "सूर्यास्ताच्या वेळी माणसाची सावली कोणत्या दिशेला पडते?"], ["East", "पूर्व"], [["West", "पश्चिम"], ["North", "उत्तर"], ["South", "दक्षिण"]]],
+    ["Reasoning", ["Facing west, a man turns 45° clockwise twice. Which direction is he facing now?", "पश्चिमेकडे तोंड असलेला माणूस घड्याळाच्या दिशेने दोनदा 45° वळतो. आता तो कोणत्या दिशेला तोंड करून आहे?"], ["North", "उत्तर"], [["South", "दक्षिण"], ["East", "पूर्व"], ["North-East", "ईशान्य"]]],
+    ["Reasoning", ["A man walks 3 km north, then 4 km west, then 3 km south. How far is he from his starting point?", "एक माणूस 3 किमी उत्तरेकडे, नंतर 4 किमी पश्चिमेकडे आणि नंतर 3 किमी दक्षिणेकडे चालतो. तो सुरुवातीच्या ठिकाणापासून किती अंतरावर आहे?"], "4 km", ["10 km", "6 km", "5 km"]],
+    ["Reasoning", ["If South-East becomes North, what does North-West become?", "जर आग्नेय दिशा उत्तर झाली, तर वायव्य दिशा कोणती होईल?"], ["South", "दक्षिण"], [["East", "पूर्व"], ["West", "पश्चिम"], ["South-West", "नैऋत्य"]]],
+
+    /* ── Reasoning · syllogism ─────────────────────────────── */
+    ["Reasoning", ["Statements: All cats are animals. All animals are living things. Which conclusion follows?", "विधाने: सर्व मांजरी प्राणी आहेत. सर्व प्राणी सजीव आहेत. कोणता निष्कर्ष निघतो?"], ["All cats are living things", "सर्व मांजरी सजीव आहेत"], [["All living things are cats", "सर्व सजीव मांजरी आहेत"], ["No cat is a living thing", "एकही मांजर सजीव नाही"], ["Some animals are not living things", "काही प्राणी सजीव नाहीत"]]],
+    ["Reasoning", ["Statements: All roses are flowers. Some flowers fade quickly. Which conclusion follows?", "विधाने: सर्व गुलाब फुले आहेत. काही फुले लवकर कोमेजतात. कोणता निष्कर्ष निघतो?"], ["Some flowers are roses", "काही फुले गुलाब आहेत"], [["All flowers are roses", "सर्व फुले गुलाब आहेत"], ["All roses fade quickly", "सर्व गुलाब लवकर कोमेजतात"], ["No rose is a flower", "एकही गुलाब फूल नाही"]]],
+    ["Reasoning", ["Statements: All men are mortal. Socrates is a man. Which conclusion follows?", "विधाने: सर्व माणसे मर्त्य आहेत. सॉक्रेटिस माणूस आहे. कोणता निष्कर्ष निघतो?"], ["Socrates is mortal", "सॉक्रेटिस मर्त्य आहे"], [["Socrates is immortal", "सॉक्रेटिस अमर आहे"], ["All mortals are men", "सर्व मर्त्य माणसे आहेत"], ["Socrates is not a man", "सॉक्रेटिस माणूस नाही"]]],
+    ["Reasoning", ["Statements: No student is lazy. Ram is a student. Which conclusion follows?", "विधाने: एकही विद्यार्थी आळशी नाही. राम विद्यार्थी आहे. कोणता निष्कर्ष निघतो?"], ["Ram is not lazy", "राम आळशी नाही"], [["Ram is lazy", "राम आळशी आहे"], ["All lazy people are students", "सर्व आळशी माणसे विद्यार्थी आहेत"], ["Ram is not a student", "राम विद्यार्थी नाही"]]],
+    ["Reasoning", ["Statements: All books are papers. No paper is red. Which conclusion follows?", "विधाने: सर्व पुस्तके कागद आहेत. एकही कागद लाल नाही. कोणता निष्कर्ष निघतो?"], ["No book is red", "एकही पुस्तक लाल नाही"], [["All books are red", "सर्व पुस्तके लाल आहेत"], ["Some papers are red", "काही कागद लाल आहेत"], ["All red things are books", "सर्व लाल वस्तू पुस्तके आहेत"]]],
+    ["Reasoning", ["Statements: Some pens are pencils. All pencils are erasers. Which conclusion follows?", "विधाने: काही पेन पेन्सिली आहेत. सर्व पेन्सिली खोडरबर आहेत. कोणता निष्कर्ष निघतो?"], ["Some pens are erasers", "काही पेन खोडरबर आहेत"], [["All pens are erasers", "सर्व पेन खोडरबर आहेत"], ["No pen is an eraser", "एकही पेन खोडरबर नाही"], ["All erasers are pens", "सर्व खोडरबर पेन आहेत"]]],
+    ["Reasoning", ["Statements: All dogs bark. Tommy is a dog. Which conclusion follows?", "विधाने: सर्व कुत्रे भुंकतात. टॉमी कुत्रा आहे. कोणता निष्कर्ष निघतो?"], ["Tommy barks", "टॉमी भुंकतो"], [["Tommy does not bark", "टॉमी भुंकत नाही"], ["All barking animals are dogs", "भुंकणारे सर्व प्राणी कुत्रे आहेत"], ["Tommy is not a dog", "टॉमी कुत्रा नाही"]]],
+    ["Reasoning", ["Statements: All squares are rectangles. All rectangles are quadrilaterals. Which conclusion follows?", "विधाने: सर्व चौरस आयत आहेत. सर्व आयत चौकोन आहेत. कोणता निष्कर्ष निघतो?"], ["All squares are quadrilaterals", "सर्व चौरस चौकोन आहेत"], [["All quadrilaterals are squares", "सर्व चौकोन चौरस आहेत"], ["No square is a quadrilateral", "एकही चौरस चौकोन नाही"], ["All rectangles are squares", "सर्व आयत चौरस आहेत"]]],
+    ["Reasoning", ["Statements: No bird is a mammal. All crows are birds. Which conclusion follows?", "विधाने: एकही पक्षी सस्तन प्राणी नाही. सर्व कावळे पक्षी आहेत. कोणता निष्कर्ष निघतो?"], ["No crow is a mammal", "एकही कावळा सस्तन प्राणी नाही"], [["All crows are mammals", "सर्व कावळे सस्तन प्राणी आहेत"], ["Some birds are mammals", "काही पक्षी सस्तन प्राणी आहेत"], ["All mammals are crows", "सर्व सस्तन प्राणी कावळे आहेत"]]],
+    ["Reasoning", ["Statements: Some teachers are writers. All writers are readers. Which conclusion follows?", "विधाने: काही शिक्षक लेखक आहेत. सर्व लेखक वाचक आहेत. कोणता निष्कर्ष निघतो?"], ["Some teachers are readers", "काही शिक्षक वाचक आहेत"], [["All teachers are readers", "सर्व शिक्षक वाचक आहेत"], ["No teacher is a reader", "एकही शिक्षक वाचक नाही"], ["All readers are teachers", "सर्व वाचक शिक्षक आहेत"]]],
+
+    /* ── Reasoning · ranking and order ─────────────────────── */
+    ["Reasoning", ["In a row of 20 students, A is 7th from the left. What is his position from the right?", "20 विद्यार्थ्यांच्या रांगेत A हा डावीकडून 7 वा आहे. उजवीकडून त्याचा क्रमांक कितवा?"], "14th", ["13th", "12th", "15th"]],
+    ["Reasoning", ["In a row of 40 students, B is 12th from the right. What is her position from the left?", "40 विद्यार्थ्यांच्या रांगेत B ही उजवीकडून 12 वी आहे. डावीकडून तिचा क्रमांक कितवा?"], "29th", ["28th", "27th", "30th"]],
+    ["Reasoning", ["A is taller than B, and B is taller than C. Who is the shortest?", "A हा B पेक्षा उंच आहे आणि B हा C पेक्षा उंच आहे. सर्वात कमी उंचीचा कोण?"], "C", ["A", "B", ["Cannot be decided", "ठरवता येत नाही"]]],
+    ["Reasoning", ["Ram ranks 8th from the top and 12th from the bottom of his class. How many students are in the class?", "रामचा वर्गात वरून 8 वा आणि खालून 12 वा क्रमांक आहे. वर्गात एकूण किती विद्यार्थी आहेत?"], "19", ["20", "18", "21"]],
+    ["Reasoning", ["In a queue of 30 people a man is 10th from the front. How many people stand behind him?", "30 लोकांच्या रांगेत एक माणूस पुढून 10 वा आहे. त्याच्या मागे किती लोक उभे आहेत?"], "20", ["19", "21", "22"]],
+    ["Reasoning", ["P is taller than Q but shorter than R. S is taller than R. Who is the tallest?", "P हा Q पेक्षा उंच पण R पेक्षा कमी उंचीचा आहे. S हा R पेक्षा उंच आहे. सर्वात उंच कोण?"], "S", ["P", "Q", "R"]],
+    ["Reasoning", ["In a row of girls, A is 11th from the left and 9th from the right. How many girls are in the row?", "मुलींच्या रांगेत A ही डावीकडून 11 वी आणि उजवीकडून 9 वी आहे. रांगेत एकूण किती मुली आहेत?"], "19", ["20", "18", "21"]],
+    ["Reasoning", ["Sita scored more than Gita but less than Rita. Who scored the highest?", "सीताला गीतापेक्षा जास्त पण रीतापेक्षा कमी गुण मिळाले. सर्वाधिक गुण कोणाला मिळाले?"], ["Rita", "रीता"], [["Sita", "सीता"], ["Gita", "गीता"], ["Cannot be decided", "ठरवता येत नाही"]]],
+    ["Reasoning", ["In a row of 25 students a boy is 8th from the right. What is his position from the left?", "25 विद्यार्थ्यांच्या रांगेत एक मुलगा उजवीकडून 8 वा आहे. डावीकडून त्याचा क्रमांक कितवा?"], "18th", ["17th", "19th", "16th"]],
+    ["Reasoning", ["In a row of 12 children, A is 3rd from the left and B is 5th from the right. How many children stand between them?", "12 मुलांच्या रांगेत A हा डावीकडून 3 रा आणि B हा उजवीकडून 5 वा आहे. त्यांच्यामध्ये किती मुले उभी आहेत?"], "4", ["3", "5", "6"]],
+
+    /* ── Reasoning · clocks and calendars ──────────────────── */
+    ["Reasoning", ["What is the angle between the hands of a clock at 3 o'clock?", "घड्याळात 3 वाजता दोन काट्यांमधील कोन किती अंशांचा असतो?"], "90°", ["60°", "120°", "180°"]],
+    ["Reasoning", ["What is the angle between the hands of a clock at 6 o'clock?", "घड्याळात 6 वाजता दोन काट्यांमधील कोन किती अंशांचा असतो?"], "180°", ["90°", "120°", "360°"]],
+    ["Reasoning", ["What is the angle between the hands of a clock at 3:30?", "घड्याळात 3:30 वाजता दोन काट्यांमधील कोन किती अंशांचा असतो?"], "75°", ["90°", "80°", "60°"]],
+    ["Reasoning", ["How many times do the hands of a clock coincide in 12 hours?", "12 तासांत घड्याळाचे दोन काटे किती वेळा एकमेकांवर येतात?"], "11", ["12", "10", "24"]],
+    ["Reasoning", ["How many times are the hands of a clock at right angles in 12 hours?", "12 तासांत घड्याळाचे दोन काटे किती वेळा काटकोनात येतात?"], "22", ["24", "11", "12"]],
+    ["Reasoning", ["If today is Monday, what day will it be after 61 days?", "आज सोमवार असेल, तर 61 दिवसांनंतर कोणता वार असेल?"], ["Saturday", "शनिवार"], [["Sunday", "रविवार"], ["Friday", "शुक्रवार"], ["Monday", "सोमवार"]]],
+    ["Reasoning", ["Which of these is a leap year?", "यांपैकी कोणते वर्ष लीप वर्ष आहे?"], "2000", ["1900", "2100", "1800"]],
+    ["Reasoning", ["In an ordinary year the 1st of January is a Sunday. What day is the 1st of February?", "एका सामान्य वर्षात 1 जानेवारीला रविवार आहे. 1 फेब्रुवारीला कोणता वार असेल?"], ["Wednesday", "बुधवार"], [["Tuesday", "मंगळवार"], ["Thursday", "गुरुवार"], ["Monday", "सोमवार"]]],
+
+    /* ── Reasoning · statement and conclusion ──────────────── */
+    ["Reasoning", ["Statement: All the students in the class passed the examination.<br>Conclusion I: No student of the class failed.<br>Conclusion II: Some students of the class failed.", "विधान: वर्गातील सर्व विद्यार्थी परीक्षेत उत्तीर्ण झाले.<br>निष्कर्ष I: वर्गातील एकही विद्यार्थी अनुत्तीर्ण झाला नाही.<br>निष्कर्ष II: वर्गातील काही विद्यार्थी अनुत्तीर्ण झाले."], ["Only conclusion I follows", "फक्त निष्कर्ष I निघतो"], [["Only conclusion II follows", "फक्त निष्कर्ष II निघतो"], ["Both conclusions follow", "दोन्ही निष्कर्ष निघतात"], ["Neither conclusion follows", "दोन्हीपैकी एकही निष्कर्ष निघत नाही"]]],
+    ["Reasoning", ["Statement: Smoking is injurious to health.<br>Conclusion I: Smoking should be discouraged.<br>Conclusion II: Non-smokers never fall ill.", "विधान: धूम्रपान आरोग्यास हानिकारक आहे.<br>निष्कर्ष I: धूम्रपानाला परावृत्त करावे.<br>निष्कर्ष II: धूम्रपान न करणारे कधीही आजारी पडत नाहीत."], ["Only conclusion I follows", "फक्त निष्कर्ष I निघतो"], [["Only conclusion II follows", "फक्त निष्कर्ष II निघतो"], ["Both conclusions follow", "दोन्ही निष्कर्ष निघतात"], ["Neither conclusion follows", "दोन्हीपैकी एकही निष्कर्ष निघत नाही"]]],
+    ["Reasoning", ["Statement: The price of petrol has increased sharply.<br>Conclusion I: Transport costs may rise.<br>Conclusion II: Some people may travel by public transport instead.", "विधान: पेट्रोलच्या किमतीत मोठी वाढ झाली आहे.<br>निष्कर्ष I: वाहतुकीचा खर्च वाढू शकतो.<br>निष्कर्ष II: काही लोक त्याऐवजी सार्वजनिक वाहतुकीचा वापर करू शकतात."], ["Both conclusions follow", "दोन्ही निष्कर्ष निघतात"], [["Only conclusion I follows", "फक्त निष्कर्ष I निघतो"], ["Only conclusion II follows", "फक्त निष्कर्ष II निघतो"], ["Neither conclusion follows", "दोन्हीपैकी एकही निष्कर्ष निघत नाही"]]],
+    ["Reasoning", ["Statement: Ram is either a doctor or an engineer.<br>Conclusion I: Ram is a doctor.<br>Conclusion II: Ram is an engineer.", "विधान: राम हा डॉक्टर तरी आहे किंवा अभियंता तरी आहे.<br>निष्कर्ष I: राम डॉक्टर आहे.<br>निष्कर्ष II: राम अभियंता आहे."], ["Neither conclusion follows", "दोन्हीपैकी एकही निष्कर्ष निघत नाही"], [["Only conclusion I follows", "फक्त निष्कर्ष I निघतो"], ["Only conclusion II follows", "फक्त निष्कर्ष II निघतो"], ["Both conclusions follow", "दोन्ही निष्कर्ष निघतात"]]],
+    ["Reasoning", ["Statement: Only graduates may apply for this post.<br>Conclusion I: A non-graduate cannot apply for this post.<br>Conclusion II: Every graduate who applies will be selected.", "विधान: या पदासाठी फक्त पदवीधरच अर्ज करू शकतात.<br>निष्कर्ष I: पदवी नसलेली व्यक्ती या पदासाठी अर्ज करू शकत नाही.<br>निष्कर्ष II: अर्ज करणाऱ्या प्रत्येक पदवीधराची निवड होईल."], ["Only conclusion I follows", "फक्त निष्कर्ष I निघतो"], [["Only conclusion II follows", "फक्त निष्कर्ष II निघतो"], ["Both conclusions follow", "दोन्ही निष्कर्ष निघतात"], ["Neither conclusion follows", "दोन्हीपैकी एकही निष्कर्ष निघत नाही"]]],
+    ["Reasoning", ["Statement: All roads leading to the fort were closed on Sunday.<br>Conclusion I: Visitors could not reach the fort by road on Sunday.<br>Conclusion II: The fort was damaged.", "विधान: रविवारी किल्ल्याकडे जाणारे सर्व रस्ते बंद होते.<br>निष्कर्ष I: रविवारी पर्यटकांना रस्त्याने किल्ल्यापर्यंत पोहोचता आले नाही.<br>निष्कर्ष II: किल्ल्याचे नुकसान झाले होते."], ["Only conclusion I follows", "फक्त निष्कर्ष I निघतो"], [["Only conclusion II follows", "फक्त निष्कर्ष II निघतो"], ["Both conclusions follow", "दोन्ही निष्कर्ष निघतात"], ["Neither conclusion follows", "दोन्हीपैकी एकही निष्कर्ष निघत नाही"]]],
+    ["Reasoning", ["Statement: The library will remain closed on Sunday.<br>Conclusion I: The library has very few readers.<br>Conclusion II: The library does not work on Sunday.", "विधान: रविवारी ग्रंथालय बंद राहील.<br>निष्कर्ष I: ग्रंथालयात फार कमी वाचक येतात.<br>निष्कर्ष II: ग्रंथालयाचे कामकाज रविवारी चालत नाही."], ["Only conclusion II follows", "फक्त निष्कर्ष II निघतो"], [["Only conclusion I follows", "फक्त निष्कर्ष I निघतो"], ["Both conclusions follow", "दोन्ही निष्कर्ष निघतात"], ["Neither conclusion follows", "दोन्हीपैकी एकही निष्कर्ष निघत नाही"]]],
+
+    /* ── Reasoning · figures and diagrams ──────────────────── */
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='10.0' y1='30.0' x2='50.0' y2='30.0'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='15.9' y1='44.1' x2='44.1' y2='15.9'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='30.0' y1='50.0' x2='30.0' y2='10.0'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='44.1' y1='44.1' x2='15.9' y2='15.9'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='10.0' y1='30.0' x2='50.0' y2='30.0'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='15.9' y1='44.1' x2='44.1' y2='15.9'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='30.0' y1='50.0' x2='30.0' y2='10.0'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30.0' cy='30' r='3.5' fill='currentColor' stroke='none'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='25.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='34.5' cy='30' r='3.5' fill='currentColor' stroke='none'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='21.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='30.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='39.0' cy='30' r='3.5' fill='currentColor' stroke='none'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='16.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='25.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='34.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='43.5' cy='30' r='3.5' fill='currentColor' stroke='none'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='12.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='21.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='30.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='39.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='48.0' cy='30' r='3.5' fill='currentColor' stroke='none'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='21.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='30.0' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='39.0' cy='30' r='3.5' fill='currentColor' stroke='none'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='7.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='16.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='25.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='34.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='43.5' cy='30' r='3.5' fill='currentColor' stroke='none'/><circle cx='52.5' cy='30' r='3.5' fill='currentColor' stroke='none'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><rect x='12' y='12' width='18' height='18' fill='currentColor' stroke='none' fill-opacity='.8'/><rect x='12' y='12' width='36' height='36'/><line x1='30' y1='12' x2='30' y2='48' stroke-opacity='.45'/><line x1='12' y1='30' x2='48' y2='30' stroke-opacity='.45'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><rect x='30' y='12' width='18' height='18' fill='currentColor' stroke='none' fill-opacity='.8'/><rect x='12' y='12' width='36' height='36'/><line x1='30' y1='12' x2='30' y2='48' stroke-opacity='.45'/><line x1='12' y1='30' x2='48' y2='30' stroke-opacity='.45'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><rect x='30' y='30' width='18' height='18' fill='currentColor' stroke='none' fill-opacity='.8'/><rect x='12' y='12' width='36' height='36'/><line x1='30' y1='12' x2='30' y2='48' stroke-opacity='.45'/><line x1='12' y1='30' x2='48' y2='30' stroke-opacity='.45'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><rect x='12' y='30' width='18' height='18' fill='currentColor' stroke='none' fill-opacity='.8'/><rect x='12' y='12' width='36' height='36'/><line x1='30' y1='12' x2='30' y2='48' stroke-opacity='.45'/><line x1='12' y1='30' x2='48' y2='30' stroke-opacity='.45'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><rect x='12' y='12' width='18' height='18' fill='currentColor' stroke='none' fill-opacity='.8'/><rect x='12' y='12' width='36' height='36'/><line x1='30' y1='12' x2='30' y2='48' stroke-opacity='.45'/><line x1='12' y1='30' x2='48' y2='30' stroke-opacity='.45'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><rect x='30' y='12' width='18' height='18' fill='currentColor' stroke='none' fill-opacity='.8'/><rect x='12' y='12' width='36' height='36'/><line x1='30' y1='12' x2='30' y2='48' stroke-opacity='.45'/><line x1='12' y1='30' x2='48' y2='30' stroke-opacity='.45'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><rect x='30' y='30' width='18' height='18' fill='currentColor' stroke='none' fill-opacity='.8'/><rect x='12' y='12' width='36' height='36'/><line x1='30' y1='12' x2='30' y2='48' stroke-opacity='.45'/><line x1='12' y1='30' x2='48' y2='30' stroke-opacity='.45'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='30.0' y1='48.0' x2='30.0' y2='12.0'/><polyline points='34.3,17.5 30.0,12.0 25.7,17.5'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='12.0' y1='30.0' x2='48.0' y2='30.0'/><polyline points='42.5,34.3 48.0,30.0 42.5,25.7'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='30.0' y1='12.0' x2='30.0' y2='48.0'/><polyline points='25.7,42.5 30.0,48.0 34.3,42.5'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='48.0' y1='30.0' x2='12.0' y2='30.0'/><polyline points='17.5,25.7 12.0,30.0 17.5,34.3'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='30.0' y1='48.0' x2='30.0' y2='12.0'/><polyline points='34.3,17.5 30.0,12.0 25.7,17.5'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='12.0' y1='30.0' x2='48.0' y2='30.0'/><polyline points='42.5,34.3 48.0,30.0 42.5,25.7'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='30.0' y1='12.0' x2='30.0' y2='48.0'/><polyline points='25.7,42.5 30.0,48.0 34.3,42.5'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 47.3,40.0 12.7,40.0'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 50.0,30.0 30.0,50.0 10.0,30.0'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 49.0,23.8 41.8,46.2 18.2,46.2 11.0,23.8'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 47.3,20.0 47.3,40.0 30.0,50.0 12.7,40.0 12.7,20.0'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 45.6,17.5 49.5,34.5 38.7,48.0 21.3,48.0 10.5,34.5 14.4,17.5'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 49.0,23.8 41.8,46.2 18.2,46.2 11.0,23.8'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 44.1,15.9 50.0,30.0 44.1,44.1 30.0,50.0 15.9,44.1 10.0,30.0 15.9,15.9'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18'/><circle cx='48.0' cy='30.0' r='5' fill='currentColor' stroke='none'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18'/><circle cx='30.0' cy='48.0' r='5' fill='currentColor' stroke='none'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18'/><circle cx='12.0' cy='30.0' r='5' fill='currentColor' stroke='none'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18'/><circle cx='30.0' cy='12.0' r='5' fill='currentColor' stroke='none'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18'/><circle cx='48.0' cy='30.0' r='5' fill='currentColor' stroke='none'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18'/><circle cx='30.0' cy='48.0' r='5' fill='currentColor' stroke='none'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18'/><circle cx='30' cy='30' r='5' fill='currentColor' stroke='none'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='30.0' y1='14' x2='30.0' y2='46'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='25.0' y1='14' x2='25.0' y2='46'/><line x1='35.0' y1='14' x2='35.0' y2='46'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='20.0' y1='14' x2='20.0' y2='46'/><line x1='30.0' y1='14' x2='30.0' y2='46'/><line x1='40.0' y1='14' x2='40.0' y2='46'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='15.0' y1='14' x2='15.0' y2='46'/><line x1='25.0' y1='14' x2='25.0' y2='46'/><line x1='35.0' y1='14' x2='35.0' y2='46'/><line x1='45.0' y1='14' x2='45.0' y2='46'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='10.0' y1='14' x2='10.0' y2='46'/><line x1='20.0' y1='14' x2='20.0' y2='46'/><line x1='30.0' y1='14' x2='30.0' y2='46'/><line x1='40.0' y1='14' x2='40.0' y2='46'/><line x1='50.0' y1='14' x2='50.0' y2='46'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='25.0' y1='14' x2='25.0' y2='46'/><line x1='35.0' y1='14' x2='35.0' y2='46'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><line x1='20.0' y1='14' x2='20.0' y2='46'/><line x1='30.0' y1='14' x2='30.0' y2='46'/><line x1='40.0' y1='14' x2='40.0' y2='46'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><path d='M30,12 A18,18 0 0,0 30,48 Z' fill='currentColor' fill-opacity='.8' stroke='none'/><circle cx='30' cy='30' r='18'/></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><path d='M12,30 A18,18 0 0,1 48,30 Z' fill='currentColor' fill-opacity='.8' stroke='none'/><circle cx='30' cy='30' r='18'/></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><path d='M30,12 A18,18 0 0,1 30,48 Z' fill='currentColor' fill-opacity='.8' stroke='none'/><circle cx='30' cy='30' r='18'/></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><path d='M12,30 A18,18 0 0,0 48,30 Z' fill='currentColor' fill-opacity='.8' stroke='none'/><circle cx='30' cy='30' r='18'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><path d='M30,12 A18,18 0 0,0 30,48 Z' fill='currentColor' fill-opacity='.8' stroke='none'/><circle cx='30' cy='30' r='18'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><path d='M12,30 A18,18 0 0,1 48,30 Z' fill='currentColor' fill-opacity='.8' stroke='none'/><circle cx='30' cy='30' r='18'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='18' fill='currentColor' fill-opacity='.8'/><circle cx='30' cy='30' r='18'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig'><svg viewBox='0 0 282 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><g transform='translate(0,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><g transform='rotate(0,30,30)'><polyline points='20,14 20,46 44,46'/></g></g><g transform='translate(74,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><g transform='rotate(90,30,30)'><polyline points='20,14 20,46 44,46'/></g></g><g transform='translate(148,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><g transform='rotate(180,30,30)'><polyline points='20,14 20,46 44,46'/></g></g><g transform='translate(222,0)'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='42' text-anchor='middle' font-family='Georgia, serif' font-size='30' font-weight='700' stroke='none' fill='currentColor' fill-opacity='.55'>?</text></g></svg></span>Which figure comes next in the series?", "मालिकेत पुढील आकृती कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><g transform='rotate(270,30,30)'><polyline points='20,14 20,46 44,46'/></g></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><g transform='rotate(0,30,30)'><polyline points='20,14 20,46 44,46'/></g></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><g transform='rotate(90,30,30)'><polyline points='20,14 20,46 44,46'/></g></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><g transform='rotate(180,30,30)'><polyline points='20,14 20,46 44,46'/></g></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='8' y='8' width='44' height='44'/><line x1='30' y1='8' x2='30' y2='52'/><line x1='8' y1='30' x2='52' y2='30'/></svg></span>How many squares are there in the figure?", "दिलेल्या आकृतीत एकूण किती चौरस आहेत?"], "5", ["4", "6", "8"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><polygon points='30,10 8,50 52,50'/><line x1='30' y1='10' x2='30' y2='50'/></svg></span>How many triangles are there in the figure?", "दिलेल्या आकृतीत एकूण किती त्रिकोण आहेत?"], "3", ["2", "4", "5"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='6' y='16' width='48' height='28'/><line x1='30' y1='16' x2='30' y2='44'/></svg></span>How many rectangles are there in the figure?", "दिलेल्या आकृतीत एकूण किती आयत आहेत?"], "3", ["2", "4", "6"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='8' y='8' width='44' height='44'/><line x1='8' y1='8' x2='52' y2='52'/><line x1='52' y1='8' x2='8' y2='52'/></svg></span>How many triangles are there in the figure?", "दिलेल्या आकृतीत एकूण किती त्रिकोण आहेत?"], "8", ["4", "6", "10"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='6' y='6' width='48' height='48'/><line x1='22' y1='6' x2='22' y2='54'/><line x1='38' y1='6' x2='38' y2='54'/><line x1='6' y1='22' x2='54' y2='22'/><line x1='6' y1='38' x2='54' y2='38'/></svg></span>How many squares are there in the figure?", "दिलेल्या आकृतीत एकूण किती चौरस आहेत?"], "14", ["9", "13", "15"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><polygon points='30,10 6,50 54,50'/><line x1='30' y1='10' x2='22' y2='50'/><line x1='30' y1='10' x2='38' y2='50'/></svg></span>How many triangles are there in the figure?", "दिलेल्या आकृतीत एकूण किती त्रिकोण आहेत?"], "6", ["5", "4", "3"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>R</text></svg></span>Which figure is the mirror image of the letter shown?", "दाखवलेल्या अक्षराची आरशातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>R</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>R</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>R</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>R</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>F</text></svg></span>Which figure is the mirror image of the letter shown?", "दाखवलेल्या अक्षराची आरशातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>F</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>F</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>F</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>F</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>P</text></svg></span>Which figure is the mirror image of the letter shown?", "दाखवलेल्या अक्षराची आरशातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>P</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>P</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>P</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>P</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>4</text></svg></span>Which figure is the mirror image of the letter shown?", "दाखवलेल्या अक्षराची आरशातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>4</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>4</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>4</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>4</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>L</text></svg></span>Which figure is the water image of the letter shown?", "दाखवलेल्या अक्षराची पाण्यातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>L</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>L</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>L</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>L</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>J</text></svg></span>Which figure is the water image of the letter shown?", "दाखवलेल्या अक्षराची पाण्यातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>J</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>J</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>J</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>J</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>7</text></svg></span>Which figure is the water image of the letter shown?", "दाखवलेल्या अक्षराची पाण्यातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>7</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>7</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>7</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>7</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>G</text></svg></span>Which figure is the water image of the letter shown?", "दाखवलेल्या अक्षराची पाण्यातील प्रतिमा कोणती?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(1,-1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>G</text></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>G</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='translate(30,30) scale(-1,1) translate(-30,-30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>G</text></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><text transform='rotate(180,30,30)' x='30' y='44' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='40' font-weight='700' stroke='none' fill='currentColor'>G</text></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='16' y='12' width='28' height='36'/><line x1='16' y1='12' x2='16' y2='48' stroke-dasharray='4 3' stroke-opacity='.7'/><circle cx='32' cy='30' r='4.5' fill='currentColor' stroke='none'/></svg></span>A square sheet of paper is folded once along the dotted line and a hole is punched through it. How many holes are seen when the sheet is unfolded?", "कागदाची चौरस घडी ठिपक्यांच्या रेषेवर एकदा घालून त्यातून एक छिद्र पाडले आहे. कागद उलगडल्यावर किती छिद्रे दिसतील?"], "2", ["1", "3", "4"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='18' y='16' width='26' height='28'/><line x1='18' y1='16' x2='18' y2='44' stroke-dasharray='4 3' stroke-opacity='.7'/><line x1='18' y1='16' x2='44' y2='16' stroke-dasharray='4 3' stroke-opacity='.7'/><circle cx='32' cy='31' r='4' fill='currentColor' stroke='none'/></svg></span>A square sheet of paper is folded twice along the dotted lines and a hole is punched through it. How many holes are seen when the sheet is unfolded?", "कागदाची चौरस घडी ठिपक्यांच्या रेषांवर दोनदा घालून त्यातून एक छिद्र पाडले आहे. कागद उलगडल्यावर किती छिद्रे दिसतील?"], "4", ["2", "3", "8"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='8' y='8' width='44' height='44'/><line x1='8' y1='8' x2='52' y2='52'/></svg></span>Which of these figures is contained in the figure shown?", "दाखवलेल्या आकृतीत यांपैकी कोणती आकृती समाविष्ट आहे?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 47.3,40.0 12.7,40.0'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='19'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 49.0,23.8 41.8,46.2 18.2,46.2 11.0,23.8'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 47.3,20.0 47.3,40.0 30.0,50.0 12.7,40.0 12.7,20.0'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='8' y='12' width='34' height='34'/><circle cx='38' cy='32' r='15'/></svg></span>Which of these figures is contained in the figure shown?", "दाखवलेल्या आकृतीत यांपैकी कोणती आकृती समाविष्ट आहे?"], "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><circle cx='30' cy='30' r='19'/></svg></span>", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 47.3,40.0 12.7,40.0'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,10.0 49.0,23.8 41.8,46.2 18.2,46.2 11.0,23.8'/></svg></span>", "<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='0.9' y='0.9' width='58.2' height='58.2' rx='2' stroke-opacity='.3' stroke-width='1.4'/><polygon points='30.0,9.0 35.3,22.7 50.0,23.5 38.6,32.8 42.3,47.0 30.0,39.0 17.7,47.0 21.4,32.8 10.0,23.5 24.7,22.7'/></svg></span>"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='12' y='12' width='36' height='36' rx='6'/><circle cx='23' cy='23' r='4' fill='currentColor' stroke='none'/><circle cx='37' cy='37' r='4' fill='currentColor' stroke='none'/></svg></span>On a standard dice the numbers on opposite faces add up to 7. If the top face shows 2, which number is on the bottom face?", "प्रमाणित फाशावर समोरासमोरील पृष्ठांवरील संख्यांची बेरीज 7 असते. वरच्या पृष्ठावर 2 असेल, तर खालच्या पृष्ठावर कोणती संख्या असेल?"], "5", ["4", "6", "3"]],
+    ["Reasoning", ["<span class='fig small'><svg viewBox='0 0 68 52' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'><rect x='18' y='2' width='16' height='16' stroke-width='1.5'/><text x='26' y='13.5' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' stroke='none' fill='currentColor'>1</text><rect x='2' y='18' width='16' height='16' stroke-width='1.5'/><text x='10' y='29.5' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' stroke='none' fill='currentColor'>2</text><rect x='18' y='18' width='16' height='16' stroke-width='1.5'/><text x='26' y='29.5' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' stroke='none' fill='currentColor'>3</text><rect x='34' y='18' width='16' height='16' stroke-width='1.5'/><text x='42' y='29.5' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' stroke='none' fill='currentColor'>4</text><rect x='50' y='18' width='16' height='16' stroke-width='1.5'/><text x='58' y='29.5' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' stroke='none' fill='currentColor'>5</text><rect x='18' y='34' width='16' height='16' stroke-width='1.5'/><text x='26' y='45.5' text-anchor='middle' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' stroke='none' fill='currentColor'>6</text></svg></span>The figure shows the net of a cube. Which number will be on the face opposite the face numbered 3?", "आकृतीत घनाची उलगडलेली रचना दाखवली आहे. 3 क्रमांकाच्या पृष्ठासमोर कोणती संख्या येईल?"], "5", ["1", "6", "2"]],
   ];
 
   const LETTERS = ["A", "B", "C", "D"];
@@ -1490,7 +1800,7 @@
     Maharashtra: "महाराष्ट्र भूगोल", "MH History": "महाराष्ट्र इतिहास",
     "MH Polity": "महाराष्ट्र राज्यव्यवस्था", Polity: "भारतीय राज्यव्यवस्था",
     "India History": "भारताचा इतिहास", India: "भारताचा भूगोल",
-    Marathi: "मराठी", GK: "सामान्यज्ञान"
+    Marathi: "मराठी", GK: "सामान्यज्ञान", Reasoning: "बुद्धिमत्ता चाचणी"
   };
 
   /* A field is either a plain string (identical in both languages —
@@ -1527,6 +1837,7 @@
   let log = [];        // per-question record for the answer key
   let started = 0, ticker = null;
   let sourceLabel = "local";
+  let queue = [];      // the bank, shuffled, drawn down across sheets
 
   /* ── helpers ────────────────────────────────────────────── */
   const shuffle = (arr) => {
@@ -1536,6 +1847,25 @@
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
+  };
+
+  /* Draw without replacement. Reshuffling the whole bank for every
+     sheet is random but wasteful: a question can come up three sheets
+     running while others are never seen at all. Instead the bank is
+     shuffled once and drawn down, so every question appears before any
+     of them repeats — a fresh shuffle only when the queue runs dry.
+     The pushback guards the seam between two cycles, where a question
+     from the tail of the old order could otherwise land on the same
+     sheet as itself from the head of the new one. */
+  const drawLocal = (n) => {
+    const out = [];
+    while (out.length < n) {
+      if (!queue.length) queue = shuffle(BANK);
+      const q = queue.pop();
+      if (out.indexOf(q) === -1) out.push(q);
+      else queue.unshift(q);
+    }
+    return out;
   };
 
   const clock = (ms) => {
@@ -1586,7 +1916,7 @@
       }
     }
     if (!drawn) {
-      drawn = shuffle(BANK).slice(0, PER_ROUND);
+      drawn = drawLocal(PER_ROUND);
       sourceLabel = "local";
     }
 
@@ -1632,6 +1962,13 @@
     ui.qOf.textContent = `/${paper.length}`;
     ui.qTag.innerHTML = item.cat + (CAT_MR[item.cat] ? `<span class="mr">${CAT_MR[item.cat]}</span>` : "");
     ui.qText.innerHTML = bi(item.q);
+
+    /* Restart the enter animation: the question block persists between
+       renders, so the class has to be taken off and reflowed back on. */
+    const block = ui.qText.closest(".question");
+    block.classList.remove("enter");
+    void block.offsetWidth;
+    block.classList.add("enter");
 
     pips().forEach((p, i) => {
       if (!p.dataset.state || p.dataset.state === "active") {
@@ -1736,7 +2073,21 @@
     ui.quiz.classList.add("hidden");
     ui.result.classList.remove("hidden");
     ui.rScore.textContent = score;
-    ui.rPct.textContent = `of ${paper.length} · ${pct}% · ${elapsed}`;
+    ui.rPct.textContent = `of ${paper.length}`;
+    el("t-wrong").textContent = paper.length - score;
+    el("t-pct").textContent = `${pct}%`;
+    el("t-run").textContent = bestStreak;
+    el("t-time").textContent = elapsed;
+
+    /* Sweep the dial from empty every time, so a second sheet animates
+       instead of jumping to its final arc. */
+    el("r-dial").dataset.band = pct >= 80 ? "high" : pct < 50 ? "low" : "";
+    const arc = el("r-arc");
+    const circumference = 2 * Math.PI * 58;
+    arc.style.strokeDashoffset = circumference;
+    requestAnimationFrame(() => {
+      arc.style.strokeDashoffset = circumference * (1 - pct / 100);
+    });
 
     const grade =
       pct === 100 ? ["A clean sheet. Every bubble matched the answer key.",
@@ -1758,7 +2109,7 @@
     };
 
     ui.review.innerHTML = log.map((r, i) => `
-      <div class="row">
+      <div class="row" data-ok="${r.ok ? 1 : 0}">
         <div class="n">${String(i + 1).padStart(2, "0")}</div>
         <div class="q">${bi(r.q)}</div>
         <div class="a">

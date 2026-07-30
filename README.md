@@ -1,6 +1,6 @@
 # MCQ Exam Drill
 
-A single-file **bilingual (English + मराठी)** MCQ practice site with a **737-question bank** aimed at Maharashtra competitive exams and school revision, designed as an OMR answer sheet — the scannable bubble form used in real exams. Answer a bubble and it inks in immediately: **green with a ✓ if correct, red with an ✕ and a shake if wrong**, with the correct option outlined in dashed green so you learn it on the spot.
+A single-file **bilingual (English + मराठी)** MCQ practice site with an **887-question bank** aimed at Maharashtra competitive exams and school revision, designed as an OMR answer sheet — the scannable bubble form used in real exams. Answer a bubble and it inks in immediately: **green with a ✓ if correct, red with an ✕ and a shake if wrong**, with the correct option outlined in dashed green so you learn it on the spot.
 
 No build step, no dependencies, no framework. One HTML file.
 
@@ -22,14 +22,16 @@ python3 -m http.server 8000
 
 ## Features
 
-- **Bilingual throughout** — all 737 questions, their options, the verdicts, the answer key and the page chrome carry Marathi.
+- **Bilingual throughout** — all 887 questions, their options, the verdicts, the answer key and the page chrome carry Marathi.
+- **150 reasoning questions**, 29 of them diagram-based — drawn as inline SVG, so they still need no external files.
 - **10 questions per sheet**, drawn at random, with the four options shuffled every time — so a question's correct answer moves position between attempts.
+- **No repeats until the bank runs out.** The bank is shuffled once and drawn down across sheets, so every one of the 887 questions comes up before any of them comes up twice.
 - **Instant marking.** Red for wrong, green for right, with a ✓/✕ stamp. The answer key row is revealed as soon as you commit.
 - **Live readouts** for score, correct streak, and elapsed time.
 - **Bubble progress strip** across the top, filling red/green as you work through the sheet.
 - **Keyboard answering** — <kbd>A</kbd>–<kbd>D</kbd> or <kbd>1</kbd>–<kbd>4</kbd> to pick, <kbd>Enter</kbd> to advance.
-- **Graded summary** with percentage, time taken, best streak, and a togglable answer key showing your answer against the correct one for every question.
-- **Light and dark themes**, following your OS preference with a manual override.
+- **Graded summary** — a score dial that sweeps to your percentage (green above 80, red below 50), boxed tallies for missed, percent, best run and time, and a togglable answer key. Every key row carries a coloured rail, so the misses can be found without reading a word.
+- **Light and dark themes**, following your OS preference with a manual override. The stock is warm rather than blue-white, the way exam paper actually is, which also stops the long Devanagari lines from glaring.
 - Respects `prefers-reduced-motion`.
 
 ## Bilingual: English + मराठी
@@ -51,7 +53,7 @@ Every entry is machine-checked: four unique options, no duplicate questions anyw
 
 ## Where the questions come from
 
-**The bundled bilingual bank of 737 questions is the default source.**
+**The bundled bilingual bank of 887 questions is the default source.**
 
 There is also optional support for **Open Trivia DB** (`opentdb.com`), which offers a few thousand questions across ~24 categories — but it is **English-only**, and no Marathi trivia API exists. Because bilingual sheets are the point, the live feed is off by default. To enable it, flip one constant near the top of the script:
 
@@ -61,22 +63,44 @@ const USE_LIVE_API = true;   // draws English-only questions instead
 
 With it on, the API is tried first and the bilingual bank serves as the fallback if the request fails.
 
-The bank is aimed at Maharashtra competitive exams (MPSC, Talathi, police bharti) as well as general school revision, across 25 subjects:
+The bank is aimed at Maharashtra competitive exams (MPSC, Talathi, police bharti) as well as general school revision, across 26 subjects:
 
 | Subject | Q | Subject | Q | Subject | Q |
 |---|---|---|---|---|---|
-| Indian polity | 71 | Chemistry | 40 | Science | 17 |
-| Maharashtra history | 60 | Marathi literature | 40 | Literature | 16 |
-| Indian history | 60 | Geography (world) | 36 | Computing | 16 |
-| Maharashtra geography | 50 | Economics | 35 | Astronomy | 11 |
-| Indian geography | 50 | Physics | 34 | Sport | 9 |
-| Static GK | 50 | Maharashtra polity | 30 | Art / Music | 10 |
-| Biology | 48 | History (world) | 24 | Language / Mythology | 10 |
-| | | Maths | 19 | General | 1 |
+| Reasoning | 150 | Chemistry | 40 | Science | 17 |
+| Indian polity | 71 | Marathi literature | 40 | Literature | 16 |
+| Maharashtra history | 60 | Geography (world) | 36 | Computing | 16 |
+| Indian history | 60 | Economics | 35 | Astronomy | 11 |
+| Maharashtra geography | 50 | Physics | 34 | Art / Music | 10 |
+| Indian geography | 50 | Maharashtra polity | 30 | Language / Mythology | 10 |
+| Static GK | 50 | History (world) | 24 | Sport | 9 |
+| Biology | 48 | Maths | 19 | General | 1 |
 
-At 10 questions a sheet, that is **73 sheets before any question repeats**.
+At 10 questions a sheet, that is **88 full sheets before any question repeats**, and the entire bank is seen within 89.
+
+This is a rotation, not an independent draw per sheet: the bank is shuffled once and questions are taken off the front until it is exhausted, then reshuffled. Drawing each sheet from the full bank instead would be random but much weaker practice — in simulation it repeated 60% of draws over 200 sheets while leaving 95 questions unseen. The queue lives in memory only, so reloading the page starts a fresh shuffle.
 
 Maharashtra-focused coverage includes the Sahyadri and state rivers, districts and divisions, Shivaji Maharaj and the Marathas, the Peshwas, the social reformers (Phule, Ambedkar, Shahu Maharaj, Karve, Agarkar), the Samyukta Maharashtra movement, state administration from talathi to collector, the sant tradition and Marathi literature, and Marathi grammar and dialects.
+
+## Reasoning · बुद्धिमत्ता चाचणी
+
+The largest single subject, at 150 questions, covering the types that actually appear in MPSC, Talathi and police bharti papers:
+
+| Type | Q | Type | Q |
+|---|---|---|---|
+| Number & letter series | 20 | Blood relations | 12 |
+| Coding–decoding | 15 | Direction sense | 12 |
+| Analogy | 15 | Syllogism | 10 |
+| Odd one out | 12 | Ranking & order | 10 |
+| **Figure series & counting** | 15 | Clock & calendar | 8 |
+| **Mirror & water images** | 8 | Statement–conclusion | 7 |
+| **Paper folding, embedded figures, dice** | 6 | | |
+
+The 29 bold entries are **diagram questions**, drawn as inline SVG — no image files, no external requests, so the single-file property survives. Every stroke is `currentColor`, which means a figure is legible in both the light and dark themes and inks over to red or green with the rest of the option when the sheet is marked.
+
+Where the four choices are themselves shapes — figure series, mirror images, embedded figures — the options are SVG too, because option text is rendered as HTML.
+
+Series, coding-decoding and letter-based questions keep Latin letters and digits exactly as Maharashtra papers print them, so those options are stored as single strings rather than translated pairs.
 
 ## Adding your own questions
 
@@ -99,7 +123,32 @@ Because plain strings are still accepted everywhere, the older English-only form
 
 Question text accepts inline HTML, so book and artwork titles can be italicised with `<em>`. Option order is randomised at runtime — do not try to control the position of the correct answer.
 
+### Diagram questions
+
+Because both question text and option text are rendered as HTML, a figure is just inline SVG wrapped in `<span class="fig">`. Put it at the **start of the English string** so the figure sits above the question and the two language lines stay together:
+
+```js
+["Reasoning",
+  ["<span class='fig'><svg viewBox='0 0 60 60' …>…</svg></span>How many triangles are in the figure?",
+   "दिलेल्या आकृतीत एकूण किती त्रिकोण आहेत?"],
+  "8", ["4", "6", "10"]],
+```
+
+Two rules keep figures consistent with the rest of the page:
+
+- **Stroke with `currentColor`, never a fixed colour.** That is what makes a figure work in both themes and inherit the graded red/green.
+- **Add `class="fig small"`** for a single 60 × 60 figure; plain `fig` is sized for a wide series strip. Inside an option, `.fig` is capped narrower automatically.
+
+An option that is itself a shape is a plain single string holding the SVG — there is nothing to translate, so it renders once:
+
+```js
+"<span class='fig small'><svg viewBox='0 0 60 60' …>…</svg></span>"
+```
+
+The bundled diagram questions were produced by a small generator script rather than written by hand, which is worth doing if you add many: rotations, polygon vertices and mirror transforms are easy to get subtly wrong in hand-written SVG.
+
 ## Notes
 
 - The whole app is one file: markup, CSS custom properties for both themes, and the logic in a single IIFE.
+- Diagrams are inline SVG markup, not images, so they survive a strict Content Security Policy and work offline like the rest of the page.
 - If you deploy this behind a strict Content Security Policy, the outbound API call is blocked and the page silently falls back to the local bank. The source label in the footer tells you which one is active.
