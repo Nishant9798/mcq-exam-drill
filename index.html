@@ -4761,7 +4761,8 @@
     Maharashtra: "महाराष्ट्र भूगोल", "MH History": "महाराष्ट्र इतिहास",
     "MH Polity": "महाराष्ट्र राज्यव्यवस्था", Polity: "भारतीय राज्यव्यवस्था",
     "India History": "भारताचा इतिहास", India: "भारताचा भूगोल",
-    Marathi: "मराठी", GK: "सामान्यज्ञान", Reasoning: "बुद्धिमत्ता चाचणी"
+    Marathi: "मराठी", GK: "सामान्यज्ञान", Reasoning: "बुद्धिमत्ता चाचणी",
+    English: "इंग्रजी", Environment: "पर्यावरण"
   };
 
   /* A field is either a plain string (identical in both languages —
@@ -5313,6 +5314,11 @@
       : matchMedia("(prefers-color-scheme: dark)").matches;
     root.dataset.theme = dark ? "light" : "dark";
   });
+
+  /* The footer is rewritten whenever a sheet is drawn, but the setup screen
+     shows it first — so take the count from the bank rather than the markup,
+     which would otherwise go stale every time questions are added. */
+  ui.source.textContent = `Bank: local · ${BANK.length} questions · English + मराठी`;
 
   buildSetup();
   showSetup();
