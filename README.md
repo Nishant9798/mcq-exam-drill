@@ -1,6 +1,6 @@
 # MCQ Exam Drill
 
-A single-file **bilingual (English + मराठी)** MCQ practice site with an **887-question bank** aimed at Maharashtra competitive exams and school revision, designed as an OMR answer sheet — the scannable bubble form used in real exams. Answer a bubble and it inks in immediately: **green with a ✓ if correct, red with an ✕ and a shake if wrong**, with the correct option outlined in dashed green so you learn it on the spot.
+A single-file **bilingual (English + मराठी)** MCQ practice site with an **2891-question bank** aimed at Maharashtra competitive exams and school revision, designed as an OMR answer sheet — the scannable bubble form used in real exams. Answer a bubble and it inks in immediately: **green with a ✓ if correct, red with an ✕ and a shake if wrong**, with the correct option outlined in dashed green so you learn it on the spot.
 
 No build step, no dependencies, no framework. One HTML file.
 
@@ -22,14 +22,14 @@ python3 -m http.server 8000
 
 ## Features
 
-- **Bilingual throughout** — all 887 questions, their options, the verdicts, the answer key and the page chrome carry Marathi.
-- **150 reasoning questions**, 29 of them diagram-based — drawn as inline SVG, so they still need no external files.
+- **Bilingual throughout** — all 2891 questions, their options, the verdicts, the answer key and the page chrome carry Marathi.
+- **374 reasoning questions**, 29 of them diagram-based — drawn as inline SVG, so they still need no external files.
 - **The sheet is set before it is drawn** — which subjects it comes from, how many questions it runs to (10 / 20 / 30 / 50), and how long there is to sit it.
 - **A whole-sheet countdown**, quoted per question and multiplied by the sheet length — 60s × 20 questions is a 20-minute paper. When it expires the sheet grades itself and everything not reached is marked unattempted.
 - Questions are **drawn at random**, with the four options shuffled every time — so a question's correct answer moves position between attempts.
-- **No repeats until the bank runs out.** The bank is shuffled once and drawn down across sheets, so every one of the 887 questions comes up before any of them comes up twice.
+- **No repeats until the bank runs out.** The bank is shuffled once and drawn down across sheets, so every one of the 2891 questions comes up before any of them comes up twice.
 - **Instant marking.** Red for wrong, green for right, with a ✓/✕ stamp. The answer key row is revealed as soon as you commit.
-- **An explanation on every question.** All 887 carry a one- or two-line bilingual note, headed `WHY · कारण`, that appears under the options the moment you answer and again beside that question in the answer key. Where there is a rule to teach rather than a fact to restate, the note teaches it: *Double the term and add 1 each time: 31 × 2 + 1 = 63.*
+- **An explanation on every question.** All 2891 carry a one- or two-line bilingual note, headed `WHY · कारण`, that appears under the options the moment you answer and again beside that question in the answer key. Where there is a rule to teach rather than a fact to restate, the note teaches it: *Double the term and add 1 each time: 31 × 2 + 1 = 63.*
 - **Live readouts** for score, correct streak, and elapsed time.
 - **Bubble progress strip** across the top, filling red/green as you work through the sheet.
 - **Keyboard answering** — <kbd>A</kbd>–<kbd>D</kbd> or <kbd>1</kbd>–<kbd>4</kbd> to pick, <kbd>Enter</kbd> to advance.
@@ -39,7 +39,7 @@ python3 -m http.server 8000
 
 ## Setting the sheet
 
-The page opens on a setup screen rather than straight into a paper. Everything on it is optional — the defaults are all 26 subjects, 10 questions, untimed — so a sheet is one click away, but the three settings are what make it drill a specific weakness rather than the whole bank.
+The page opens on a setup screen rather than straight into a paper. Everything on it is optional — the defaults are all 28 subjects, 10 questions, untimed — so a sheet is one click away, but the three settings are what make it drill a specific weakness rather than the whole bank.
 
 **Subjects.** Every subject in the bank is a tick box carrying its question count, built from `BANK` at load rather than a hand-kept list — add questions in a new subject and its box appears on its own. `All` and `None` are there for the common case of drilling one thing: `None`, then `Reasoning`, gives a 150-question reasoning paper. The `Start` button is disabled while nothing is selected.
 
@@ -72,7 +72,7 @@ Every entry is machine-checked: four unique options, no duplicate questions anyw
 
 ## Where the questions come from
 
-**The bundled bilingual bank of 887 questions is the default source.**
+**The bundled bilingual bank of 2891 questions is the default source.**
 
 There is also optional support for **Open Trivia DB** (`opentdb.com`), which offers a few thousand questions across ~24 categories — but it is **English-only**, and no Marathi trivia API exists. Because bilingual sheets are the point, the live feed is off by default. To enable it, flip one constant near the top of the script:
 
@@ -82,20 +82,22 @@ const USE_LIVE_API = true;   // draws English-only questions instead
 
 With it on, the API is tried first and the bilingual bank serves as the fallback if the request fails. The subject filter applies to the local bank only — the API's categories don't map onto the bank's subjects — but the sheet length and the countdown work the same either way.
 
-The bank is aimed at Maharashtra competitive exams (MPSC, Talathi, police bharti) as well as general school revision, across 26 subjects:
+The bank is aimed at Maharashtra competitive exams (MPSC, Talathi, police bharti) as well as general school revision, across 28 subjects:
 
 | Subject | Q | Subject | Q | Subject | Q |
 |---|---|---|---|---|---|
-| Reasoning | 150 | Chemistry | 40 | Science | 17 |
-| Indian polity | 71 | Marathi literature | 40 | Literature | 16 |
-| Maharashtra history | 60 | Geography (world) | 36 | Computing | 16 |
-| Indian history | 60 | Economics | 35 | Astronomy | 11 |
-| Maharashtra geography | 50 | Physics | 34 | Art / Music | 10 |
-| Indian geography | 50 | Maharashtra polity | 30 | Language / Mythology | 10 |
-| Static GK | 50 | History (world) | 24 | Sport | 9 |
-| Biology | 48 | Maths | 19 | General | 1 |
+| Reasoning | 374 | Biology | 103 | Environment | 19 |
+| Indian polity | 279 | Science | 91 | Literature | 16 |
+| Marathi language | 244 | Chemistry | 77 | Sport | 9 |
+| Maths | 240 | Physics | 72 | Art | 5 |
+| Maharashtra history | 236 | Static GK | 66 | Music | 5 |
+| Indian history | 216 | Geography (world) | 56 | Language | 5 |
+| Maharashtra geography | 205 | Computing | 45 | Mythology | 5 |
+| Economics | 179 | Astronomy | 34 | General | 1 |
+| English language | 150 | Maharashtra polity | 30 |  |  |
+| Indian geography | 105 | History (world) | 24 |  |  |
 
-At 10 questions a sheet, that is **88 full sheets before any question repeats**, and the entire bank is seen within 89. Filtering to one subject shortens that to that subject's own rotation.
+At 10 questions a sheet, that is **289 full sheets before any question repeats**, and the entire bank is seen within 290. Filtering to one subject shortens that to that subject's own rotation.
 
 This is a rotation, not an independent draw per sheet: the bank is shuffled once and questions are taken off the front until it is exhausted, then reshuffled. Drawing each sheet from the full bank instead would be random but much weaker practice — in simulation it repeated 60% of draws over 200 sheets while leaving 95 questions unseen. The queue lives in memory only, so reloading the page starts a fresh shuffle.
 
