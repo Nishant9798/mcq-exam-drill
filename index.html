@@ -207,6 +207,10 @@
     font-variant-numeric: tabular-nums;
     line-height: 1.25;
   }
+  /* the countdown, once there is little enough left to matter */
+  .field[data-warn="1"] { border-color: var(--wrong); background: var(--wrong-wash); }
+  .field[data-warn="1"] span,
+  .field[data-warn="1"] strong { color: var(--wrong); }
 
   /* ── progress bubbles ─────────────────────────────────────── */
   .strip {
@@ -244,6 +248,8 @@
   }
   .pip[data-state="right"] { background: var(--correct); border-color: var(--correct); color: var(--paper); }
   .pip[data-state="wrong"] { background: var(--wrong); border-color: var(--wrong); color: var(--paper); }
+  /* never reached — the clock ran out before this one came up */
+  .pip[data-state="skip"] { border-style: dashed; border-color: var(--ink-faint); }
 
   /* ── question ─────────────────────────────────────────────── */
   .question { display: flex; gap: 16px; padding: 26px 0 22px; }
@@ -599,8 +605,163 @@
     color: var(--ink-soft);
   }
 
+  /* ── setup ────────────────────────────────────────────────
+     The sheet is set before it is drawn: which subjects it comes
+     from, how long it runs to, and how long there is to sit it. */
+  .setup { padding: 26px 0 4px; }
+
+  .setup .block { padding-bottom: 22px; }
+  .setup .block + .block { border-top: 1px solid var(--rule); padding-top: 20px; }
+
+  .legend {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin: 0 0 12px;
+  }
+  .legend h2 {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .legend h2 .mr {
+    display: inline;
+    font-family: var(--deva);
+    font-size: 11px;
+    letter-spacing: .02em;
+    text-transform: none;
+  }
+  .legend h2 .mr::before { content: " · "; }
+  .legend .count {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+  }
+  .legend .count .mr { display: inline; font-size: 11px; }
+  .legend .count .mr::before { content: " · "; }
+  .legend .pick {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    padding: 0;
+    margin-left: 12px;
+    cursor: pointer;
+  }
+  .legend .pick:hover { text-decoration: underline; }
+  .legend .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* subject chips — a tick box, the way the real form prints it */
+  .subs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--rule);
+    background: color-mix(in srgb, var(--paper) 70%, var(--ground));
+    border-radius: 2px;
+    padding: 6px 10px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    line-height: 1.25;
+    text-align: left;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: border-color .16s ease, background-color .16s ease, color .16s ease;
+  }
+  .chip .box {
+    flex: none;
+    width: 13px; height: 13px;
+    border: 1.5px solid var(--ink-faint);
+    border-radius: 2px;
+    display: grid;
+    place-items: center;
+    font-size: 9px;
+    line-height: 1;
+    color: transparent;
+  }
+  .chip .mr { display: block; font-size: 11px; opacity: .85; }
+  .chip .n {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+  }
+  .chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-wash); color: var(--ink); }
+  .chip[aria-pressed="true"] .box { border-color: var(--accent); background: var(--accent); color: var(--paper); }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* segmented controls for sheet length and pace */
+  .seg { display: flex; flex-wrap: wrap; gap: 6px; }
+  .seg button {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: color-mix(in srgb, var(--paper) 70%, var(--ground));
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 9px 15px;
+    cursor: pointer;
+    transition: border-color .16s ease, background-color .16s ease, color .16s ease;
+  }
+  .seg button .mr {
+    display: block;
+    font-family: var(--deva);
+    font-size: 10px;
+    letter-spacing: .02em;
+    text-transform: none;
+    opacity: .85;
+  }
+  .seg button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .sum {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .sum b { color: var(--ink); font-weight: 600; }
+  .sum .mr { display: block; font-size: 11.5px; margin-top: 2px; }
+
   /* ── results ──────────────────────────────────────────────── */
   .result { padding: 30px 0 4px; }
+
+  /* the countdown running out on an unfinished sheet */
+  .timeup {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--wrong);
+    border: 1px solid var(--wrong);
+    background: var(--wrong-wash);
+    padding: 7px 12px;
+    margin: 0 0 18px;
+    display: inline-block;
+  }
+  .timeup .mr {
+    display: inline;
+    font-family: var(--deva);
+    font-size: 11px;
+    letter-spacing: .02em;
+    text-transform: none;
+  }
+  .timeup .mr::before { content: " · "; }
 
   .scoreboard {
     display: flex;
@@ -787,8 +948,8 @@
           <span>Streak<span class="mr">सलग</span></span>
           <strong id="f-streak">0</strong>
         </div>
-        <div class="field">
-          <span>Time<span class="mr">वेळ</span></span>
+        <div class="field" id="f-time-box">
+          <span id="f-time-label">Time<span class="mr">वेळ</span></span>
           <strong id="f-time">0:00</strong>
         </div>
       </div>
@@ -799,6 +960,38 @@
     </div>
 
     <div class="loading" id="loading">Loading question bank…<span class="mr">प्रश्नसंच उघडत आहे…</span></div>
+
+    <section id="setup" class="hidden">
+      <div class="setup">
+        <p class="eyebrow">Set the sheet<span class="mr">पेपर ठरवा</span></p>
+
+        <div class="block">
+          <div class="legend">
+            <h2>Subjects<span class="mr">विषय</span>
+              <button type="button" class="pick" id="pick-all">All</button>
+              <button type="button" class="pick" id="pick-none">None</button>
+            </h2>
+            <span class="count" id="sub-count"></span>
+          </div>
+          <div class="subs" id="subs" role="group" aria-label="Subjects"></div>
+        </div>
+
+        <div class="block">
+          <div class="legend"><h2>Questions per sheet<span class="mr">प्रश्नसंख्या</span></h2></div>
+          <div class="seg" id="counts" role="group" aria-label="Questions per sheet"></div>
+        </div>
+
+        <div class="block">
+          <div class="legend"><h2>Time limit<span class="mr">वेळमर्यादा</span></h2></div>
+          <div class="seg" id="paces" role="group" aria-label="Time limit"></div>
+        </div>
+
+        <div class="footer">
+          <p class="sum" id="sum"></p>
+          <button class="btn" id="start">Start the sheet<span class="mr">पेपर सुरू करा</span></button>
+        </div>
+      </div>
+    </section>
 
     <section id="quiz" class="hidden">
       <div class="question">
@@ -828,6 +1021,7 @@
     <section id="result" class="hidden">
       <div class="result">
         <p class="eyebrow">Sheet graded<span class="mr">पेपर तपासला</span></p>
+        <p class="timeup hidden" id="timeup"></p>
 
         <div class="scoreboard">
           <div class="dial" id="r-dial">
@@ -849,8 +1043,9 @@
         </div>
 
         <p class="grade" id="r-grade"></p>
-        <div class="footer" style="margin-top:0;border-top:0;padding-top:0">
+        <div class="footer" style="margin-top:0;border-top:0;padding-top:0;justify-content:flex-start">
           <button class="btn" id="again">Start a new sheet<span class="mr">नवीन पेपर</span></button>
+          <button class="btn ghost" id="change">Change the setup<span class="mr">पेपर बदला</span></button>
           <button class="btn ghost" id="toggle-review">Show answer key<span class="mr">उत्तरतालिका</span></button>
         </div>
       </div>
@@ -868,7 +1063,19 @@
 (() => {
   "use strict";
 
-  const PER_ROUND = 10;
+  const PER_ROUND = 10;                    // sheet length a fresh session opens on
+  const COUNTS = [10, 20, 30, 50];         // the lengths offered on the setup screen
+
+  /* One countdown for the whole sheet, quoted per question and
+     multiplied by its length — the way a real paper is timed, so a hard
+     question can be given longer at the cost of the rest. Index 0 is the
+     default: an untimed sheet is still the right way to learn the bank. */
+  const PACES = [
+    { sec: 0,  en: "Untimed",  mr: "वेळेशिवाय" },
+    { sec: 90, en: "90s / Q",  mr: "निवांत" },
+    { sec: 60, en: "60s / Q",  mr: "प्रमाण" },
+    { sec: 30, en: "30s / Q",  mr: "जलद" }
+  ];
 
   /* The bundled bank is bilingual; Open Trivia DB is English-only.
      Bilingual sheets are the whole point, so the bank leads. Set this
@@ -1872,12 +2079,15 @@
 
   const el = (id) => document.getElementById(id);
   const ui = {
-    loading: el("loading"), quiz: el("quiz"), result: el("result"),
+    loading: el("loading"), setup: el("setup"), quiz: el("quiz"), result: el("result"),
     strip: el("strip"), options: el("options"), verdict: el("verdict"), note: el("note"),
     next: el("next"), qNum: el("q-num"), qOf: el("q-of"),
     qTag: el("q-tag"), qText: el("q-text"),
-    fScore: el("f-score"), fStreak: el("f-streak"), fTime: el("f-time"),
-    rScore: el("r-score"), rPct: el("r-pct"), rGrade: el("r-grade"),
+    fScore: el("f-score"), fStreak: el("f-streak"),
+    fTime: el("f-time"), fTimeBox: el("f-time-box"), fTimeLabel: el("f-time-label"),
+    subs: el("subs"), counts: el("counts"), paces: el("paces"),
+    subCount: el("sub-count"), sum: el("sum"), start: el("start"),
+    rScore: el("r-score"), rPct: el("r-pct"), rGrade: el("r-grade"), timeup: el("timeup"),
     review: el("review"), source: el("source")
   };
 
@@ -1888,8 +2098,35 @@
   let locked = false;
   let log = [];        // per-question record for the answer key
   let started = 0, ticker = null;
+  let limit = 0;       // ms allowed for this sheet, 0 when untimed
+  let deadline = 0;
+  let ranOut = false;  // the clock, not the last question, ended the sheet
   let sourceLabel = "local";
-  let queue = [];      // the bank, shuffled, drawn down across sheets
+
+  /* What the sheet is drawn from and how it is timed. Held in memory for
+     the session, so a second sheet keeps the settings of the first. */
+  const cfg = { subs: new Set(), count: PER_ROUND, pace: 0 };
+
+  /* Every subject in the bank with its question count, commonest first —
+     the setup screen is built from this rather than a hand-kept list, so
+     adding questions in a new subject needs no second edit. */
+  const SUBJECTS = (() => {
+    const n = new Map();
+    BANK.forEach(([cat]) => n.set(cat, (n.get(cat) || 0) + 1));
+    return [...n.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  })();
+  SUBJECTS.forEach(([cat]) => cfg.subs.add(cat));
+
+  /* One draw-down queue per subject selection, keyed by that selection.
+     Filtering has to start a fresh rotation — the old queue holds
+     subjects that are now excluded — but keeping the queues means going
+     back to a previous selection resumes it where it left off rather
+     than reshuffling and repeating questions already seen. */
+  const queues = new Map();
+  const sig = () => [...cfg.subs].sort().join("|");
+  const pool = () => cfg.subs.size === SUBJECTS.length
+    ? BANK
+    : BANK.filter(([cat]) => cfg.subs.has(cat));
 
   /* ── helpers ────────────────────────────────────────────── */
   const shuffle = (arr) => {
@@ -1909,10 +2146,14 @@
      The pushback guards the seam between two cycles, where a question
      from the tail of the old order could otherwise land on the same
      sheet as itself from the head of the new one. */
-  const drawLocal = (n) => {
+  const drawLocal = (n, from) => {
+    const key = sig();
+    let queue = queues.get(key);
+    if (!queue) { queue = shuffle(from); queues.set(key, queue); }
+
     const out = [];
     while (out.length < n) {
-      if (!queue.length) queue = shuffle(BANK);
+      if (!queue.length) { queue = shuffle(from); queues.set(key, queue); }
       const q = queue.pop();
       if (out.indexOf(q) === -1) out.push(q);
       else queue.unshift(q);
@@ -1920,8 +2161,10 @@
     return out;
   };
 
-  const clock = (ms) => {
-    const s = Math.floor(ms / 1000);
+  /* Rounds up, so a countdown reads 0:01 until the second it expires
+     rather than sitting on 0:00 with time still to run. */
+  const clock = (ms, up) => {
+    const s = up ? Math.ceil(ms / 1000) : Math.floor(ms / 1000);
     return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
   };
 
@@ -1949,26 +2192,116 @@
     }
   }
 
-  /* ── round setup ────────────────────────────────────────── */
-  async function newRound() {
+  /* ── setup screen ───────────────────────────────────────── */
+  function buildSetup() {
+    SUBJECTS.forEach(([cat, n]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.dataset.cat = cat;
+      b.innerHTML =
+        '<span class="box" aria-hidden="true">✓</span>' +
+        `<span>${cat}${CAT_MR[cat] ? `<span class="mr">${CAT_MR[cat]}</span>` : ""}</span>` +
+        `<span class="n">${n}</span>`;
+      b.addEventListener("click", () => {
+        if (cfg.subs.has(cat)) cfg.subs.delete(cat); else cfg.subs.add(cat);
+        syncSetup();
+      });
+      ui.subs.appendChild(b);
+    });
+
+    COUNTS.forEach((n) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.n = n;
+      b.textContent = n;
+      b.addEventListener("click", () => { cfg.count = n; syncSetup(); });
+      ui.counts.appendChild(b);
+    });
+
+    PACES.forEach((p, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.i = i;
+      b.innerHTML = `${p.en}<span class="mr">${p.mr}</span>`;
+      b.addEventListener("click", () => { cfg.pace = i; syncSetup(); });
+      ui.paces.appendChild(b);
+    });
+  }
+
+  function syncSetup() {
+    const total = pool().length;
+    const n = Math.min(cfg.count, total);
+    const secs = PACES[cfg.pace].sec * n;
+
+    ui.subs.querySelectorAll(".chip").forEach((c) =>
+      c.setAttribute("aria-pressed", cfg.subs.has(c.dataset.cat) ? "true" : "false"));
+    ui.counts.querySelectorAll("button").forEach((b) =>
+      b.setAttribute("aria-pressed", Number(b.dataset.n) === cfg.count ? "true" : "false"));
+    ui.paces.querySelectorAll("button").forEach((b) =>
+      b.setAttribute("aria-pressed", Number(b.dataset.i) === cfg.pace ? "true" : "false"));
+
+    ui.subCount.innerHTML =
+      `${cfg.subs.size}/${SUBJECTS.length} subjects · ${total} questions` +
+      `<span class="mr">${total} प्रश्न</span>`;
+
+    ui.start.disabled = total === 0;
+    ui.sum.innerHTML = total === 0
+      ? 'Pick at least one subject.<span class="mr">किमान एक विषय निवडा.</span>'
+      /* A narrow selection can hold fewer questions than the sheet asks
+         for; say so on the setup screen rather than quietly cutting the
+         sheet short once it has been drawn. */
+      : `<b>${n}</b> questions · ${secs ? `<b>${clock(secs * 1000)}</b> for the sheet` : "no time limit"}` +
+        (n < cfg.count ? ` · only ${total} in this selection` : "") +
+        `<span class="mr">${n} प्रश्न · ${secs ? "वेळ " + clock(secs * 1000) : "वेळमर्यादा नाही"}</span>`;
+  }
+
+  function showSetup() {
+    clearInterval(ticker);
+    ui.loading.classList.add("hidden");
     ui.quiz.classList.add("hidden");
     ui.result.classList.add("hidden");
     ui.review.classList.add("hidden");
+    ui.strip.classList.add("hidden");
+    el("toggle-review").innerHTML = KEY_SHOW;
+
+    ui.fScore.textContent = "0/0";
+    ui.fStreak.textContent = "0";
+    ui.fTime.textContent = "0:00";
+    ui.fTimeBox.dataset.warn = "";
+    ui.fTimeLabel.innerHTML = 'Time<span class="mr">वेळ</span>';
+
+    syncSetup();
+    ui.setup.classList.remove("hidden");
+  }
+
+  /* ── round setup ────────────────────────────────────────── */
+  async function newRound() {
+    ui.setup.classList.add("hidden");
+    ui.quiz.classList.add("hidden");
+    ui.result.classList.add("hidden");
+    ui.review.classList.add("hidden");
+    ui.strip.classList.remove("hidden");
     el("toggle-review").innerHTML = KEY_SHOW;
     ui.loading.classList.remove("hidden");
     ui.loading.innerHTML = 'Drawing questions…<span class="mr">प्रश्न निवडत आहे…</span>';
 
+    /* Clamped, or a selection smaller than the sheet length would leave
+       the draw looking for questions that do not exist. */
+    const from = pool();
+    const want = Math.min(cfg.count, from.length);
+
     let drawn = null;
     if (USE_LIVE_API) {
       try {
-        drawn = await fetchLive(PER_ROUND);
+        drawn = await fetchLive(want);
         sourceLabel = "live";
       } catch (err) {
         drawn = null;
       }
     }
     if (!drawn) {
-      drawn = drawLocal(PER_ROUND);
+      drawn = drawLocal(want, from);
       sourceLabel = "local";
     }
 
@@ -1980,20 +2313,48 @@
       return { cat, q, right, opts, note, key: opts.indexOf(right) };
     });
 
-    at = 0; score = 0; streak = 0; bestStreak = 0; log = [];
+    at = 0; score = 0; streak = 0; bestStreak = 0; log = []; ranOut = false;
     ui.source.textContent = sourceLabel === "live"
       ? "Bank: live · Open Trivia DB · English only"
-      : `Bank: local · ${BANK.length} questions · English + मराठी`;
+      : `Bank: local · ${from.length}${from.length < BANK.length ? ` of ${BANK.length}` : ""}` +
+        " questions · English + मराठी";
 
     buildStrip();
     ui.loading.classList.add("hidden");
     ui.quiz.classList.remove("hidden");
 
+    /* The paper is timed as a whole, so the allowance is the per-question
+       pace times however many questions were actually drawn. */
+    limit = PACES[cfg.pace].sec * 1000 * paper.length;
     started = performance.now();
+    deadline = started + limit;
+    ui.fTimeBox.dataset.warn = "";
+    ui.fTimeLabel.innerHTML = limit
+      ? 'Time left<span class="mr">उरलेला वेळ</span>'
+      : 'Time<span class="mr">वेळ</span>';
+
     clearInterval(ticker);
-    ticker = setInterval(() => { ui.fTime.textContent = clock(performance.now() - started); }, 250);
+    ticker = setInterval(tick, 250);
+    tick();
 
     render();
+  }
+
+  /* Counts up on an untimed sheet, down on a timed one. */
+  function tick() {
+    if (!limit) {
+      ui.fTime.textContent = clock(performance.now() - started);
+      return;
+    }
+    const left = Math.max(0, deadline - performance.now());
+    ui.fTime.textContent = clock(left, true);
+    /* Flag the last tenth of the paper, or the last minute, whichever is
+       shorter — the point at which a candidate starts guessing. */
+    ui.fTimeBox.dataset.warn = left <= Math.min(60000, limit * 0.1) ? "1" : "";
+    if (left === 0) {
+      ranOut = true;
+      finish();
+    }
   }
 
   function buildStrip() {
@@ -2128,8 +2489,27 @@
 
   function finish() {
     clearInterval(ticker);
+
+    /* A timed sheet can end on the clock rather than the last question.
+       Everything not reached is logged unattempted, so the answer key
+       still runs the full length of the paper and the percentage is out
+       of what was set rather than what was got to. */
+    const skipped = paper.length - log.length;
+    for (let i = log.length; i < paper.length; i++) {
+      const item = paper[i];
+      log.push({ q: item.q, picked: null, right: item.right, ok: false, note: item.note });
+      pips()[i].dataset.state = "skip";
+    }
+
     const pct = Math.round((score / paper.length) * 100);
-    const elapsed = clock(performance.now() - started);
+    const elapsed = clock(limit ? Math.min(performance.now() - started, limit) : performance.now() - started);
+
+    ui.timeup.classList.toggle("hidden", !ranOut);
+    if (ranOut) {
+      ui.timeup.innerHTML = skipped
+        ? `Time up — ${skipped} not attempted<span class="mr">वेळ संपली — ${skipped} प्रश्न सुटले नाहीत</span>`
+        : 'Time up<span class="mr">वेळ संपली</span>';
+    }
 
     ui.quiz.classList.add("hidden");
     ui.result.classList.remove("hidden");
@@ -2174,7 +2554,9 @@
         <div class="n">${String(i + 1).padStart(2, "0")}</div>
         <div class="q">${bi(r.q)}</div>
         <div class="a">
-          ${r.ok
+          ${r.picked === null
+            ? `<em>Not attempted<span class="mr">सोडवला नाही</span></em><br><em>Answer key</em> <span class="yes">${both(r.right)}</span>`
+            : r.ok
             ? `<em>You answered</em> <span class="yes">${both(r.picked)}</span>`
             : `<em>You answered</em> <span class="no">${both(r.picked)}</span><br><em>Answer key</em> <span class="yes">${both(r.right)}</span>`}
         </div>
@@ -2184,7 +2566,18 @@
 
   /* ── wiring ─────────────────────────────────────────────── */
   ui.next.addEventListener("click", advance);
-  el("again").addEventListener("click", newRound);
+  el("again").addEventListener("click", newRound);   // same setup, fresh draw
+  el("change").addEventListener("click", showSetup);
+  ui.start.addEventListener("click", newRound);
+
+  el("pick-all").addEventListener("click", () => {
+    SUBJECTS.forEach(([cat]) => cfg.subs.add(cat));
+    syncSetup();
+  });
+  el("pick-none").addEventListener("click", () => {
+    cfg.subs.clear();
+    syncSetup();
+  });
 
   el("toggle-review").addEventListener("click", (e) => {
     const hidden = ui.review.classList.toggle("hidden");
@@ -2217,6 +2610,7 @@
     root.dataset.theme = dark ? "light" : "dark";
   });
 
-  newRound();
+  buildSetup();
+  showSetup();
 })();
 </script>

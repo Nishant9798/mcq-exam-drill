@@ -24,7 +24,9 @@ python3 -m http.server 8000
 
 - **Bilingual throughout** — all 887 questions, their options, the verdicts, the answer key and the page chrome carry Marathi.
 - **150 reasoning questions**, 29 of them diagram-based — drawn as inline SVG, so they still need no external files.
-- **10 questions per sheet**, drawn at random, with the four options shuffled every time — so a question's correct answer moves position between attempts.
+- **The sheet is set before it is drawn** — which subjects it comes from, how many questions it runs to (10 / 20 / 30 / 50), and how long there is to sit it.
+- **A whole-sheet countdown**, quoted per question and multiplied by the sheet length — 60s × 20 questions is a 20-minute paper. When it expires the sheet grades itself and everything not reached is marked unattempted.
+- Questions are **drawn at random**, with the four options shuffled every time — so a question's correct answer moves position between attempts.
 - **No repeats until the bank runs out.** The bank is shuffled once and drawn down across sheets, so every one of the 887 questions comes up before any of them comes up twice.
 - **Instant marking.** Red for wrong, green for right, with a ✓/✕ stamp. The answer key row is revealed as soon as you commit.
 - **An explanation on every question.** All 887 carry a one- or two-line bilingual note, headed `WHY · कारण`, that appears under the options the moment you answer and again beside that question in the answer key. Where there is a rule to teach rather than a fact to restate, the note teaches it: *Double the term and add 1 each time: 31 × 2 + 1 = 63.*
@@ -34,6 +36,22 @@ python3 -m http.server 8000
 - **Graded summary** — a score dial that sweeps to your percentage (green above 80, red below 50), boxed tallies for missed, percent, best run and time, and a togglable answer key. Every key row carries a coloured rail, so the misses can be found without reading a word.
 - **Light and dark themes**, following your OS preference with a manual override. The stock is warm rather than blue-white, the way exam paper actually is, which also stops the long Devanagari lines from glaring.
 - Respects `prefers-reduced-motion`.
+
+## Setting the sheet
+
+The page opens on a setup screen rather than straight into a paper. Everything on it is optional — the defaults are all 26 subjects, 10 questions, untimed — so a sheet is one click away, but the three settings are what make it drill a specific weakness rather than the whole bank.
+
+**Subjects.** Every subject in the bank is a tick box carrying its question count, built from `BANK` at load rather than a hand-kept list — add questions in a new subject and its box appears on its own. `All` and `None` are there for the common case of drilling one thing: `None`, then `Reasoning`, gives a 150-question reasoning paper. The `Start` button is disabled while nothing is selected.
+
+**Questions per sheet.** 10, 20, 30 or 50. A narrow selection can hold fewer questions than the sheet asks for — 50 questions from a subject with 19 — so the count is clamped to what is available and the setup screen says so before you start (*only 19 in this selection*) rather than quietly cutting the paper short.
+
+**Time limit.** Untimed, or 90 / 60 / 30 seconds a question. The quote is per question but the clock is **one countdown for the whole sheet**, the way a real paper is timed: a hard question can be given four minutes at the cost of the rest. The masthead field switches from `Time` counting up to `Time left` counting down, and turns red for the last minute — or the last tenth of the paper, whichever is shorter.
+
+When the countdown reaches zero the sheet grades itself where it stands. Questions never reached are logged **unattempted**, their bubbles left dashed on the progress strip, and the percentage is still out of the full sheet length — 6 of 20 on a paper you got halfway through is 30%, not 60%. The result screen leads with how many were left.
+
+Settings are held for the session, so `Start a new sheet` draws another paper on the same terms and `Change the setup` goes back to alter them. They are not persisted — a reload returns to the defaults, along with a fresh shuffle.
+
+Filtering starts a fresh rotation, because the queue in progress holds subjects that are now excluded. The queues are kept per selection, though, so going back to a previous one resumes it where it left off instead of reshuffling and repeating questions already seen.
 
 ## Bilingual: English + मराठी
 
@@ -62,7 +80,7 @@ There is also optional support for **Open Trivia DB** (`opentdb.com`), which off
 const USE_LIVE_API = true;   // draws English-only questions instead
 ```
 
-With it on, the API is tried first and the bilingual bank serves as the fallback if the request fails.
+With it on, the API is tried first and the bilingual bank serves as the fallback if the request fails. The subject filter applies to the local bank only — the API's categories don't map onto the bank's subjects — but the sheet length and the countdown work the same either way.
 
 The bank is aimed at Maharashtra competitive exams (MPSC, Talathi, police bharti) as well as general school revision, across 26 subjects:
 
@@ -77,7 +95,7 @@ The bank is aimed at Maharashtra competitive exams (MPSC, Talathi, police bharti
 | Static GK | 50 | History (world) | 24 | Sport | 9 |
 | Biology | 48 | Maths | 19 | General | 1 |
 
-At 10 questions a sheet, that is **88 full sheets before any question repeats**, and the entire bank is seen within 89.
+At 10 questions a sheet, that is **88 full sheets before any question repeats**, and the entire bank is seen within 89. Filtering to one subject shortens that to that subject's own rotation.
 
 This is a rotation, not an independent draw per sheet: the bank is shuffled once and questions are taken off the front until it is exhausted, then reshuffled. Drawing each sheet from the full bank instead would be random but much weaker practice — in simulation it repeated 60% of draws over 200 sheets while leaving 95 questions unseen. The queue lives in memory only, so reloading the page starts a fresh shuffle.
 
