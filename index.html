@@ -525,6 +525,19 @@
     border-top: 1px dotted var(--rule);
   }
 
+  /* The note on the option that was actually picked, shown only when
+     that option was wrong. The red rail sets it apart at a glance from
+     the answer's own note directly below it, so the pair reads as
+     "here is what you picked, and here is the answer" without either
+     panel needing to say so. */
+  .note.miss {
+    border-left-color: var(--wrong);
+    background: color-mix(in srgb, var(--wrong-wash) 45%, transparent);
+  }
+
+  /* the two panels stack, so the second tucks up under the first */
+  .note.miss + .note { margin-top: 10px; }
+
   /* the same note, repeated in the answer key */
   .row .note {
     margin: 7px 0 2px;
@@ -533,6 +546,8 @@
     grid-column: 2;
     animation: none;
   }
+
+  .row .note.miss + .note { margin-top: 4px; }
 
   /* ── footer / verdict ─────────────────────────────────────── */
   .footer {
@@ -1007,6 +1022,7 @@
 
       <div class="options" id="options" role="group" aria-label="Answer options"></div>
 
+      <div class="note miss hidden" id="miss"></div>
       <div class="note hidden" id="note"></div>
 
       <div class="footer">
@@ -1200,19 +1216,19 @@
     ["MH History", ["Sane Guruji is best known for writing which Marathi book?", "साने गुरुजी कोणत्या मराठी पुस्तकासाठी सर्वाधिक ओळखले जातात?"], ["Shyamchi Aai", "श्यामची आई"], [["Gulamgiri", "गुलामगिरी"], ["Yayati", "ययाति"], ["Batatyachi Chal", "बटाट्याची चाळ"]], ["Shyamchi Aai was written while he was imprisoned at Nashik in 1933.", "1933 मध्ये नाशिकच्या तुरुंगात असताना त्यांनी श्यामची आई लिहिली."]],
 
     /* Indian polity and the Constitution */
-    ["Polity", ["On which date did the Constitution of India come into force?", "भारताचे संविधान कोणत्या दिवशी अंमलात आले?"], ["26 January 1950", "26 जानेवारी 1950"], [["15 August 1947", "15 ऑगस्ट 1947"], ["26 November 1949", "26 नोव्हेंबर 1949"], ["30 January 1948", "30 जानेवारी 1948"]], ["The Assembly adopted it on 26 November 1949 but held the commencement back to 26 January, the date of the Purna Swaraj declaration of 1930.", "संविधान सभेने ते 26 नोव्हेंबर 1949 रोजी स्वीकारले, पण 1930 च्या पूर्ण स्वराज्य घोषणेची तारीख म्हणून अंमलबजावणी 26 जानेवारीपर्यंत थांबवली."]],
-    ["Polity", ["On which date was the Constitution of India adopted by the Constituent Assembly?", "संविधान सभेने भारताचे संविधान कोणत्या दिवशी स्वीकारले?"], ["26 November 1949", "26 नोव्हेंबर 1949"], [["26 January 1950", "26 जानेवारी 1950"], ["15 August 1947", "15 ऑगस्ट 1947"], ["9 December 1946", "9 डिसेंबर 1946"]], ["Adopted on 26 November 1949, it came into force two months later.", "26 नोव्हेंबर 1949 रोजी स्वीकृत झालेली राज्यघटना दोन महिन्यांनी अंमलात आली."]],
-    ["Polity", ["Who was the permanent chairman of the Constituent Assembly?", "संविधान सभेचे कायमस्वरूपी अध्यक्ष कोण होते?"], ["Dr. Rajendra Prasad", "डॉ. राजेंद्र प्रसाद"], [["Dr. B. R. Ambedkar", "डॉ. बाबासाहेब आंबेडकर"], ["Jawaharlal Nehru", "जवाहरलाल नेहरू"], ["Sachchidananda Sinha", "सच्चिदानंद सिन्हा"]], ["Sachchidananda Sinha served as temporary chairman before him.", "त्यांच्या आधी सच्चिदानंद सिन्हा हे हंगामी अध्यक्ष होते."]],
-    ["Polity", ["How long did the Constituent Assembly take to frame the Constitution?", "संविधान तयार करण्यास संविधान सभेला किती कालावधी लागला?"], ["About 2 years, 11 months and 18 days", "सुमारे 2 वर्षे 11 महिने 18 दिवस"], [["About 1 year and 6 months", "सुमारे 1 वर्ष 6 महिने"], ["About 4 years and 2 months", "सुमारे 4 वर्षे 2 महिने"], ["About 5 years", "सुमारे 5 वर्षे"]], ["From 9 December 1946 to 26 November 1949.", "9 डिसेंबर 1946 ते 26 नोव्हेंबर 1949 या कालावधीत."]],
-    ["Polity", ["From which country's constitution was the idea of Fundamental Rights primarily drawn?", "मूलभूत हक्कांची संकल्पना प्रामुख्याने कोणत्या देशाच्या संविधानातून घेतली आहे?"], ["The United States", "अमेरिका"], [["Britain", "ब्रिटन"], ["Ireland", "आयर्लंड"], ["Canada", "कॅनडा"]], ["The American Bill of Rights was the model for Part III.", "अमेरिकेच्या हक्कांच्या सनदेवरून भाग तीनची रचना केली गेली."]],
-    ["Polity", ["The Directive Principles of State Policy were borrowed from which country?", "राज्य धोरणाची मार्गदर्शक तत्त्वे कोणत्या देशाकडून घेतली आहेत?"], ["Ireland", "आयर्लंड"], [["The United States", "अमेरिका"], ["Britain", "ब्रिटन"], ["Australia", "ऑस्ट्रेलिया"]], ["Ireland had in turn taken the idea from the Spanish constitution.", "आयर्लंडने ही कल्पना स्पेनच्या राज्यघटनेतून घेतली होती."]],
-    ["Polity", ["The parliamentary form of government was adopted from which country?", "संसदीय शासनपद्धती कोणत्या देशाकडून स्वीकारली आहे?"], ["Britain", "ब्रिटन"], [["The United States", "अमेरिका"], ["France", "फ्रान्स"], ["Japan", "जपान"]], ["The rule of law, single citizenship and the Speaker's office came from there too.", "कायद्याचे राज्य, एकेरी नागरिकत्व व सभापतीपद हीही तिथूनच घेतली आहेत."]],
-    ["Polity", ["Which part of the Constitution deals with Fundamental Rights?", "संविधानाचा कोणता भाग मूलभूत हक्कांशी संबंधित आहे?"], ["Part III", "भाग तीन"], [["Part II", "भाग दोन"], ["Part IV", "भाग चार"], ["Part V", "भाग पाच"]], ["Articles 12 to 35 together make up Part III.", "अनुच्छेद 12 ते 35 मिळून भाग तीन होतो."]],
-    ["Polity", ["Which part of the Constitution contains the Directive Principles of State Policy?", "मार्गदर्शक तत्त्वे संविधानाच्या कोणत्या भागात आहेत?"], ["Part IV", "भाग चार"], [["Part III", "भाग तीन"], ["Part V", "भाग पाच"], ["Part VI", "भाग सहा"]], ["Articles 36 to 51; unlike the rights, these cannot be enforced in court.", "अनुच्छेद 36 ते 51; हक्कांप्रमाणे ही तत्त्वे न्यायालयात बजावता येत नाहीत."]],
-    ["Polity", ["Which article guarantees the right to equality before the law?", "कायद्यासमोर समानतेचा हक्क कोणत्या अनुच्छेदाने दिला आहे?"], ["Article 14", "अनुच्छेद 14"], [["Article 19", "अनुच्छेद 19"], ["Article 21", "अनुच्छेद 21"], ["Article 32", "अनुच्छेद 32"]], ["It guarantees equality before the law and equal protection of the laws.", "यात कायद्यापुढे समानता व कायद्याचे समान संरक्षण यांची हमी आहे."]],
-    ["Polity", ["Which article guarantees the right to life and personal liberty?", "जगण्याचा व वैयक्तिक स्वातंत्र्याचा हक्क कोणत्या अनुच्छेदाने दिला आहे?"], ["Article 21", "अनुच्छेद 21"], [["Article 14", "अनुच्छेद 14"], ["Article 19", "अनुच्छेद 19"], ["Article 25", "अनुच्छेद 25"]], ["The courts have read the right to privacy and to a clean environment into it.", "न्यायालयांनी यातच गोपनीयतेचा व स्वच्छ पर्यावरणाचा हक्क समाविष्ट मानला आहे."]],
-    ["Polity", ["Which article abolishes untouchability?", "अस्पृश्यता नष्ट करणारा अनुच्छेद कोणता?"], ["Article 17", "अनुच्छेद 17"], [["Article 15", "अनुच्छेद 15"], ["Article 16", "अनुच्छेद 16"], ["Article 18", "अनुच्छेद 18"]], ["It abolishes untouchability and forbids its practice in any form.", "यात अस्पृश्यता नष्ट केली असून कोणत्याही स्वरूपात तिचे पालन निषिद्ध आहे."]],
-    ["Polity", ["Which article did Dr. Ambedkar call the heart and soul of the Constitution?", "डॉ. आंबेडकरांनी कोणत्या अनुच्छेदाला संविधानाचा आत्मा म्हटले?"], ["Article 32", "अनुच्छेद 32"], [["Article 14", "अनुच्छेद 14"], ["Article 21", "अनुच्छेद 21"], ["Article 356", "अनुच्छेद 356"]], ["It gives the right to move the Supreme Court directly to enforce the other rights.", "इतर हक्क बजावण्यासाठी थेट सर्वोच्च न्यायालयात जाण्याचा अधिकार यातून मिळतो."]],
+    ["Polity", ["On which date did the Constitution of India come into force?", "भारताचे संविधान कोणत्या दिवशी अंमलात आले?"], ["26 January 1950", "26 जानेवारी 1950"], [["15 August 1947", "15 ऑगस्ट 1947"], ["26 November 1949", "26 नोव्हेंबर 1949"], ["30 January 1948", "30 जानेवारी 1948"]], ["The Assembly adopted it on 26 November 1949 but held the commencement back to 26 January, the date of the Purna Swaraj declaration of 1930.", "संविधान सभेने ते 26 नोव्हेंबर 1949 रोजी स्वीकारले, पण 1930 च्या पूर्ण स्वराज्य घोषणेची तारीख म्हणून अंमलबजावणी 26 जानेवारीपर्यंत थांबवली."], [["That is Independence Day — power was transferred under the Indian Independence Act while the Constitution was still being drafted.", "तो स्वातंत्र्यदिन — भारतीय स्वातंत्र्य कायद्याने सत्तांतर झाले, तेव्हा राज्यघटनेचा मसुदा तयारच होत होता."], ["That is the day the Assembly adopted it — Constitution Day. It came into force two months later, on 26 January, to honour the Purna Swaraj pledge of 1930.", "त्या दिवशी संविधान सभेने ती स्वीकारली — संविधान दिन. 1930 च्या पूर्ण स्वराज्य प्रतिज्ञेच्या स्मरणार्थ ती दोन महिन्यांनी 26 जानेवारीला अंमलात आली."], ["That is the day Mahatma Gandhi was assassinated; the date has no constitutional significance.", "त्या दिवशी महात्मा गांधींची हत्या झाली; घटनात्मकदृष्ट्या त्या तारखेला महत्त्व नाही."]]],
+    ["Polity", ["On which date was the Constitution of India adopted by the Constituent Assembly?", "संविधान सभेने भारताचे संविधान कोणत्या दिवशी स्वीकारले?"], ["26 November 1949", "26 नोव्हेंबर 1949"], [["26 January 1950", "26 जानेवारी 1950"], ["15 August 1947", "15 ऑगस्ट 1947"], ["9 December 1946", "9 डिसेंबर 1946"]], ["Adopted on 26 November 1949, it came into force two months later.", "26 नोव्हेंबर 1949 रोजी स्वीकृत झालेली राज्यघटना दोन महिन्यांनी अंमलात आली."], [["That is when it came into force, not when it was adopted — the two dates are two months apart and are asked against each other constantly.", "ती अंमलात येण्याची तारीख आहे, स्वीकारण्याची नाही — दोन तारखांत दोन महिन्यांचे अंतर असून त्या एकमेकांविरुद्धच विचारल्या जातात."], ["Independence Day. The Assembly had been sitting since 1946 and went on drafting for two more years.", "स्वातंत्र्यदिन. संविधान सभा 1946 पासून बसत होती आणि पुढे आणखी दोन वर्षे मसुदा तयार करत राहिली."], ["That is the Assembly's first sitting, held under Sachchidananda Sinha as temporary chairman.", "ती संविधान सभेच्या पहिल्या बैठकीची तारीख, जिचे हंगामी अध्यक्ष सच्चिदानंद सिन्हा होते."]]],
+    ["Polity", ["Who was the permanent chairman of the Constituent Assembly?", "संविधान सभेचे कायमस्वरूपी अध्यक्ष कोण होते?"], ["Dr. Rajendra Prasad", "डॉ. राजेंद्र प्रसाद"], [["Dr. B. R. Ambedkar", "डॉ. बाबासाहेब आंबेडकर"], ["Jawaharlal Nehru", "जवाहरलाल नेहरू"], ["Sachchidananda Sinha", "सच्चिदानंद सिन्हा"]], ["Sachchidananda Sinha served as temporary chairman before him.", "त्यांच्या आधी सच्चिदानंद सिन्हा हे हंगामी अध्यक्ष होते."], [["He chaired the Drafting Committee, not the Assembly itself — the two posts are the classic mix-up.", "ते मसुदा समितीचे अध्यक्ष होते, संविधान सभेचे नव्हे — याच दोन पदांचा नेहमी घोटाळा होतो."], ["He moved the Objectives Resolution and led the government, but never presided over the Assembly.", "त्यांनी उद्दिष्टांचा ठराव मांडला व सरकारचे नेतृत्व केले, पण संविधान सभेचे अध्यक्षपद कधीच भूषवले नाही."], ["He was temporary chairman for the first sitting of 9 December 1946 only; Rajendra Prasad was elected permanent chairman two days later.", "ते फक्त 9 डिसेंबर 1946 च्या पहिल्या बैठकीपुरते हंगामी अध्यक्ष होते; दोन दिवसांनी राजेंद्र प्रसाद कायम अध्यक्ष म्हणून निवडले गेले."]]],
+    ["Polity", ["How long did the Constituent Assembly take to frame the Constitution?", "संविधान तयार करण्यास संविधान सभेला किती कालावधी लागला?"], ["About 2 years, 11 months and 18 days", "सुमारे 2 वर्षे 11 महिने 18 दिवस"], [["About 1 year and 6 months", "सुमारे 1 वर्ष 6 महिने"], ["About 4 years and 2 months", "सुमारे 4 वर्षे 2 महिने"], ["About 5 years", "सुमारे 5 वर्षे"]], ["From 9 December 1946 to 26 November 1949.", "9 डिसेंबर 1946 ते 26 नोव्हेंबर 1949 या कालावधीत."], [["Too short — the Assembly sat from December 1946 to November 1949. The figure to memorise is 2 years, 11 months and 18 days.", "फार कमी — संविधान सभा डिसेंबर 1946 ते नोव्हेंबर 1949 अशी बसली. पाठ करण्याचा आकडा 2 वर्षे, 11 महिने, 18 दिवस."], ["Too long — that would run past 1950, by which time the Constitution was already in force.", "फार जास्त — तेवढा काळ धरला तर 1950 उलटून जाईल, तोवर राज्यघटना अंमलातही आली होती."], ["Nearly double the true span — the drafting was finished in under three years.", "जवळपास दुपटीने जास्त — मसुद्याचे काम तीन वर्षांच्या आतच पूर्ण झाले."]]],
+    ["Polity", ["From which country's constitution was the idea of Fundamental Rights primarily drawn?", "मूलभूत हक्कांची संकल्पना प्रामुख्याने कोणत्या देशाच्या संविधानातून घेतली आहे?"], ["The United States", "अमेरिका"], [["Britain", "ब्रिटन"], ["Ireland", "आयर्लंड"], ["Canada", "कॅनडा"]], ["The American Bill of Rights was the model for Part III.", "अमेरिकेच्या हक्कांच्या सनदेवरून भाग तीनची रचना केली गेली."], [["From Britain came the parliamentary system, the rule of law and single citizenship — not the justiciable list of rights.", "ब्रिटनकडून संसदीय पद्धत, कायद्याचे राज्य व एकेरी नागरिकत्व आले — न्यायालयात दाद मागता येणारी हक्कांची यादी नव्हे."], ["Ireland gave the Directive Principles, which are the non-justiciable counterpart to the Rights.", "आयर्लंडकडून मार्गदर्शक तत्त्वे आली, जी हक्कांची न्यायप्रविष्ट नसलेली जोडगोळी आहे."], ["Canada gave the federation with a strong Centre and residuary powers resting with the Union.", "कॅनडाकडून बलवान केंद्र असलेली संघराज्य रचना व शेषाधिकार संघाकडे ही तरतूद आली."]]],
+    ["Polity", ["The Directive Principles of State Policy were borrowed from which country?", "राज्य धोरणाची मार्गदर्शक तत्त्वे कोणत्या देशाकडून घेतली आहेत?"], ["Ireland", "आयर्लंड"], [["The United States", "अमेरिका"], ["Britain", "ब्रिटन"], ["Australia", "ऑस्ट्रेलिया"]], ["Ireland had in turn taken the idea from the Spanish constitution.", "आयर्लंडने ही कल्पना स्पेनच्या राज्यघटनेतून घेतली होती."], [["The United States gave the Fundamental Rights, judicial review and the written constitution itself.", "अमेरिकेकडून मूलभूत हक्क, न्यायिक पुनर्विलोकन व लिखित राज्यघटना ही कल्पना आली."], ["Britain gave the parliamentary form, the rule of law and the office of Speaker.", "ब्रिटनकडून संसदीय शासनपद्धत, कायद्याचे राज्य व सभापतीपद आले."], ["Australia gave the Concurrent List and the freedom of trade and commerce.", "ऑस्ट्रेलियाकडून समवर्ती सूची आणि व्यापार व वाणिज्य स्वातंत्र्य आले."]]],
+    ["Polity", ["The parliamentary form of government was adopted from which country?", "संसदीय शासनपद्धती कोणत्या देशाकडून स्वीकारली आहे?"], ["Britain", "ब्रिटन"], [["The United States", "अमेरिका"], ["France", "फ्रान्स"], ["Japan", "जपान"]], ["The rule of law, single citizenship and the Speaker's office came from there too.", "कायद्याचे राज्य, एकेरी नागरिकत्व व सभापतीपद हीही तिथूनच घेतली आहेत."], [["The United States has a presidential system — the very model India rejected in favour of Britain's.", "अमेरिकेत अध्यक्षीय पद्धत आहे — नेमकी तीच नाकारून भारताने ब्रिटनचे प्रारूप स्वीकारले."], ["France gave liberty, equality and fraternity, taken into the Preamble.", "फ्रान्सकडून स्वातंत्र्य, समता व बंधुता आली, जी प्रास्ताविकेत घेतली आहे."], ["Japan gave the phrase 'procedure established by law', which sits in Article 21.", "जपानकडून 'कायद्याने प्रस्थापित पद्धत' हा अनुच्छेद 21 मधील शब्दप्रयोग आला."]]],
+    ["Polity", ["Which part of the Constitution deals with Fundamental Rights?", "संविधानाचा कोणता भाग मूलभूत हक्कांशी संबंधित आहे?"], ["Part III", "भाग तीन"], [["Part II", "भाग दोन"], ["Part IV", "भाग चार"], ["Part V", "भाग पाच"]], ["Articles 12 to 35 together make up Part III.", "अनुच्छेद 12 ते 35 मिळून भाग तीन होतो."], [["Part II is Citizenship, Articles 5 to 11.", "भाग दोन म्हणजे नागरिकत्व, अनुच्छेद 5 ते 11."], ["Part IV is the Directive Principles — Part III and Part IV are the pair asked against each other.", "भाग चार म्हणजे मार्गदर्शक तत्त्वे — भाग तीन व भाग चार हीच जोडी एकमेकांविरुद्ध विचारली जाते."], ["Part V is the Union — the President, Parliament and the Supreme Court.", "भाग पाच म्हणजे संघराज्य — राष्ट्रपती, संसद व सर्वोच्च न्यायालय."]]],
+    ["Polity", ["Which part of the Constitution contains the Directive Principles of State Policy?", "मार्गदर्शक तत्त्वे संविधानाच्या कोणत्या भागात आहेत?"], ["Part IV", "भाग चार"], [["Part III", "भाग तीन"], ["Part V", "भाग पाच"], ["Part VI", "भाग सहा"]], ["Articles 36 to 51; unlike the rights, these cannot be enforced in court.", "अनुच्छेद 36 ते 51; हक्कांप्रमाणे ही तत्त्वे न्यायालयात बजावता येत नाहीत."], [["Part III is the Fundamental Rights, which are enforceable in court; the Directive Principles are not.", "भाग तीन म्हणजे मूलभूत हक्क, जे न्यायालयात बजावता येतात; मार्गदर्शक तत्त्वे तशी बजावता येत नाहीत."], ["Part V is the Union government.", "भाग पाच म्हणजे संघराज्य सरकार."], ["Part VI is the States — the Governor, the state legislature and the High Courts.", "भाग सहा म्हणजे राज्ये — राज्यपाल, राज्य विधिमंडळ व उच्च न्यायालये."]]],
+    ["Polity", ["Which article guarantees the right to equality before the law?", "कायद्यासमोर समानतेचा हक्क कोणत्या अनुच्छेदाने दिला आहे?"], ["Article 14", "अनुच्छेद 14"], [["Article 19", "अनुच्छेद 19"], ["Article 21", "अनुच्छेद 21"], ["Article 32", "अनुच्छेद 32"]], ["It guarantees equality before the law and equal protection of the laws.", "यात कायद्यापुढे समानता व कायद्याचे समान संरक्षण यांची हमी आहे."], [["Article 19 is the six freedoms — speech, assembly, association, movement, residence and profession.", "अनुच्छेद 19 म्हणजे सहा स्वातंत्र्ये — भाषण, सभा, संघटना, संचार, वास्तव्य व व्यवसाय."], ["Article 21 is the right to life and personal liberty.", "अनुच्छेद 21 म्हणजे जीवित व वैयक्तिक स्वातंत्र्याचा हक्क."], ["Article 32 is the right to constitutional remedies, the article that enforces all the others.", "अनुच्छेद 32 म्हणजे घटनात्मक उपाययोजनांचा हक्क, जो इतर सर्व हक्क बजावून घेतो."]]],
+    ["Polity", ["Which article guarantees the right to life and personal liberty?", "जगण्याचा व वैयक्तिक स्वातंत्र्याचा हक्क कोणत्या अनुच्छेदाने दिला आहे?"], ["Article 21", "अनुच्छेद 21"], [["Article 14", "अनुच्छेद 14"], ["Article 19", "अनुच्छेद 19"], ["Article 25", "अनुच्छेद 25"]], ["The courts have read the right to privacy and to a clean environment into it.", "न्यायालयांनी यातच गोपनीयतेचा व स्वच्छ पर्यावरणाचा हक्क समाविष्ट मानला आहे."], [["Article 14 is equality before the law and equal protection of the laws.", "अनुच्छेद 14 म्हणजे कायद्यापुढे समानता व कायद्याचे समान संरक्षण."], ["Article 19 is the six freedoms.", "अनुच्छेद 19 म्हणजे सहा स्वातंत्र्ये."], ["Article 25 is freedom of conscience and the free profession of religion.", "अनुच्छेद 25 म्हणजे सद्सद्विवेकबुद्धीचे स्वातंत्र्य व धर्माचरणाचा हक्क."]]],
+    ["Polity", ["Which article abolishes untouchability?", "अस्पृश्यता नष्ट करणारा अनुच्छेद कोणता?"], ["Article 17", "अनुच्छेद 17"], [["Article 15", "अनुच्छेद 15"], ["Article 16", "अनुच्छेद 16"], ["Article 18", "अनुच्छेद 18"]], ["It abolishes untouchability and forbids its practice in any form.", "यात अस्पृश्यता नष्ट केली असून कोणत्याही स्वरूपात तिचे पालन निषिद्ध आहे."], [["Article 15 forbids discrimination on grounds of religion, race, caste, sex or place of birth — related, but wider and not specifically untouchability.", "अनुच्छेद 15 धर्म, वंश, जात, लिंग व जन्मस्थान यांवरील भेदभाव रोखतो — संबंधित आहे, पण अधिक व्यापक असून नेमका अस्पृश्यतेविषयी नाही."], ["Article 16 is equality of opportunity in public employment.", "अनुच्छेद 16 म्हणजे सरकारी नोकरीत समान संधी."], ["Article 18 abolishes titles — the article next door, and the usual slip.", "अनुच्छेद 18 पदव्या रद्द करतो — शेजारचाच अनुच्छेद आणि नेहमीची चूक."]]],
+    ["Polity", ["Which article did Dr. Ambedkar call the heart and soul of the Constitution?", "डॉ. आंबेडकरांनी कोणत्या अनुच्छेदाला संविधानाचा आत्मा म्हटले?"], ["Article 32", "अनुच्छेद 32"], [["Article 14", "अनुच्छेद 14"], ["Article 21", "अनुच्छेद 21"], ["Article 356", "अनुच्छेद 356"]], ["It gives the right to move the Supreme Court directly to enforce the other rights.", "इतर हक्क बजावण्यासाठी थेट सर्वोच्च न्यायालयात जाण्याचा अधिकार यातून मिळतो."], [["Article 14 is equality before the law. Ambedkar's phrase was not for any single right but for the article that lets you enforce them.", "अनुच्छेद 14 म्हणजे कायद्यापुढे समानता. आंबेडकरांचे ते वर्णन कोणत्याही एका हक्कासाठी नव्हे, तर हक्क बजावून देणाऱ्या अनुच्छेदासाठी होते."], ["The courts have read Article 21 the widest of all, but the phrase was Ambedkar's for Article 32.", "अनुच्छेद 21 चा अर्थ न्यायालयांनी सर्वाधिक व्यापक लावला, पण आंबेडकरांचे ते शब्द अनुच्छेद 32 साठी होते."], ["Article 356 is President's Rule — a provision Ambedkar hoped would remain a dead letter, the opposite of his praise for Article 32.", "अनुच्छेद 356 म्हणजे राष्ट्रपती राजवट — ती कधी वापरावी लागू नये अशी आंबेडकरांची इच्छा होती, म्हणजे 32 च्या स्तुतीच्या नेमके उलट."]]],
     ["Polity", ["Which article provides for the right to education for children aged 6 to 14?", "6 ते 14 वयोगटातील मुलांच्या शिक्षणाच्या हक्काची तरतूद कोणत्या अनुच्छेदात आहे?"], ["Article 21A", "अनुच्छेद 21अ"], [["Article 45", "अनुच्छेद 45"], ["Article 29", "अनुच्छेद 29"], ["Article 30", "अनुच्छेद 30"]], ["It was inserted by the 86th Amendment in 2002.", "2002 च्या 86 व्या घटनादुरुस्तीने हा अनुच्छेद समाविष्ट केला."]],
     ["Polity", ["Which amendment made education a fundamental right?", "कोणत्या घटनादुरुस्तीने शिक्षणाला मूलभूत हक्काचा दर्जा दिला?"], ["The 86th", "86 वी"], [["The 42nd", "42 वी"], ["The 44th", "44 वी"], ["The 73rd", "73 वी"]], ["The 86th Amendment of 2002 inserted Article 21A.", "2002 च्या 86 व्या घटनादुरुस्तीने अनुच्छेद 21अ समाविष्ट केला."]],
     ["Polity", ["How many Fundamental Duties are listed in the Constitution today?", "संविधानात सध्या किती मूलभूत कर्तव्ये आहेत?"], "11", ["10", "9", "12"], ["Ten were added in 1976, and the eleventh came with the 86th Amendment in 2002.", "1976 मध्ये दहा कर्तव्ये जोडली गेली; अकरावे 2002 च्या 86 व्या दुरुस्तीने आले."]],
@@ -4508,6 +4524,9 @@
   };
 
   const NOTE_LABEL = '<span class="lbl">Why<span class="mr">कारण</span></span>';
+  /* Heads the note on the option that was actually picked, when it was
+     the wrong one — so the two panels read as your answer, then the key. */
+  const MISS_LABEL = '<span class="lbl">Your answer<span class="mr">तुमचे उत्तर</span></span>';
 
   const KEY_SHOW = 'Show answer key<span class="mr">उत्तरतालिका</span>';
   const KEY_HIDE = 'Hide answer key<span class="mr">तालिका लपवा</span>';
@@ -4517,6 +4536,7 @@
   const ui = {
     loading: el("loading"), setup: el("setup"), quiz: el("quiz"), result: el("result"),
     strip: el("strip"), options: el("options"), verdict: el("verdict"), note: el("note"),
+    miss: el("miss"),
     next: el("next"), qNum: el("q-num"), qOf: el("q-of"),
     qTag: el("q-tag"), qText: el("q-text"),
     fScore: el("f-score"), fStreak: el("f-streak"),
@@ -4743,10 +4763,25 @@
 
     /* The 5th field is the explanation and is optional: entries without
        one simply show no panel, which is also how live API questions
-       arrive. */
-    paper = drawn.map(([cat, q, right, wrongs, note]) => {
-      const opts = shuffle([right, ...wrongs.slice(0, 3)]);
-      return { cat, q, right, opts, note, key: opts.indexOf(right) };
+       arrive. The 6th is optional too — a note per wrong option, in the
+       order the wrong options are written, saying why that particular
+       one is wrong. Any of the three may be null where there is nothing
+       worth saying, and a question with no 6th field at all behaves
+       exactly as it did before this existed.
+
+       The note has to survive the shuffle, so option and note travel as
+       one card rather than being matched up by position afterwards. */
+    paper = drawn.map(([cat, q, right, wrongs, note, misses]) => {
+      const cards = shuffle([
+        { text: right, why: null },
+        ...wrongs.slice(0, 3).map((w, i) => ({ text: w, why: (misses && misses[i]) || null }))
+      ]);
+      return {
+        cat, q, right, note,
+        opts: cards.map((c) => c.text),
+        why: cards.map((c) => c.why),
+        key: cards.findIndex((c) => c.text === right)
+      };
     });
 
     at = 0; score = 0; streak = 0; bestStreak = 0; log = []; ranOut = false;
@@ -4843,6 +4878,7 @@
     });
 
     ui.note.classList.add("hidden");
+    ui.miss.classList.add("hidden");
     ui.verdict.dataset.tone = "";
     ui.verdict.innerHTML =
       'Pick an option — or press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd>' +
@@ -4889,7 +4925,8 @@
       streak = 0;
     }
 
-    log.push({ q: item.q, picked: item.opts[picked], right: item.right, ok: right, note: item.note });
+    const miss = right ? null : item.why[picked];
+    log.push({ q: item.q, picked: item.opts[picked], right: item.right, ok: right, note: item.note, miss });
     pips()[at].dataset.state = right ? "right" : "wrong";
 
     const ans = pair(item.right);
@@ -4901,6 +4938,11 @@
       `<span class="mr">${right
         ? `बरोबर${ans.mr ? " — " + ans.mr : ""}${streak >= 3 ? ` · सलग ${streak}` : ""}`
         : `चूक — योग्य उत्तर: ${ans.mr || ans.en}`}</span>`;
+
+    if (miss) {
+      ui.miss.innerHTML = MISS_LABEL + bi(miss);
+      ui.miss.classList.remove("hidden");
+    }
 
     if (item.note) {
       ui.note.innerHTML = NOTE_LABEL + bi(item.note);
@@ -4933,7 +4975,7 @@
     const skipped = paper.length - log.length;
     for (let i = log.length; i < paper.length; i++) {
       const item = paper[i];
-      log.push({ q: item.q, picked: null, right: item.right, ok: false, note: item.note });
+      log.push({ q: item.q, picked: null, right: item.right, ok: false, note: item.note, miss: null });
       pips()[i].dataset.state = "skip";
     }
 
@@ -4996,6 +5038,7 @@
             ? `<em>You answered</em> <span class="yes">${both(r.picked)}</span>`
             : `<em>You answered</em> <span class="no">${both(r.picked)}</span><br><em>Answer key</em> <span class="yes">${both(r.right)}</span>`}
         </div>
+        ${r.miss ? `<div class="note miss">${MISS_LABEL}${bi(r.miss)}</div>` : ""}
         ${r.note ? `<div class="note">${NOTE_LABEL}${bi(r.note)}</div>` : ""}
       </div>`).join("");
   }
